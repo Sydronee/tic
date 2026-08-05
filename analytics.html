@@ -31,11 +31,13 @@ tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: {
     --c1:#7c5cff; --c2:#22d3ee; --c3:#34d399; --c4:#fbbf24; --c5:#fb7185; --c6:#a78bfa;
     --grid:rgba(255,255,255,.06);
   }
+  html.dark{color-scheme:dark}
   html:not(.dark){
     --bg:#f6f7fb; --bg2:#eef0f7; --panel:255,255,255; --panel-a:.75;
     --stroke:15,23,42; --stroke-a:.08;
     --txt:#0f172a; --txt-dim:#475069; --txt-faint:#7c8499;
     --grid:rgba(15,23,42,.07);
+    color-scheme:light;
   }
   html,body{height:100%}
   body{
@@ -43,6 +45,30 @@ tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: {
     font-family:Inter,system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+  }
+  html.dark body,
+  html.dark button,
+  html.dark input,
+  html.dark select,
+  html.dark textarea,
+  html.dark dialog,
+  html.dark pre,
+  html.dark code,
+  html.dark a,
+  html.dark table,
+  html.dark th,
+  html.dark td,
+  html.dark label,
+  html.dark p,
+  html.dark h1,
+  html.dark h2,
+  html.dark h3,
+  html.dark h4,
+  html.dark h5,
+  html.dark h6,
+  html.dark span,
+  html.dark div{
+    color:var(--txt);
   }
   /* Ambient gradient field */
   body::before{
