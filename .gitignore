@@ -1,0 +1,4 @@
+/temp_downloads
+.venv
+__pycache__
+*.parquet

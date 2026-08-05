@@ -530,9 +530,19 @@ async function runScript(sql) {
 }
 
 async function loadDemo() {
+  for (const name of ['negotiated_rates', 'payers', 'billing_codes']) {
+    await DB.conn.query(`DROP VIEW IF EXISTS ${name}`);
+    await DB.conn.query(`DROP TABLE IF EXISTS ${name}`);
+  }
   await runScript(DEMO_SQL);
   await runScript(V_RATES + V_STATS);
   DB.source = 'demo'; DB.label = 'Demo dataset';
+}
+
+async function replaceSourceObject(name, query) {
+  await DB.conn.query(`DROP TABLE IF EXISTS temp.${name}`);
+  await DB.conn.query(`DROP TABLE IF EXISTS ${name}`);
+  await DB.conn.query(`CREATE TEMP TABLE ${name} AS ${query}`);
 }
 
 /** Load user Parquet exports (version-stable across DuckDB builds). */
@@ -548,7 +558,7 @@ async function loadParquet(files) {
   const missing = need.filter(n => !found[n]);
   if (missing.length) throw new Error('Missing parquet file(s) for: ' + missing.join(', '));
   for (const t of need)
-    await DB.conn.query(`CREATE OR REPLACE VIEW ${t} AS SELECT * FROM read_parquet('${found[t]}')`);
+    await replaceSourceObject(t, `SELECT * FROM read_parquet('${found[t]}')`);
   await runScript(V_RATES + V_STATS);
   DB.source = 'parquet'; DB.label = files.length + ' Parquet file(s)';
 }
@@ -563,7 +573,7 @@ async function loadDuckFile(file) {
       + 'mismatch between your DuckDB build and DuckDB WASM. Export to Parquet instead. (' + e.message + ')');
   }
   for (const t of ['negotiated_rates', 'payers', 'billing_codes'])
-    await DB.conn.query(`CREATE OR REPLACE VIEW ${t} AS SELECT * FROM src.main.${t}`);
+    await replaceSourceObject(t, `SELECT * FROM src.main.${t}`);
   await runScript(V_RATES + V_STATS);
   DB.source = 'duckdb'; DB.label = file.name;
 }
@@ -581,7 +591,7 @@ async function loadCSV(files) {
   const missing = need.filter(n => !found[n]);
   if (missing.length) throw new Error('Missing CSV file(s) for: ' + missing.join(', '));
   for (const t of need)
-    await DB.conn.query(`CREATE OR REPLACE VIEW ${t} AS SELECT * FROM read_csv_auto('${found[t]}')`);
+    await replaceSourceObject(t, `SELECT * FROM read_csv_auto('${found[t]}')`);
   await runScript(V_RATES + V_STATS);
   DB.source = 'csv'; DB.label = files.length + ' CSV file(s)';
 }
