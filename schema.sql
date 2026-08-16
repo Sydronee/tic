@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS billing_codes (
     billing_code               VARCHAR NOT NULL,
     billing_code_type          VARCHAR NOT NULL,
     billing_code_type_version  VARCHAR,
-    description                VARCHAR
+    description                VARCHAR,
+    negotiation_arrangement    VARCHAR
 );
 
 -- ---------------------------------------------------------------------
@@ -41,7 +42,9 @@ CREATE TABLE IF NOT EXISTS billing_codes (
 CREATE TABLE IF NOT EXISTS negotiated_rates (
     payer_id                 BIGINT,
     code_id                  BIGINT,
+    negotiation_arrangement  VARCHAR,
     billing_class            VARCHAR,
+    setting                  VARCHAR,
     negotiated_type          VARCHAR,
     negotiated_rate          DOUBLE,
     service_code             VARCHAR[],
@@ -54,14 +57,30 @@ CREATE TABLE IF NOT EXISTS negotiated_rates (
 
 -- ---------------------------------------------------------------------
 -- Optional: Provider mappings
+--
+-- provider_reference_id is either:
+--   - a real CMS-assigned group id (from the file's top-level
+--     `provider_references` array), or
+--   - a synthetic negative id we mint for provider_groups that are
+--     embedded inline on a negotiated_rate with no id of their own.
+-- group_key is a content hash used only for de-duplicating embedded
+-- groups across parser runs/files; it is not meaningful downstream.
+-- One row is stored per NPI in a group, so a group with 3 NPIs is 3 rows
+-- sharing the same provider_reference_id.
 -- ---------------------------------------------------------------------
+CREATE SEQUENCE IF NOT EXISTS seq_provider_id START 1;
+CREATE SEQUENCE IF NOT EXISTS seq_synthetic_provider_ref START 1;
 CREATE TABLE IF NOT EXISTS providers (
-    provider_reference_id  BIGINT PRIMARY KEY,
+    provider_id            BIGINT PRIMARY KEY DEFAULT nextval('seq_provider_id'),
+    provider_reference_id  BIGINT,
     npi                    BIGINT,
     tin_type               VARCHAR,
     tin_value              VARCHAR,
-    facility_name          VARCHAR
+    facility_name          VARCHAR,
+    group_key               VARCHAR
 );
+-- Idempotent migration for existing databases created before this column existed.
+ALTER TABLE providers ADD COLUMN IF NOT EXISTS group_key VARCHAR;
 
 -- ---------------------------------------------------------------------
 -- Basic Analytical Views (available immediately)

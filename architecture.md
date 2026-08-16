@@ -29,9 +29,16 @@ fetch_uhc_index.py ─▶ stream_parser.py ────────▶ transpare
 
 ## Parsing and storage
 
-`stream_parser.py` streams a single MRF file directly into DuckDB. It uses `gzip.GzipFile` for on-the-fly decompression and `ijson` so the full `in_network` array never has to live in memory.
 
-Only rows with `billing_class = 'institutional'` are kept. That matches the facility/hospital use case and avoids mixing in the `professional` rows that require different analysis.
+`stream_parser.py` streams a single MRF file directly into DuckDB. It uses `gzip.GzipFile` for on-the-fly decompression and a single `ijson.parse(stream)` event loop so the file is downloaded and parsed in one pass (avoiding repeated network downloads). The parser:
+
+- collects top-level metadata (`reporting_entity_name`, `plan_id`, etc.)
+- persists `provider_references` into the `providers` table (one row per provider object) so integer `provider_reference_id` values can be resolved later
+- extracts and stores `negotiation_arrangement` at the billing-code level
+- captures `setting` for each `negotiated_price`
+- keeps only rows where `billing_class = 'institutional'` by default
+
+Arrays such as `service_code`, `billing_code_modifier`, and `provider_reference_ids` are normalized and written as SQL arrays so they can be exported and consumed safely by the browser dashboard.
 
 The storage layout in `schema.sql` is a small star schema:
 
@@ -44,7 +51,7 @@ The storage layout in `schema.sql` is a small star schema:
 
 ## Dashboard export
 
-`export_for_dashboard.py` exports `negotiated_rates`, `payers`, and `billing_codes` to Parquet. The exporter normalizes the output schema so the dashboard can consume the files consistently even if the source database has slightly different column names or optional fields.
+`export_for_dashboard.py` exports `negotiated_rates`, `payers`, `billing_codes`, and `providers` to Parquet. The exporter normalizes the output schema so the dashboard can consume the files consistently even if the source database has slightly different column names or optional fields.
 
 The dashboard in `analytics.html` loads those Parquet files locally in the browser. It now mounts them as temporary tables to avoid DuckDB catalog conflicts with the built-in demo tables that use the same base names.
 
@@ -60,6 +67,7 @@ python -m http.server 8000
 ```
 
 Then open `http://localhost:8000/analytics.html` and select the three exported Parquet files together.
+Then open `http://localhost:8000/analytics.html` and select the exported Parquet files (negotiated_rates, payers, billing_codes, providers).
 
 ## Operational notes
 

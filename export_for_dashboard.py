@@ -2,7 +2,7 @@
 """
 export_for_dashboard.py
 ------------------------
-Dump the three relations analytics.html needs into Parquet.
+Dump the relations the dashboard needs into Parquet (including `providers`).
 
 Parquet is the recommended hand-off because its format is stable across DuckDB
 versions, whereas a raw .duckdb file must match the storage version compiled
@@ -11,8 +11,8 @@ to attach a database directly.
 
     python export_for_dashboard.py --db transparency.duckdb --out ./web
 
-Then serve the folder and pick the three .parquet files in the dashboard's
-"Connect a data source" dialog:
+Then serve the folder and pick the exported .parquet files in the dashboard's
+"Connect a data source" dialog (negotiated_rates, payers, billing_codes, providers):
 
     python -m http.server 8000
 """
@@ -22,11 +22,11 @@ from pathlib import Path
 
 import duckdb
 
-TABLES = ["negotiated_rates", "payers", "billing_codes"]
+TABLES = ["negotiated_rates", "payers", "billing_codes", "providers"]
 
 EXPORT_SCHEMAS = {
     "negotiated_rates": [
-        ("rate_id", ["rate_id"], None),
+        ("rate_id", ["rate_id"], "row_number() OVER ()"),
         ("payer_id", ["payer_id"], None),
         ("code_id", ["code_id"], None),
         ("billing_class", ["billing_class"], None),
@@ -34,6 +34,8 @@ EXPORT_SCHEMAS = {
         ("negotiated_rate", ["negotiated_rate", "rate"], None),
         ("service_code", ["service_code"], "[]::VARCHAR[]"),
         ("billing_code_modifier", ["billing_code_modifier"], "[]::VARCHAR[]"),
+        ("negotiation_arrangement", ["negotiation_arrangement"], "NULL::VARCHAR"),
+        ("setting", ["setting"], "NULL::VARCHAR"),
         ("expiration_date", ["expiration_date"], None),
         ("provider_reference_ids", ["provider_reference_ids"], "[]::BIGINT[]"),
         ("source_file", ["source_file"], None),
@@ -56,6 +58,15 @@ EXPORT_SCHEMAS = {
         ("billing_code_type", ["billing_code_type"], None),
         ("billing_code_type_version", ["billing_code_type_version", "code_type_version"], "NULL::VARCHAR"),
         ("description", ["description"], None),
+        ("negotiation_arrangement", ["negotiation_arrangement"], "NULL::VARCHAR"),
+    ],
+    "providers": [
+        ("provider_id", ["provider_id"], None),
+        ("provider_reference_id", ["provider_reference_id"], None),
+        ("npi", ["npi"], None),
+        ("tin_type", ["tin_type"], None),
+        ("tin_value", ["tin_value"], None),
+        ("facility_name", ["facility_name"], None),
     ],
 }
 
@@ -119,7 +130,7 @@ def main():
         print(f"  {t:20s} {n:>10,} rows  →  {dest.name}  ({size:,.0f} KB)")
 
     print(f"\n{total:,} rows exported to {out.resolve()}")
-    print("Load all three files together in the dashboard's data-source dialog.")
+    print("Load the exported Parquet files (negotiated_rates, payers, billing_codes, providers) in the dashboard's data-source dialog.")
 
 
 if __name__ == "__main__":

@@ -116,79 +116,90 @@ def main():
     if args.max_files is not None:
         end_index = min(processed_count + args.max_files, total_files)
 
-    # Launch ThreadPoolExecutor for background downloads
-    with ThreadPoolExecutor(max_workers=PREFETCH_COUNT) as executor:
-        futures = {}
+    # Background downloader for upcoming files. Managed explicitly (not via
+    # `with`) so that on error we can shut down WITHOUT waiting for every
+    # in-flight/queued prefetch to finish first — see the finally block below.
+    executor = ThreadPoolExecutor(max_workers=PREFETCH_COUNT)
+    futures = {}
 
-        try:
-            # Main processing loop
-            for index in range(processed_count, end_index):
-                item = blobs[index]
-                
-                download_url = item.get("downloadUrl") if isinstance(item, dict) else item
-                filename = item.get("name") if isinstance(item, dict) else os.path.basename(urlparse(download_url).path)
+    try:
+        # Main processing loop
+        for index in range(processed_count, end_index):
+            item = blobs[index]
+            
+            download_url = item.get("downloadUrl") if isinstance(item, dict) else item
+            filename = item.get("name") if isinstance(item, dict) else os.path.basename(urlparse(download_url).path)
 
-                if not download_url:
-                    print(f"Skipping index {index}: missing downloadUrl.")
-                    processed_count += 1
-                    update_processed_count(processed_count)
-                    continue
+            if not download_url:
+                print(f"Skipping index {index}: missing downloadUrl.")
+                processed_count += 1
+                update_processed_count(processed_count)
+                continue
 
-                local_filepath = os.path.join(DOWNLOAD_DIR, filename)
+            local_filepath = os.path.join(DOWNLOAD_DIR, filename)
 
-                # Ensure background prefetching for the next items in queue
-                prefetch_end = min(index + PREFETCH_COUNT + 1, end_index)
-                for pf_idx in range(index, prefetch_end):
-                    if pf_idx not in futures:
-                        pf_item = blobs[pf_idx]
-                        pf_url = pf_item.get("downloadUrl") if isinstance(pf_item, dict) else pf_item
-                        pf_filename = pf_item.get("name") if isinstance(pf_item, dict) else os.path.basename(urlparse(pf_url).path)
-                        pf_path = os.path.join(DOWNLOAD_DIR, pf_filename)
-                        
-                        # Submit prefetch task
-                        futures[pf_idx] = executor.submit(download_file, pf_url, pf_path)
+            # Ensure background prefetching for the next items in queue
+            prefetch_end = min(index + PREFETCH_COUNT + 1, end_index)
+            for pf_idx in range(index, prefetch_end):
+                if pf_idx not in futures:
+                    pf_item = blobs[pf_idx]
+                    pf_url = pf_item.get("downloadUrl") if isinstance(pf_item, dict) else pf_item
+                    if not pf_url:
+                        continue  # no URL to prefetch; the main loop will skip this index itself
+                    pf_filename = pf_item.get("name") if isinstance(pf_item, dict) else os.path.basename(urlparse(pf_url).path)
+                    pf_path = os.path.join(DOWNLOAD_DIR, pf_filename)
 
-                print(f"\n[{index + 1}/{total_files}] (Run count: {processed_in_this_run + 1}/{args.max_files if args.max_files else '∞'}) Fetching/Processing: {filename}")
-                
-                # Await download for the current file
-                try:
-                    futures[index].result()
-                except Exception as e:
-                    print(f"Error downloading {filename}: {e}")
-                    break
+                    # Submit prefetch task
+                    futures[pf_idx] = executor.submit(download_file, pf_url, pf_path)
 
-                # Step B: Parse and insert into DuckDB
-                try:
-                    print("Processing and inserting into DuckDB...")
-                    stream_parser.process_file(con, local_filepath, filename)
-                except Exception as e:
-                    print(f"Error processing {filename}: {e}")
-                    if os.path.exists(local_filepath):
-                        os.remove(local_filepath)
-                    print("Stopping pipeline due to error. Fix issue and re-run to resume.")
-                    break
-                else:
-                    # Step C: Delete local file after successful insertion
-                    if os.path.exists(local_filepath):
-                        os.remove(local_filepath)
-                        print(f"Cleaned up local file: {local_filepath}")
-
-                    # Step D: Update progress counter file & run limit counter
-                    processed_count += 1
-                    processed_in_this_run += 1
-                    update_processed_count(processed_count)
-                    print(f"Progress updated: {processed_count}/{total_files} total completed.")
-
-        finally:
-            # Consolidate Write-Ahead Log (WAL) into transparency.duckdb before exit
+            print(f"\n[{index + 1}/{total_files}] (Run count: {processed_in_this_run + 1}/{args.max_files if args.max_files else '∞'}) Fetching/Processing: {filename}")
+            
+            # Await download for the current file
             try:
-                print("Flushing WAL to disk (CHECKPOINT)...")
-                con.execute("CHECKPOINT;")
+                futures.pop(index).result()
             except Exception as e:
-                print(f"Warning: CHECKPOINT failed: {e}")
-                
-            con.close()
-            print("DuckDB connection closed.")
+                print(f"Error downloading {filename}: {e}")
+                break
+
+            # Step B: Parse and insert into DuckDB
+            try:
+                print("Processing and inserting into DuckDB...")
+                stream_parser.process_file(con, local_filepath, filename)
+            except Exception as e:
+                print(f"Error processing {filename}: {e}")
+                if os.path.exists(local_filepath):
+                    os.remove(local_filepath)
+                print("Stopping pipeline due to error. Fix issue and re-run to resume.")
+                break
+            else:
+                # Step C: Delete local file after successful insertion
+                if os.path.exists(local_filepath):
+                    os.remove(local_filepath)
+                    print(f"Cleaned up local file: {local_filepath}")
+
+                # Step D: Update progress counter file & run limit counter
+                processed_count += 1
+                processed_in_this_run += 1
+                update_processed_count(processed_count)
+                print(f"Progress updated: {processed_count}/{total_files} total completed.")
+
+    finally:
+        # Don't wait for queued/in-flight prefetches we no longer need — cancel
+        # anything not yet started, and don't block the process on the rest.
+        # (Files that were mid-download when we cancel will just leave a stray
+        # .tmp file behind, cleaned up by download_file's own except-block on
+        # its next attempt, or safe to delete manually from DOWNLOAD_DIR.)
+        executor.shutdown(wait=False, cancel_futures=True)
+
+        # Consolidate Write-Ahead Log (WAL) into transparency.duckdb before exit
+        try:
+            print("Flushing WAL to disk (CHECKPOINT)...")
+            con.execute("CHECKPOINT;")
+        except Exception as e:
+            print(f"Warning: CHECKPOINT failed: {e}")
+            
+        con.close()
+        print("DuckDB connection closed.")
 
 if __name__ == "__main__":
     main()

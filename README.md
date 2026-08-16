@@ -7,6 +7,7 @@ Tools for fetching, parsing, storing, and exploring hospital price transparency 
 - `fetch_uhc_index.py` discovers in-network-rates file URLs from UHC blob listings.
 - `fetch_and_filter_blobs.py` is a smaller helper that filters the top-level blob response into a local JSON list.
 - `stream_parser.py` streams a single MRF file into DuckDB without loading the full payload into memory.
+- `stream_parser.py` streams a single MRF file into DuckDB without loading the full payload into memory. It now uses a single `ijson.parse(stream)` pass (no double-download), persists top-level `provider_references` into a `providers` table, captures `negotiation_arrangement` and `setting`, and writes array-typed columns as SQL arrays so they can be exported directly.
 - `runner.py` batches downloads from a filtered JSON manifest and feeds them into the parser.
 - `export_for_dashboard.py` exports the three dashboard tables to Parquet.
 - `analytics.html` is the browser dashboard that reads the exported tables.
@@ -44,7 +45,7 @@ python runner.py --max-files 5
 4. Export dashboard-ready Parquet files:
 
 ```bash
-python export_for_dashboard.py --db transparency.duckdb --out ./web
+	python export_for_dashboard.py --db transparency.duckdb --out ./web
 ```
 
 5. Serve the folder and open the dashboard:
@@ -57,11 +58,12 @@ Then open `http://localhost:8000/analytics.html` and load the three Parquet file
 
 ## Dashboard contract
 
-The dashboard expects these exported files:
+The dashboard expects these exported files (the exporter now also writes provider mappings):
 
-- `negotiated_rates.parquet`
+- `negotiated_rates.parquet` (includes `negotiation_arrangement` and `setting`)
 - `payers.parquet`
-- `billing_codes.parquet`
+- `billing_codes.parquet` (includes optional `negotiation_arrangement`)
+- `providers.parquet` (mapping of `provider_reference_id` → NPI/TIN/facility)
 
 The Parquet loader in `analytics.html` mounts each file as a temporary table named after the base relation, so the dashboard SQL can keep reading from `negotiated_rates`, `payers`, and `billing_codes` without schema changes.
 
@@ -69,4 +71,8 @@ The Parquet loader in `analytics.html` mounts each file as a temporary table nam
 
 - The parser keeps only `billing_class = 'institutional'` rows.
 - The exported Parquet schema is normalized to match the dashboard’s expected columns.
+- `schema.sql` is idempotent, so it can be re-run against an existing DuckDB file.
+- The parser keeps only `billing_class = 'institutional'` rows by default.
+- The parser stores group-level `provider_reference_id` values into a `providers` relation so you can resolve integer references in `negotiated_rates.provider_reference_ids` to NPIs/TINs/facility names later.
+- The exported Parquet schema is normalized to match the dashboard’s expected columns; array-typed columns (e.g., `service_code`, `billing_code_modifier`, `provider_reference_ids`) are emitted as proper Parquet arrays so DuckDB WASM can read them as arrays.
 - `schema.sql` is idempotent, so it can be re-run against an existing DuckDB file.

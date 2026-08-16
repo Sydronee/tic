@@ -250,7 +250,10 @@ tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: {
         <select id="fPayer"   class="inp px-2.5 py-1.5 text-[12px]" multiple size="1" title="Payer"></select>
         <select id="fCodeType" class="inp px-2.5 py-1.5 text-[12px]"></select>
         <select id="fNegType"  class="inp px-2.5 py-1.5 text-[12px]"></select>
+        <select id="fNegArr"  class="inp px-2.5 py-1.5 text-[12px]" title="Negotiation arrangement"></select>
+        <select id="fSetting" class="inp px-2.5 py-1.5 text-[12px]" title="Setting (inpatient/outpatient/both)"></select>
         <select id="fClass"    class="inp px-2.5 py-1.5 text-[12px]"></select>
+        <select id="fProvider" class="inp px-2.5 py-1.5 text-[12px] max-w-[220px]" title="Provider (facility)"></select>
         <select id="fSource"   class="inp px-2.5 py-1.5 text-[12px] max-w-[190px]"></select>
         <select id="fExpiry"   class="inp px-2.5 py-1.5 text-[12px]"></select>
         <input id="fMin" type="number" class="inp px-2.5 py-1.5 text-[12px] w-24 mono" placeholder="min $">
@@ -298,7 +301,7 @@ tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: {
     <div class="mt-4 pt-4 border-t hair text-[11px] dim leading-relaxed">
       <strong class="text-[11px]" style="color:var(--txt)">Recommended:</strong> export your tables to Parquet, which is version-stable across DuckDB builds —
       <code class="mono text-[10.5px] px-1 rounded" style="background:rgba(var(--stroke),.08)">COPY negotiated_rates TO 'negotiated_rates.parquet'</code>
-      (repeat for <span class="mono">payers</span> and <span class="mono">billing_codes</span>), then load all three files here.
+      (repeat for <span class="mono">payers</span>, <span class="mono">billing_codes</span>, and <span class="mono">providers</span>), then load all four files here.
     </div>
     <div class="flex justify-end gap-2 mt-4">
       <button id="srcClose" class="btn px-3.5 py-2 text-[12.5px]">Close</button>
@@ -436,18 +439,38 @@ async function bootDuckDB() {
   DB.ready = true;
 }
 
-/** The single view every analytic reads from. Rebuilt whenever the source changes. */
-const V_RATES = `
+async function tableColumns(table) {
+  const rows = await q(`PRAGMA table_info('${table}')`, { cacheable: false });
+  return new Set(rows.map(row => row.name));
+}
+
+function buildViewSql(negotiationArrangementExpr, settingExpr) {
+  return `
 CREATE OR REPLACE VIEW v_rates AS
-SELECT r.rate_id, r.negotiated_rate AS rate, r.negotiated_type, r.billing_class,
+SELECT COALESCE(r.rate_id, row_number() OVER ()) AS rate_id,
+       r.negotiated_rate AS rate, r.negotiated_type, r.billing_class,
+       ${negotiationArrangementExpr}, ${settingExpr},
        r.expiration_date, r.source_file, r.provider_reference_ids, r.service_code,
        p.payer_id, COALESCE(p.reporting_entity_name,'Unknown') AS payer, p.plan_name,
        c.code_id, c.billing_code, c.billing_code_type, c.description
 FROM negotiated_rates r
 LEFT JOIN payers p USING (payer_id)
-LEFT JOIN billing_codes c USING (code_id);`;
+LEFT JOIN billing_codes c USING (code_id);
 
-const V_STATS = `
+CREATE OR REPLACE VIEW v_rate_providers AS
+SELECT e.rate_id, e.payer_id, e.payer, e.plan_name, e.code_id, e.billing_code,
+       e.billing_code_type, e.description, e.rate, e.negotiated_type, e.billing_class,
+       e.negotiation_arrangement, e.setting, e.expiration_date, e.source_file,
+       e.provider_reference_id, pr.npi, pr.tin_type, pr.tin_value, pr.facility_name
+FROM (
+  SELECT v.rate_id, v.payer_id, v.payer, v.plan_name, v.code_id, v.billing_code,
+         v.billing_code_type, v.description, v.rate, v.negotiated_type, v.billing_class,
+         v.negotiation_arrangement, v.setting, v.expiration_date, v.source_file,
+         unnest(v.provider_reference_ids) AS provider_reference_id
+  FROM v_rates v
+) e
+LEFT JOIN providers pr ON pr.provider_reference_id = e.provider_reference_id;
+
 CREATE OR REPLACE VIEW procedure_price_stats AS
 SELECT billing_code, billing_code_type, any_value(description) AS description,
        COUNT(*) AS n_rate_entries, COUNT(DISTINCT payer_id) AS n_payers,
@@ -455,13 +478,33 @@ SELECT billing_code, billing_code_type, any_value(description) AS description,
        ROUND(AVG(rate),2) AS avg_rate, MEDIAN(rate) AS median_rate
 FROM v_rates WHERE negotiated_type='negotiated' AND rate IS NOT NULL
 GROUP BY 1,2;`;
+}
+
+async function rebuildViews() {
+  const rateCols = await tableColumns('negotiated_rates');
+  const codeCols = await tableColumns('billing_codes');
+  let negotiationArrangementExpr;
+  if (rateCols.has('negotiation_arrangement')) {
+    negotiationArrangementExpr = codeCols.has('negotiation_arrangement')
+      ? 'COALESCE(r.negotiation_arrangement, c.negotiation_arrangement) AS negotiation_arrangement'
+      : 'r.negotiation_arrangement AS negotiation_arrangement';
+  } else if (codeCols.has('negotiation_arrangement')) {
+    negotiationArrangementExpr = 'c.negotiation_arrangement AS negotiation_arrangement';
+  } else {
+    negotiationArrangementExpr = 'NULL::VARCHAR AS negotiation_arrangement';
+  }
+
+  const settingExpr = rateCols.has('setting') ? 'r.setting AS setting' : 'NULL::VARCHAR AS setting';
+
+  await runScript(buildViewSql(negotiationArrangementExpr, settingExpr));
+}
 
 /* ── Demo dataset ───────────────────────────────────────────────────────
    Synthesised in SQL so the page is fully alive on first open. Shapes match
    schema.sql exactly, so swapping in real data changes nothing downstream.
    Each payer gets a stable price bias, each procedure realistic variance,
    plus a sprinkle of true outliers so anomaly detection has something to find. */
-const DEMO_SQL = `
+  const DEMO_SQL = `
 SELECT setseed(0.42);
 
 CREATE OR REPLACE TABLE payers AS SELECT * FROM (VALUES
@@ -520,7 +563,10 @@ CREATE OR REPLACE TABLE billing_codes AS
 SELECT row_number() OVER (ORDER BY billing_code_type, billing_code) AS code_id,
        billing_code, billing_code_type,
        CASE billing_code_type WHEN 'MS-DRG' THEN '40' ELSE '2026' END AS billing_code_type_version,
-       description
+    description,
+    CASE billing_code_type WHEN 'MS-DRG' THEN 'bundled'
+      WHEN 'CPT' THEN 'fee_for_service'
+      ELSE 'other' END AS negotiation_arrangement
 FROM demo_codes;
 
 CREATE OR REPLACE TABLE demo_mult AS
@@ -534,6 +580,8 @@ SELECT row_number() OVER () AS rate_id, m.payer_id, m.code_id,
   NULL::DOUBLE AS negotiated_rate,
   [d.pos]::VARCHAR[] AS service_code, []::VARCHAR[] AS billing_code_modifier,
   CASE WHEN random() < 0.55 THEN '9999-12-31' WHEN random() < 0.5 THEN '2026-12-31' ELSE '2027-06-30' END AS expiration_date,
+  CASE WHEN random() < 0.5 THEN 'outpatient' ELSE 'inpatient' END AS setting,
+  c.negotiation_arrangement,
   [ (m.payer_id*100000 + (random()*60)::INT)::BIGINT ] AS provider_reference_ids,
   p.source_file, now()::TIMESTAMP AS ingested_at, d.base_price * m.mult AS _fair
 FROM demo_mult m
@@ -541,6 +589,16 @@ JOIN payers p USING (payer_id)
 JOIN billing_codes c USING (code_id)
 JOIN demo_codes d ON d.billing_code = c.billing_code AND d.billing_code_type = c.billing_code_type
 CROSS JOIN (SELECT unnest(generate_series(1,90)) AS rep) g;
+
+-- Build a simple providers table mapping the synthetic provider_reference_ids used above
+CREATE OR REPLACE TABLE providers AS
+SELECT row_number() OVER (ORDER BY pid) AS provider_id,
+       pid AS provider_reference_id,
+       (1000000000 + (pid % 900000000))::BIGINT AS npi,
+       'ein' AS tin_type,
+       lpad((pid % 9999999)::VARCHAR,9,'0') AS tin_value,
+       'Demo Facility ' || pid::VARCHAR AS facility_name
+FROM (SELECT DISTINCT unnest(provider_reference_ids) AS pid FROM negotiated_rates) t;
 
 UPDATE negotiated_rates SET negotiated_rate =
   CASE WHEN negotiated_type='percentage' THEN round(20 + random()*55, 1)
@@ -561,7 +619,7 @@ async function loadDemo() {
     await DB.conn.query(`DROP TABLE IF EXISTS ${name}`);
   }
   await runScript(DEMO_SQL);
-  await runScript(V_RATES + V_STATS);
+  await rebuildViews();
   DB.source = 'demo'; DB.label = 'Demo dataset';
 }
 
@@ -573,7 +631,7 @@ async function replaceSourceObject(name, query) {
 
 /** Load user Parquet exports (version-stable across DuckDB builds). */
 async function loadParquet(files) {
-  const need = ['negotiated_rates', 'payers', 'billing_codes'];
+  const need = ['negotiated_rates', 'payers', 'billing_codes', 'providers'];
   const found = {};
   for (const f of files) {
     await DB.db.registerFileBuffer(f.name, new Uint8Array(await f.arrayBuffer()));
@@ -585,7 +643,7 @@ async function loadParquet(files) {
   if (missing.length) throw new Error('Missing parquet file(s) for: ' + missing.join(', '));
   for (const t of need)
     await replaceSourceObject(t, `SELECT * FROM read_parquet('${found[t]}')`);
-  await runScript(V_RATES + V_STATS);
+  await rebuildViews();
   DB.source = 'parquet'; DB.label = files.length + ' Parquet file(s)';
 }
 
@@ -598,15 +656,15 @@ async function loadDuckFile(file) {
     throw new Error('Could not attach this .duckdb file — most often a storage-format version '
       + 'mismatch between your DuckDB build and DuckDB WASM. Export to Parquet instead. (' + e.message + ')');
   }
-  for (const t of ['negotiated_rates', 'payers', 'billing_codes'])
+  for (const t of ['negotiated_rates', 'payers', 'billing_codes', 'providers'])
     await replaceSourceObject(t, `SELECT * FROM src.main.${t}`);
-  await runScript(V_RATES + V_STATS);
+  await rebuildViews();
   DB.source = 'duckdb'; DB.label = file.name;
 }
 
 /** Load CSV exports as a fallback. */
 async function loadCSV(files) {
-  const need = ['negotiated_rates', 'payers', 'billing_codes'];
+  const need = ['negotiated_rates', 'payers', 'billing_codes', 'providers'];
   const found = {};
   for (const f of files) {
     await DB.db.registerFileText(f.name, await f.text());
@@ -618,14 +676,15 @@ async function loadCSV(files) {
   if (missing.length) throw new Error('Missing CSV file(s) for: ' + missing.join(', '));
   for (const t of need)
     await replaceSourceObject(t, `SELECT * FROM read_csv_auto('${found[t]}')`);
-  await runScript(V_RATES + V_STATS);
+  await rebuildViews();
   DB.source = 'csv'; DB.label = files.length + ' CSV file(s)';
 }
 
 /* ───────────────── §3  FILTER STATE → SQL PREDICATE ───────────────── */
 
-const F = { payers: [], codeType: '', negType: 'negotiated', billingClass: '',
-            source: '', expiry: '', min: null, max: null, search: '' };
+const F = { payers: [], codeType: '', negType: 'negotiated', negotiationArrangement: '',
+            setting: '', billingClass: '', source: '', expiry: '', min: null, max: null,
+            search: '', provider: null };
 
 /** Build the shared WHERE clause. `priced` restricts to fixed-dollar rows,
  *  which is what every price statistic must use. */
@@ -637,6 +696,8 @@ function where({ priced = true, alias = '' } = {}) {
   if (F.payers.length) c.push(`${a}payer IN (${F.payers.map(sqlStr).join(',')})`);
   if (F.codeType)      c.push(`${a}billing_code_type = ${sqlStr(F.codeType)}`);
   if (F.billingClass)  c.push(`${a}billing_class = ${sqlStr(F.billingClass)}`);
+  if (F.negotiationArrangement) c.push(`${a}negotiation_arrangement = ${sqlStr(F.negotiationArrangement)}`);
+  if (F.setting) c.push(`${a}setting = ${sqlStr(F.setting)}`);
   if (F.source)        c.push(`${a}source_file = ${sqlStr(F.source)}`);
   if (F.expiry)        c.push(`${a}expiration_date = ${sqlStr(F.expiry)}`);
   if (F.min != null)   c.push(`${a}rate >= ${F.min}`);
@@ -644,6 +705,10 @@ function where({ priced = true, alias = '' } = {}) {
   if (F.search) {
     const s = sqlStr('%' + F.search.toLowerCase() + '%');
     c.push(`(lower(${a}billing_code) LIKE ${s} OR lower(${a}description) LIKE ${s})`);
+  }
+  if (F.provider) {
+    // require the rate to be associated with the selected provider_reference_id
+    c.push(`EXISTS (SELECT 1 FROM v_rate_providers vp WHERE vp.rate_id = ${a}rate_id AND vp.provider_reference_id = ${sqlStr(F.provider)})`);
   }
   return 'WHERE ' + c.join(' AND ');
 }
@@ -832,6 +897,8 @@ const SQL = {
     SELECT 'payer' AS f, payer AS v, count(*) AS n FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
     UNION ALL SELECT 'code_type', billing_code_type, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
     UNION ALL SELECT 'neg_type', negotiated_type, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
+    UNION ALL SELECT 'neg_arrangement', negotiation_arrangement, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
+    UNION ALL SELECT 'setting', setting, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
     UNION ALL SELECT 'class', billing_class, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
     UNION ALL SELECT 'source', source_file, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
     UNION ALL SELECT 'expiry', expiration_date, count(*) FROM v_rates WHERE rate IS NOT NULL GROUP BY 2
@@ -1032,6 +1099,7 @@ const SECTIONS = [
   { id: 'prices',     name: 'Price Analytics', sub: 'Distribution, shape, percentiles and outliers', icon: 'M4 19V5m0 14h16M8 16V9m4 7V6m4 10v-4' },
   { id: 'procedures', name: 'Procedures',  sub: 'Which services drive cost and how consistent they are', icon: 'M4 6h16M4 12h10M4 18h7' },
   { id: 'payers',     name: 'Payers',      sub: 'Head-to-head comparison across every payer', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM3 21a8 8 0 0116 0' },
+  { id: 'providers',  name: 'Providers',   sub: 'Facility and NPI-level rollup from resolved provider references', icon: 'M19 21V8l-7-5-7 5v13M9 21v-6h6v6M9 12h.01M15 12h.01' },
   { id: 'benchmarks', name: 'Benchmarks',  sub: 'Rankings built from procedure_price_stats', icon: 'M7 20V10m5 10V4m5 16v-7' },
   { id: 'variation',  name: 'Variation',   sub: 'Where payers disagree most and least on price', icon: 'M3 17l6-6 4 4 8-8' },
   { id: 'insights',   name: 'Insights',    sub: 'Automatically surfaced anomalies and findings', icon: 'M12 3a6 6 0 00-4 10.5V17h8v-3.5A6 6 0 0012 3zM10 21h4' },
@@ -1163,6 +1231,15 @@ function buildSections() {
     card('py_sankey','Payer → code system flow', 'Width = number of negotiated rates', { span: 'lg:col-span-12', h: 330 }) +
     card('py_table', 'Payer comparison table', 'Every metric, sortable', { span: 'lg:col-span-12', h: 340 });
 
+  /* ---------- PROVIDERS ---------- */
+  $('#grid-providers').innerHTML =
+    card('pv_stats',       'Provider snapshot', 'Resolved from provider_references / provider_groups', { span: 'lg:col-span-12', h: 118, actions: false }) +
+    card('pv_top_vol',     'Top providers by rate volume', 'Count of negotiated rate rows', { span: 'lg:col-span-6', h: 320 }) +
+    card('pv_top_price',   'Top providers by average price', 'Providers with ≥3 priced rate rows', { span: 'lg:col-span-6', h: 320 }) +
+    card('pv_reach',       'Widest payer reach', 'Distinct payers negotiating with each provider', { span: 'lg:col-span-6', h: 300 }) +
+    card('pv_scatter',     'Volume vs. average price', 'x = avg rate, y = rate rows, size = total negotiated value', { span: 'lg:col-span-6', h: 300 }) +
+    card('pv_table',       'Provider directory', 'Facility / NPI rollup — sortable', { span: 'lg:col-span-12', h: 420 });
+
   /* ---------- BENCHMARKS ---------- */
   $('#grid-benchmarks').innerHTML =
     card('bm_exp',  'Most expensive procedures', 'By median rate', { span: 'lg:col-span-6', h: 300 }) +
@@ -1243,6 +1320,119 @@ function registerCharts() {
     if (!r.length) return { empty: true };
     return { sql, config: cfgLine(r.map(x => usdC(x.center)), r.map(x => x.n),
       { color: PAL[0], money: false, label: 'Rates' }) };
+  });
+
+  /* ---------- PROVIDERS ---------- */
+  chart('pv_stats', async () => {
+    const sql = `
+SELECT count(DISTINCT provider_reference_id) AS n_providers,
+       count(DISTINCT npi) AS n_npis,
+       count(DISTINCT payer_id) AS n_payers_covered,
+       ROUND(AVG(rate) FILTER (WHERE negotiated_type='negotiated' AND rate IS NOT NULL),2) AS avg_rate,
+       ROUND(MEDIAN(rate) FILTER (WHERE negotiated_type='negotiated' AND rate IS NOT NULL),2) AS median_rate
+FROM v_rate_providers ${WA()} AND provider_reference_id IS NOT NULL`;
+    const r = await q1(sql);
+    if (!r.n_providers) return { empty: true };
+    const stat = (label, val) => `<div class="min-w-[120px]">
+      <div class="text-[10px] mono tracking-wider faint">${esc(label)}</div>
+      <div class="text-[19px] font-semibold mt-1 tracking-tight">${val}</div></div>`;
+    const html = `<div class="flex flex-wrap gap-x-8 gap-y-3 h-full items-center">
+      ${stat('RESOLVED PROVIDERS', num(r.n_providers))}
+      ${stat('DISTINCT NPIS', num(r.n_npis))}
+      ${stat('PAYERS COVERED', num(r.n_payers_covered))}
+      ${stat('AVG PRICE', usdC(r.avg_rate))}
+      ${stat('MEDIAN PRICE', usdC(r.median_rate))}
+    </div>`;
+    return { html, sql };
+  });
+
+  chart('pv_top_vol', async () => {
+    const sql = `
+SELECT COALESCE(facility_name, CAST(npi AS VARCHAR), CAST(provider_reference_id AS VARCHAR)) AS provider_name,
+       COUNT(*) AS n_rates
+FROM v_rate_providers ${WA()} AND provider_reference_id IS NOT NULL
+GROUP BY 1 ORDER BY n_rates DESC LIMIT 12`;
+    const r = await q(sql);
+    if (!r.length) return { empty: true };
+    return { sql, config: cfgBar(r.map(x => trunc(x.provider_name)), r.map(x => x.n_rates),
+      { color: PAL[2], horizontal: true, money: false, label: 'Rate rows' }) };
+  });
+
+  chart('pv_top_price', async () => {
+    const sql = `
+SELECT COALESCE(facility_name, CAST(npi AS VARCHAR), CAST(provider_reference_id AS VARCHAR)) AS provider_name,
+       ROUND(AVG(rate),2) AS avg_rate, COUNT(*) AS n_rates
+FROM v_rate_providers ${W()} AND provider_reference_id IS NOT NULL
+GROUP BY 1 HAVING COUNT(*) >= 3
+ORDER BY avg_rate DESC LIMIT 12`;
+    const r = await q(sql);
+    if (!r.length) return { empty: true };
+    return { sql, config: cfgBar(r.map(x => trunc(x.provider_name)), r.map(x => x.avg_rate),
+      { color: PAL[4], horizontal: true, money: true, label: 'Average price' }) };
+  });
+
+  chart('pv_reach', async () => {
+    const sql = `
+SELECT COALESCE(facility_name, CAST(npi AS VARCHAR), CAST(provider_reference_id AS VARCHAR)) AS provider_name,
+       COUNT(DISTINCT payer_id) AS n_payers, COUNT(*) AS n_rates
+FROM v_rate_providers ${WA()} AND provider_reference_id IS NOT NULL
+GROUP BY 1 ORDER BY n_payers DESC, n_rates DESC LIMIT 12`;
+    const r = await q(sql);
+    if (!r.length) return { empty: true };
+    return { sql, config: cfgBar(r.map(x => trunc(x.provider_name)), r.map(x => x.n_payers),
+      { color: PAL[1], horizontal: true, money: false, label: 'Distinct payers' }) };
+  });
+
+  chart('pv_scatter', async () => {
+    const sql = `
+SELECT COALESCE(facility_name, CAST(npi AS VARCHAR), CAST(provider_reference_id AS VARCHAR)) AS provider_name,
+       ROUND(AVG(rate),2) AS avg_rate, COUNT(*) AS n_rates, SUM(rate) AS total_value
+FROM v_rate_providers ${W()} AND provider_reference_id IS NOT NULL
+GROUP BY 1 HAVING COUNT(*) >= 3
+ORDER BY total_value DESC LIMIT 60`;
+    const r = await q(sql);
+    if (!r.length) return { empty: true };
+    const maxVal = Math.max(...r.map(x => x.total_value || 0), 1);
+    const points = r.map(x => ({
+      x: x.avg_rate, y: x.n_rates, r: 4 + 16 * Math.sqrt((x.total_value || 0) / maxVal),
+      label: `${x.provider_name}: ${usdC(x.avg_rate)} avg, ${num(x.n_rates)} rows`,
+    }));
+    return { sql, config: cfgScatter(points, { color: PAL[3], xLabel: 'Average price', yLabel: 'Rate rows', money: true, bubble: true }) };
+  });
+
+  chart('pv_table', async () => {
+    const sql = `
+SELECT COALESCE(facility_name, CAST(npi AS VARCHAR)) AS provider_name,
+       provider_reference_id, npi, tin_type, tin_value,
+       COUNT(*) AS n_rates, COUNT(DISTINCT payer_id) AS n_payers,
+       ROUND(MEDIAN(rate) FILTER (WHERE negotiated_type='negotiated' AND rate IS NOT NULL),2) AS median_rate,
+       ROUND(AVG(rate) FILTER (WHERE negotiated_type='negotiated' AND rate IS NOT NULL),2) AS avg_rate,
+       ROUND(SUM(rate) FILTER (WHERE negotiated_type='negotiated' AND rate IS NOT NULL),2) AS total_value
+FROM v_rate_providers ${WA()} AND provider_reference_id IS NOT NULL
+GROUP BY 1,2,3,4,5
+ORDER BY n_rates DESC LIMIT 200`;
+    const rows = await q(sql);
+    if (!rows.length) return { empty: true };
+    const html = `
+<div class="scroll" style="max-height:380px; overflow:auto">
+  <table class="tbl"><thead><tr>
+    <th>Provider</th><th>NPI</th><th>TIN</th><th class="mono">Reference ID</th>
+    <th class="mono">Payers</th><th class="mono">Rows</th>
+    <th class="mono">Median</th><th class="mono">Avg</th><th class="mono">Total</th>
+  </tr></thead><tbody>
+  ${rows.map(r => `<tr>
+    <td>${esc(r.provider_name)}</td>
+    <td class="mono">${esc(r.npi || '')}</td>
+    <td class="mono">${esc(r.tin_value || '')}</td>
+    <td class="mono">${esc(r.provider_reference_id)}</td>
+    <td class="mono">${num(r.n_payers)}</td>
+    <td class="mono">${num(r.n_rates)}</td>
+    <td class="mono">${usdC(r.median_rate)}</td>
+    <td class="mono">${usdC(r.avg_rate)}</td>
+    <td class="mono">${usdC(r.total_value)}</td>
+  </tr>`).join('')}
+  </tbody></table></div>`;
+    return { html, sql };
   });
 
   chart('ov_type', async () => {
@@ -2027,9 +2217,18 @@ async function buildFilters() {
   $('#fPayer').size = Math.min(4, payers.length);
   fill('#fCodeType', of('code_type'), 'All code systems');
   fill('#fNegType',  of('neg_type'),  'All rate types');
+  fill('#fNegArr',   of('neg_arrangement'), 'All arrangements');
+  fill('#fSetting',  of('setting'), 'Any setting');
   fill('#fClass',    of('class'),     'All billing classes');
   fill('#fSource',   of('source'),    'All source files');
   fill('#fExpiry',   of('expiry'),    'Any expiration');
+  // providers list comes from the providers table
+  try {
+    const provs = await q("SELECT provider_reference_id, COALESCE(facility_name, CAST(npi AS VARCHAR)) AS label FROM providers ORDER BY label LIMIT 1000");
+    const psel = $('#fProvider'); if (psel) {
+      psel.innerHTML = '<option value="">Any provider</option>' + provs.map(p => `<option value="${p.provider_reference_id}">${esc(p.label)}</option>`).join('');
+    }
+  } catch (e) { /* providers may be missing in some sources; leave blank */ }
   $('#fNegType').value = 'negotiated';
   syncFilterUI();
 }
@@ -2038,7 +2237,10 @@ function readFilters() {
   F.payers = [...$('#fPayer').selectedOptions].map(o => o.value);
   F.codeType = $('#fCodeType').value;
   F.negType = $('#fNegType').value;
+  F.negotiationArrangement = $('#fNegArr') ? $('#fNegArr').value : '';
+  F.setting = $('#fSetting') ? $('#fSetting').value : '';
   F.billingClass = $('#fClass').value;
+  F.provider = ($('#fProvider') && $('#fProvider').value) ? $('#fProvider').value : null;
   F.source = $('#fSource').value;
   F.expiry = $('#fExpiry').value;
   const mn = parseFloat($('#fMin').value), mx = parseFloat($('#fMax').value);
@@ -2059,7 +2261,7 @@ async function applyFilters() {
 }
 
 function resetFilters() {
-  ['#fCodeType', '#fClass', '#fSource', '#fExpiry'].forEach(s => $(s).value = '');
+  ['#fCodeType', '#fClass', '#fSource', '#fExpiry', '#fNegArr', '#fSetting', '#fProvider'].forEach(s => $(s) && ($(s).value = ''));
   $('#fNegType').value = 'negotiated';
   [...$('#fPayer').options].forEach(o => o.selected = false);
   $('#fMin').value = ''; $('#fMax').value = ''; $('#globalSearch').value = ''; $('#expSearch') && ($('#expSearch').value = '');
@@ -2250,7 +2452,7 @@ function buildSourceModal() {
     </button>
     <label class="btn w-full text-left px-3.5 py-3 block cursor-pointer">
       <div class="text-[13px] font-medium">Load Parquet exports <span class="text-[10px] mono ml-1" style="color:var(--c3)">RECOMMENDED</span></div>
-      <div class="text-[11.5px] dim mt-0.5">Select negotiated_rates, payers and billing_codes .parquet files together.</div>
+      <div class="text-[11.5px] dim mt-0.5">Select negotiated_rates, payers, billing_codes, and providers .parquet files together.</div>
       <input type="file" class="hidden" multiple accept=".parquet" data-src="parquet">
     </label>
     <label class="btn w-full text-left px-3.5 py-3 block cursor-pointer">
@@ -2260,7 +2462,7 @@ function buildSourceModal() {
     </label>
     <label class="btn w-full text-left px-3.5 py-3 block cursor-pointer">
       <div class="text-[13px] font-medium">Load CSV exports</div>
-      <div class="text-[11.5px] dim mt-0.5">Same three tables as CSV. Slower to parse, but universally portable.</div>
+      <div class="text-[11.5px] dim mt-0.5">Same four tables as CSV (negotiated_rates, payers, billing_codes, providers). Slower to parse, but universally portable.</div>
       <input type="file" class="hidden" multiple accept=".csv" data-src="csv">
     </label>`;
 
