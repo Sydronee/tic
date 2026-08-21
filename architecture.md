@@ -32,11 +32,13 @@ fetch_uhc_index.py ─▶ stream_parser.py ────────▶ transpare
 
 `stream_parser.py` streams a single MRF file directly into DuckDB. It uses `gzip.GzipFile` for on-the-fly decompression and a single `ijson.parse(stream)` event loop so the file is downloaded and parsed in one pass (avoiding repeated network downloads). The parser:
 
-- collects top-level metadata (`reporting_entity_name`, `plan_id`, etc.)
-- persists `provider_references` into the `providers` table (one row per provider object) so integer `provider_reference_id` values can be resolved later
-- extracts and stores `negotiation_arrangement` at the billing-code level
+- collects top-level metadata (`reporting_entity_name`, `plan_id`, `version`, etc.) — `version` is a CMS-required field
+- persists `provider_references` into the `providers` table (one row per provider object), including the CMS-required `network_name`, so integer `provider_reference_id` values can be resolved later
+- extracts and stores `negotiation_arrangement` and the CMS-required `name` (distinct from `description`) at the billing-code level
 - captures `setting` for each `negotiated_price`
 - keeps only rows where `billing_class = 'institutional'` by default
+
+Note: CMS marks `setting` as required on every `negotiated_price`, but real-world source files are inconsistent about populating it — expect `NULL` on a meaningful share of rows, concentrated in `percentage`/`per diem` `negotiated_type` entries. This is a source-data gap, not a parser bug, and downstream consumers of `setting` should handle `NULL` explicitly.
 
 Arrays such as `service_code`, `billing_code_modifier`, and `provider_reference_ids` are normalized and written as SQL arrays so they can be exported and consumed safely by the browser dashboard.
 
@@ -66,7 +68,6 @@ python export_for_dashboard.py --db transparency.duckdb --out ./web
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000/analytics.html` and select the three exported Parquet files together.
 Then open `http://localhost:8000/analytics.html` and select the exported Parquet files (negotiated_rates, payers, billing_codes, providers).
 
 ## Operational notes

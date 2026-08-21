@@ -444,10 +444,10 @@ async function tableColumns(table) {
   return new Set(rows.map(row => row.name));
 }
 
-function buildViewSql(negotiationArrangementExpr, settingExpr) {
+function buildViewSql(negotiationArrangementExpr, settingExpr, rateIdExpr) {
   return `
 CREATE OR REPLACE VIEW v_rates AS
-SELECT COALESCE(r.rate_id, row_number() OVER ()) AS rate_id,
+SELECT ${rateIdExpr} AS rate_id,
        r.negotiated_rate AS rate, r.negotiated_type, r.billing_class,
        ${negotiationArrangementExpr}, ${settingExpr},
        r.expiration_date, r.source_file, r.provider_reference_ids, r.service_code,
@@ -496,7 +496,13 @@ async function rebuildViews() {
 
   const settingExpr = rateCols.has('setting') ? 'r.setting AS setting' : 'NULL::VARCHAR AS setting';
 
-  await runScript(buildViewSql(negotiationArrangementExpr, settingExpr));
+  // schema.sql (the real pipeline's negotiated_rates table) has no rate_id column —
+  // only the in-browser demo data and Parquet exports synthesize one. Fall back to
+  // row_number() so attaching a raw .duckdb file or a hand-exported CSV doesn't
+  // throw "column r.rate_id not found".
+  const rateIdExpr = rateCols.has('rate_id') ? 'r.rate_id' : 'row_number() OVER ()';
+
+  await runScript(buildViewSql(negotiationArrangementExpr, settingExpr, rateIdExpr));
 }
 
 /* ── Demo dataset ───────────────────────────────────────────────────────
@@ -2564,7 +2570,7 @@ function wireShell() {
   try {
     await bootDuckDB();
     if (DB.source !== 'external') await loadDemo();
-    else await runScript(V_RATES + V_STATS);
+    else await rebuildViews();
     $('#srcName').textContent = DB.label;
     await buildFilters();
     await paintKPIs();

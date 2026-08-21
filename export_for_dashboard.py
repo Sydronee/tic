@@ -50,6 +50,7 @@ EXPORT_SCHEMAS = {
         ("plan_id_type", ["plan_id_type"], None),
         ("plan_market_type", ["plan_market_type"], None),
         ("last_updated_on", ["last_updated_on"], None),
+        ("version", ["version"], "NULL::VARCHAR"),
         ("source_file", ["source_file"], None),
     ],
     "billing_codes": [
@@ -58,6 +59,7 @@ EXPORT_SCHEMAS = {
         ("billing_code_type", ["billing_code_type"], None),
         ("billing_code_type_version", ["billing_code_type_version", "code_type_version"], "NULL::VARCHAR"),
         ("description", ["description"], None),
+        ("name", ["name"], "NULL::VARCHAR"),
         ("negotiation_arrangement", ["negotiation_arrangement"], "NULL::VARCHAR"),
     ],
     "providers": [
@@ -67,6 +69,7 @@ EXPORT_SCHEMAS = {
         ("tin_type", ["tin_type"], None),
         ("tin_value", ["tin_value"], None),
         ("facility_name", ["facility_name"], None),
+        ("network_name", ["network_name"], "[]::VARCHAR[]"),
     ],
 }
 

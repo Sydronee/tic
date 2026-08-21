@@ -27,7 +27,7 @@ import duckdb
 import ijson
 import requests
 
-BATCH_SIZE = 20_000
+BATCH_SIZE = 122_880  # Match DuckDB's native RowGroup size for optimal storage
 
 TOP_LEVEL_SCALAR_FIELDS = {
     "reporting_entity_name", "reporting_entity_type", "plan_name",
@@ -100,16 +100,17 @@ def get_or_create_payer(con, header, source_file):
     row = con.execute(
         """INSERT INTO payers (reporting_entity_name, reporting_entity_type,
                plan_name, plan_id, plan_id_type, plan_market_type,
-               last_updated_on, source_file)
-           VALUES (?,?,?,?,?,?,?,?) RETURNING payer_id""",
+               last_updated_on, version, source_file)
+           VALUES (?,?,?,?,?,?,?,?,?) RETURNING payer_id""",
         [header.get("reporting_entity_name"), header.get("reporting_entity_type"),
          header.get("plan_name"), header.get("plan_id"), header.get("plan_id_type"),
-         header.get("plan_market_type"), header.get("last_updated_on"), source_file],
+         header.get("plan_market_type"), header.get("last_updated_on"),
+         header.get("version"), source_file],
     ).fetchone()
     return row[0]
 
 
-def get_or_create_code(con, code, code_type, code_version, description, negotiation_arrangement, cache):
+def get_or_create_code(con, code, code_type, code_version, description, name, negotiation_arrangement, cache):
     key = (code, code_type, negotiation_arrangement)
     if key in cache:
         return cache[key]
@@ -125,9 +126,9 @@ def get_or_create_code(con, code, code_type, code_version, description, negotiat
     if row is None:
         row = con.execute(
             """INSERT INTO billing_codes (billing_code, billing_code_type,
-                   billing_code_type_version, description, negotiation_arrangement)
-               VALUES (?,?,?,?,?) RETURNING code_id""",
-            [code, code_type, code_version, description, negotiation_arrangement],
+                   billing_code_type_version, description, name, negotiation_arrangement)
+               VALUES (?,?,?,?,?,?) RETURNING code_id""",
+            [code, code_type, code_version, description, name, negotiation_arrangement],
         ).fetchone()
     cache[key] = row[0]
     return row[0]
@@ -149,16 +150,19 @@ def _provider_group_key(prov):
     return "embedded:" + hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
-def get_or_create_provider_group(con, group_id, prov, cache):
+def get_or_create_provider_group(con, group_id, prov, cache, network_name=None):
     """Resolve a provider_group to a provider_reference_id, inserting one
     providers row per NPI in the group.
 
     - group_id given (from top-level provider_references): a real CMS id.
       De-duplicated per (group_id, npi) so re-running a file doesn't insert
-      duplicate rows.
+      duplicate rows. `network_name` (required by the CMS schema on the
+      enclosing provider_references item) is stored alongside it.
     - group_id is None (embedded provider_groups on a negotiated_rate item):
       mints a synthetic negative id, keyed by _provider_group_key, so the
-      same embedded group always resolves to the same id.
+      same embedded group always resolves to the same id. Embedded groups
+      have no enclosing provider_references item, so network_name is
+      always unavailable (NULL) for these.
 
     Returns the provider_reference_id to store on negotiated_rates rows.
     """
@@ -181,8 +185,8 @@ def get_or_create_provider_group(con, group_id, prov, cache):
                 if not exists:
                     con.execute(
                         "INSERT INTO providers (provider_reference_id, npi, tin_type, "
-                        "tin_value, facility_name, group_key) VALUES (?,?,?,?,?,?)",
-                        [group_id, npi, tin_type, tin_value, facility_name, f"ref:{group_id}"],
+                        "tin_value, facility_name, network_name, group_key) VALUES (?,?,?,?,?,?,?)",
+                        [group_id, npi, tin_type, tin_value, facility_name, network_name, f"ref:{group_id}"],
                     )
         return group_id
 
@@ -201,13 +205,11 @@ def get_or_create_provider_group(con, group_id, prov, cache):
     for npi in npis:
         con.execute(
             "INSERT INTO providers (provider_reference_id, npi, tin_type, "
-            "tin_value, facility_name, group_key) VALUES (?,?,?,?,?,?)",
-            [synthetic_id, npi, tin_type, tin_value, facility_name, group_key],
+            "tin_value, facility_name, network_name, group_key) VALUES (?,?,?,?,?,?,?)",
+            [synthetic_id, npi, tin_type, tin_value, facility_name, None, group_key],
         )
     cache[group_key] = synthetic_id
     return synthetic_id
-
-BATCH_SIZE = 122_880  # Match DuckDB's native RowGroup size for optimal storage
 
 
 def _build_value_from_events(event_iter, prefix, event, value):
@@ -265,10 +267,12 @@ def process_file(con, source, source_file_label):
                 # top-level provider_references array items
                 if prefix == "provider_references.item" and event == "start_map":
                     obj = _build_value_from_events(parser, prefix, event, value)
-                    # obj should be a mapping with provider_group_id and provider_groups
+                    # obj should be a mapping with provider_group_id, provider_groups
+                    # and network_name (all three required by the CMS schema).
                     group_id = obj.get("provider_group_id")
+                    network_name = obj.get("network_name")
                     for prov in obj.get("provider_groups", []):
-                        get_or_create_provider_group(con, group_id, prov, provider_cache)
+                        get_or_create_provider_group(con, group_id, prov, provider_cache, network_name)
                     continue
 
                 # detect start of in_network array and switch to processing items
@@ -291,6 +295,7 @@ def process_file(con, source, source_file_label):
                         item.get("billing_code_type"),
                         item.get("billing_code_type_version"),
                         item.get("description"),
+                        item.get("name"),
                         negotiation_arrangement,
                         code_cache,
                     )

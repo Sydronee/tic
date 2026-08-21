@@ -18,8 +18,11 @@ CREATE TABLE IF NOT EXISTS payers (
     plan_id_type           VARCHAR,
     plan_market_type       VARCHAR,
     last_updated_on        VARCHAR,
+    version                VARCHAR,
     source_file            VARCHAR
 );
+-- Idempotent migration for existing databases created before this column existed.
+ALTER TABLE payers ADD COLUMN IF NOT EXISTS version VARCHAR;
 
 -- ---------------------------------------------------------------------
 -- Dimension: Billing Codes / Procedures
@@ -32,8 +35,11 @@ CREATE TABLE IF NOT EXISTS billing_codes (
     billing_code_type          VARCHAR NOT NULL,
     billing_code_type_version  VARCHAR,
     description                VARCHAR,
+    name                       VARCHAR,
     negotiation_arrangement    VARCHAR
 );
+-- Idempotent migration for existing databases created before this column existed.
+ALTER TABLE billing_codes ADD COLUMN IF NOT EXISTS name VARCHAR;
 
 -- ---------------------------------------------------------------------
 -- Fact Table: Negotiated Rates
@@ -77,10 +83,12 @@ CREATE TABLE IF NOT EXISTS providers (
     tin_type               VARCHAR,
     tin_value              VARCHAR,
     facility_name          VARCHAR,
+    network_name           VARCHAR[],
     group_key               VARCHAR
 );
--- Idempotent migration for existing databases created before this column existed.
+-- Idempotent migrations for existing databases created before these columns existed.
 ALTER TABLE providers ADD COLUMN IF NOT EXISTS group_key VARCHAR;
+ALTER TABLE providers ADD COLUMN IF NOT EXISTS network_name VARCHAR[];
 
 -- ---------------------------------------------------------------------
 -- Basic Analytical Views (available immediately)
