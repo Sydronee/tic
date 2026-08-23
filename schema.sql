@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS providers (
     provider_id            BIGINT PRIMARY KEY DEFAULT nextval('seq_provider_id'),
     provider_reference_id  BIGINT,
     npi                    BIGINT,
-    tin_type               VARCHAR,
+    tin_type               VARCHAR, 
     tin_value              VARCHAR,
     facility_name          VARCHAR,
     network_name           VARCHAR[],

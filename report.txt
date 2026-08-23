@@ -1,0 +1,200 @@
+==========================================================================================
+DATA VALIDATION REPORT — transparency.duckdb
+==========================================================================================
+
+A. Structure
+------------
+  ✓ [PASS ] table:payers: Table 'payers' exists
+         → 0 bad
+  ✓ [PASS ] columns:payers: Table 'payers' has all columns from the current schema.sql
+         → 0 bad
+  ✓ [PASS ] table:billing_codes: Table 'billing_codes' exists
+         → 0 bad
+  ✓ [PASS ] columns:billing_codes: Table 'billing_codes' has all columns from the current schema.sql
+         → 0 bad
+  ✓ [PASS ] table:negotiated_rates: Table 'negotiated_rates' exists
+         → 0 bad
+  ✓ [PASS ] columns:negotiated_rates: Table 'negotiated_rates' has all columns from the current schema.sql
+         → 0 bad
+  ✓ [PASS ] table:providers: Table 'providers' exists
+         → 0 bad
+  ✓ [PASS ] columns:providers: Table 'providers' has all columns from the current schema.sql
+         → 0 bad
+  · row_counts: Row counts per table
+      {'table_name': 'payers', 'n_rows': 724}
+      {'table_name': 'billing_codes', 'n_rows': 20506}
+      {'table_name': 'negotiated_rates', 'n_rows': 2407681}
+      {'table_name': 'providers', 'n_rows': 735130}
+
+B. Referential
+--------------
+  ✓ [PASS ] orphan_payer_id: Every negotiated_rates.payer_id resolves to a row in payers
+         → 0 bad (0.00% of 2,407,681)
+  ✓ [PASS ] orphan_code_id: Every negotiated_rates.code_id resolves to a row in billing_codes
+         → 0 bad (0.00% of 2,407,681)
+  ✓ [PASS ] orphan_provider_reference_ids: Every id in negotiated_rates.provider_reference_ids resolves to a row in providers
+         → 0 bad (0.00% of 2,407,681)
+         note: % is bad-ref-count over rows-with-refs (a rough denominator, since one row can carry multiple provider_reference_ids) — treat it as an order of magnitude, not exact.
+
+C. Completeness
+---------------
+  ✓ [PASS ] billing_codes_missing_code: billing_codes.billing_code / billing_code_type are populated
+         → 0 bad (0.00% of 20,506)
+  ✓ [PASS ] negotiated_missing_rate: Rows with negotiated_type = 'negotiated' have a non-null negotiated_rate
+         → 0 bad (0.00% of 1,470,592)
+  ✓ [PASS ] rates_missing_source_file: negotiated_rates.source_file is populated (needed to trace provenance)
+         → 0 bad (0.00% of 2,407,681)
+  ✓ [PASS ] payers_missing_entity_name: payers.reporting_entity_name is populated
+         → 0 bad (0.00% of 724)
+  ! [WARN ] codes_missing_description: billing_codes.description is populated (blank descriptions make codes unreadable downstream)
+         → 1 bad (0.00% of 20,506)
+         e.g. {'code_id': 1981, 'billing_code': '22552', 'billing_code_type': 'CPT', 'billing_code_type_version': '2026', 'description': None, 'name': None, 'negotiation_arrangement': 'ffs'}
+  ✓ [PASS ] providers_missing_identity: providers rows have at least one of NPI, facility_name, or tin_value (rows with none of the three are unusable for identity resolution)
+         → 0 bad (0.00% of 735,130)
+
+D. Domain
+---------
+  ✓ [PASS ] billing_class_not_institutional: billing_class = 'institutional' (this pipeline's stream_parser.py filters to institutional-only by design)
+         → 0 bad (0.00% of 2,407,681)
+         note: If this is non-zero, either the parser's institutional-only filter regressed, or you intentionally changed it — check stream_parser.py's `billing_class` check.
+  ✓ [PASS ] negotiated_type_out_of_range: negotiated_type is one of ['fee schedule', 'negotiated', 'per diem', 'percentage']
+         → 0 bad (0.00% of 2,407,681)
+  ✓ [PASS ] setting_out_of_range: setting is NULL or one of ['inpatient', 'outpatient']
+         → 0 bad (0.00% of 2,407,681)
+  ✗ [ERROR] dollar_rate_not_positive: negotiated_type IN ('negotiated','fee schedule','per diem') rows have negotiated_rate > 0 (a dollar-denominated rate of $0 or less is essentially always wrong)
+         → 552 bad (0.03% of 1,891,538)
+         e.g. {'payer_id': 596, 'code_id': 916, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [41], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 13, 16, 24, 170964)}
+         e.g. {'payer_id': 596, 'code_id': 916, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [23], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 13, 16, 24, 170964)}
+         e.g. {'payer_id': 596, 'code_id': 916, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [1], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 13, 16, 24, 170964)}
+         e.g. {'payer_id': 596, 'code_id': 916, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [28], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 13, 16, 24, 170964)}
+         e.g. {'payer_id': 596, 'code_id': 916, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [32], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 13, 16, 24, 170964)}
+  ! [WARN ] percentage_rate_zero_or_negative: negotiated_type = 'percentage' rows have negotiated_rate > 0 (0% can be a legitimate value — e.g. fully covered under another arrangement — so this is a warn, not an error; worth spot-checking, not necessarily wrong)
+         → 66 bad (0.01% of 516,143)
+         e.g. {'payer_id': 452, 'code_id': 1051, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'percentage', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [59], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOCTOR-ON-DEMAND-DCI_MEDICAL-COLLEGE-OF-WISCONSIN_-DOD_1HWS_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 39, 14, 321854)}
+         e.g. {'payer_id': 452, 'code_id': 1051, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'percentage', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [6], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOCTOR-ON-DEMAND-DCI_MEDICAL-COLLEGE-OF-WISCONSIN_-DOD_1HWS_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 39, 14, 321854)}
+         e.g. {'payer_id': 452, 'code_id': 1051, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'percentage', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [67], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOCTOR-ON-DEMAND-DCI_MEDICAL-COLLEGE-OF-WISCONSIN_-DOD_1HWS_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 39, 14, 321854)}
+         e.g. {'payer_id': 452, 'code_id': 1052, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'percentage', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [59], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOCTOR-ON-DEMAND-DCI_MEDICAL-COLLEGE-OF-WISCONSIN_-DOD_1HWS_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 39, 14, 321854)}
+         e.g. {'payer_id': 452, 'code_id': 1052, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'percentage', 'negotiated_rate': 0.0, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [6], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOCTOR-ON-DEMAND-DCI_MEDICAL-COLLEGE-OF-WISCONSIN_-DOD_1HWS_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 39, 14, 321854)}
+  ✓ [PASS ] percentage_rate_implausible: negotiated_type = 'percentage' rows have negotiated_rate <= 1000 (a value far above that usually means a dollar amount landed in a percentage row)
+         → 0 bad (0.00% of 516,143)
+  ! [WARN ] dollar_rate_outlier: negotiated_type IN ('negotiated','fee schedule','per diem') rows have negotiated_rate <= $250,000 (flagged as an outlier worth spot-checking, not necessarily wrong)
+         → 49,571 bad (2.62% of 1,891,538)
+         e.g. {'payer_id': 501, 'code_id': 5392, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 993290.77, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [16], 'source_file': '2026-08-01_United-HealthCare-Services--Inc-_Third-Party-Administrator_Dinsmore---Shohl_GSP-811-C775_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 46, 53, 959386)}
+         e.g. {'payer_id': 385, 'code_id': 5392, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 974678.98, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [1], 'source_file': '2026-08-01_United-HealthCare-Services--Inc-_Third-Party-Administrator_Hospital-for-Special-Surgery_GSP-914-C878_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 12, 0, 5, 130842)}
+         e.g. {'payer_id': 317, 'code_id': 5392, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 973728.96, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [0], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOD-W-UHC-CSP_COMPASS-ROSE-RETIREES-PLAN-C_-OMA_QRC_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 11, 20, 55, 15635)}
+         e.g. {'payer_id': 318, 'code_id': 5392, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 973728.96, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [5], 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOD-RA-UHC-HH_COMPASS-ROSE-RETIREES-PLAN-C_-MDH_QRC_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 11, 21, 13, 687695)}
+         e.g. {'payer_id': 326, 'code_id': 5946, 'negotiation_arrangement': 'ffs', 'billing_class': 'institutional', 'setting': 'inpatient', 'negotiated_type': 'negotiated', 'negotiated_rate': 940062.52, 'service_code': [], 'billing_code_modifier': [], 'expiration_date': '9999-12-31', 'provider_reference_ids': [0], 'source_file': '2026-08-01_United-HealthCare-Services--Inc-_Third-Party-Administrator_New-York-Downtown-Hospital_GSP-906-C030_in-network-rates.json.gz', 'ingested_at': datetime.datetime(2026, 8, 21, 11, 24, 1, 607014)}
+  ✓ [PASS ] reporting_entity_type_out_of_range: payers.reporting_entity_type (case-insensitive) is one of ['group health plan', 'health insurance issuer', 'insurer', 'issuer', 'third-party administrator', 'tpa']
+         → 0 bad (0.00% of 724)
+  ✓ [PASS ] plan_market_type_out_of_range: payers.plan_market_type (case-insensitive) is one of ['group', 'individual']
+         → 0 bad
+  ✓ [PASS ] tin_type_out_of_range: providers.tin_type (case-insensitive) is one of ['ein', 'npi', 'ssn']
+         → 0 bad (0.00% of 735,130)
+
+E. Format
+---------
+  ! [WARN ] code_has_padding_whitespace: billing_code has no leading/trailing whitespace (padding causes silent join/lookup failures downstream)
+         → 175 bad (0.85% of 20,506)
+         note: Fix upstream in stream_parser.py by trimming billing_code on insert.
+         e.g. {'code_id': 2388, 'billing_code': '918      ', 'billing_code_type': 'RC', 'billing_code_type_version': '2026', 'description': 'Psychiatric/Psychological Services - Testing', 'name': 'Psychiatric/Psychological Services - Testing', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 2389, 'billing_code': '623      ', 'billing_code_type': 'RC', 'billing_code_type_version': '2026', 'description': 'Surgical dressings', 'name': 'Surgical dressings', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 2390, 'billing_code': '761      ', 'billing_code_type': 'RC', 'billing_code_type_version': '2026', 'description': 'Treatment/Observation Room - Treatment Room', 'name': 'Treatment/Observation Room - Treatment Room', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 2391, 'billing_code': '771      ', 'billing_code_type': 'RC', 'billing_code_type_version': '2026', 'description': 'Vaccine administration', 'name': 'Vaccine administration', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 2392, 'billing_code': '273      ', 'billing_code_type': 'RC', 'billing_code_type_version': '2026', 'description': 'Medical/Surgical Supplies and Devices - Take Home Supplies', 'name': 'Medical/Surgical Supplies and Devices - Take Home Supplies', 'negotiation_arrangement': 'ffs'}
+  ! [WARN ] code_format:CPT: billing_code (trimmed) matches expected CPT format (5 digits, or 4 digits + a Category III/PLA letter (e.g. 0591T))
+         → 169 bad (1.40% of 12,037)
+         e.g. {'code_id': 1445, 'billing_code': 'CSTM-00', 'billing_code_type': 'CPT', 'billing_code_type_version': '2026', 'description': 'All CPT codes', 'name': 'CPT Codes', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 1975, 'billing_code': '29888 AND 29882', 'billing_code_type': 'CPT', 'billing_code_type_version': '2026', 'description': 'Arthroscopically Aided Anter,Cruciate Li/Arthroscopy,Knee,Surg;w Meniscus Repair-', 'name': 'Arthroscopically Aided Anter,Cruciate Li/Arthroscopy,Knee,Surg;w Meniscus Repair-', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 1976, 'billing_code': '29888 AND 29881', 'billing_code_type': 'CPT', 'billing_code_type_version': '2026', 'description': 'Arthroscopically Aided Anter,Cruciate Li/Arthroscop Knee W Partial Meniscect', 'name': 'Arthroscopically Aided Anter,Cruciate Li/Arthroscop Knee W Partial Meniscect', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 1977, 'billing_code': '22551 AND 22552', 'billing_code_type': 'CPT', 'billing_code_type_version': '2026', 'description': 'Arthrodesis, anterior interbody, including disc space preparation, discectomy, osteophytectomy and decompression of spinal cord and/or nerve roots; cervical below C2/Arthrodes,Diskec,Cerv,P.App;auto Gf', 'name': 'Arthrodesis, anterior interbody, including disc space preparation, discectomy, osteophytectomy and decompression of spinal cord and/or nerve roots; cervical below C2/Arthrodes,Diskec,Cerv,P.App;auto Gf', 'negotiation_arrangement': 'ffs'}
+         e.g. {'code_id': 1993, 'billing_code': '29822 AND 29827', 'billing_code_type': 'CPT', 'billing_code_type_version': '2026', 'description': 'Arthroscopy,Shldr,Surg;debride,Lim/Arthroscopy, Shoulder, Surgical; with Rotator Cuff Repair', 'name': 'Arthroscopy,Shldr,Surg;debride,Lim/Arthroscopy, Shoulder, Surgical; with Rotator Cuff Repair', 'negotiation_arrangement': 'ffs'}
+  ✓ [PASS ] code_format:HCPCS: billing_code (trimmed) matches expected HCPCS format (1 letter + 4 digits)
+         → 0 bad (0.00% of 6,443)
+  ! [WARN ] code_format:MS-DRG: billing_code (trimmed) matches expected MS-DRG format (3 or 4 digits (some payers zero-pad to 4))
+         → 1 bad (0.12% of 822)
+         e.g. {'code_id': 1446, 'billing_code': 'CSTM', 'billing_code_type': 'MS-DRG', 'billing_code_type_version': '2026', 'description': 'All DRG codes', 'name': 'DRG Codes', 'negotiation_arrangement': 'ffs'}
+  ✓ [PASS ] code_format:NDC: billing_code (trimmed) matches expected NDC format (10-11 digits)
+         → 0 bad
+  ✓ [PASS ] code_format:APC: billing_code (trimmed) matches expected APC format (4 digits)
+         → 0 bad
+  ✓ [PASS ] code_format:RC: billing_code (trimmed) matches expected RC format (3-4 digits)
+         → 0 bad (0.00% of 713)
+  ✓ [PASS ] expiration_date_unparseable: expiration_date is NULL, the CMS sentinel '9999-12-31', or a parseable ISO date
+         → 0 bad (0.00% of 2,407,681)
+  ! [WARN ] tin_value_format: providers.tin_value looks like a 9-digit EIN/SSN (with or without dashes), for rows where tin_type isn't 'npi'
+         → 1,228 bad (0.17% of 734,803)
+         note: A short value like '172' or '60646813' often means a leading zero got dropped somewhere upstream (e.g. an EIN parsed as an integer) rather than a truly invalid TIN.
+         e.g. {'provider_id': 6944, 'provider_reference_id': -16, 'npi': 1407833486, 'tin_type': 'ein', 'tin_value': '60646813', 'facility_name': None, 'network_name': None, 'group_key': 'embedded:3d0852e1b3c3ebcf'}
+         e.g. {'provider_id': 6971, 'provider_reference_id': -43, 'npi': 1407833486, 'tin_type': 'ein', 'tin_value': '60646813', 'facility_name': None, 'network_name': None, 'group_key': 'embedded:7890a0d5dd3d88aa'}
+         e.g. {'provider_id': 6972, 'provider_reference_id': -43, 'npi': 1275847185, 'tin_type': 'ein', 'tin_value': '60646813', 'facility_name': None, 'network_name': None, 'group_key': 'embedded:7890a0d5dd3d88aa'}
+         e.g. {'provider_id': 8571, 'provider_reference_id': -59, 'npi': None, 'tin_type': 'ein', 'tin_value': '172', 'facility_name': None, 'network_name': None, 'group_key': 'embedded:d2942ad8f98b77b1'}
+         e.g. {'provider_id': 8587, 'provider_reference_id': -75, 'npi': 1710087127, 'tin_type': 'ein', 'tin_value': '42774441  ', 'facility_name': None, 'network_name': None, 'group_key': 'embedded:42cfee8d04378314'}
+  ! [WARN ] npi_invalid: Distinct providers.npi values are 10 digits, start with 1 or 2, and pass the CMS check-digit algorithm
+         → 10 bad (0.00% of 238,277)
+         e.g. {'npi': 0, 'issue': 'not exactly 10 digits'}
+         e.g. {'npi': 105359766, 'issue': 'not exactly 10 digits'}
+         e.g. {'npi': 1083722793, 'issue': 'fails CMS check-digit (Luhn) algorithm'}
+         e.g. {'npi': 1275847185, 'issue': 'fails CMS check-digit (Luhn) algorithm'}
+         e.g. {'npi': 1326017017, 'issue': 'fails CMS check-digit (Luhn) algorithm'}
+
+F. Duplicates
+-------------
+  ✓ [PASS ] duplicate_billing_codes: No (billing_code, billing_code_type, negotiation_arrangement) triple appears in more than one billing_codes row
+         → 0 bad (0.00% of 20,506)
+  ✓ [PASS ] duplicate_provider_npi_rows: No (provider_reference_id, npi) pair appears in more than one providers row
+         → 0 bad (0.00% of 735,130)
+  ! [WARN ] duplicate_negotiated_rate_rows: No fully-duplicate row (identical on every column but ingested_at) exists in negotiated_rates
+         → 358,264 bad (14.88% of 2,407,681)
+         e.g. {'payer_id': 596, 'code_id': 1248, 'negotiated_type': 'negotiated', 'negotiated_rate': 944.0, 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'n': 970}
+         e.g. {'payer_id': 596, 'code_id': 1262, 'negotiated_type': 'negotiated', 'negotiated_rate': 640.0, 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'n': 970}
+         e.g. {'payer_id': 596, 'code_id': 52, 'negotiated_type': 'negotiated', 'negotiated_rate': 944.0, 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'n': 970}
+         e.g. {'payer_id': 596, 'code_id': 1262, 'negotiated_type': 'negotiated', 'negotiated_rate': 640.0, 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'n': 970}
+         e.g. {'payer_id': 596, 'code_id': 54, 'negotiated_type': 'negotiated', 'negotiated_rate': 944.0, 'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'n': 970}
+
+G. Coverage
+-----------
+  · rows_by_source_file: Row counts and rate range per ingested source file
+      {'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_STATE-OF-OK-SWIFT-MD-DCI_HEALTHCHOICE---STATE-OF-OKLAHOMA_-STO_MHCO_in-network-rates.json.gz', 'n_rows': 274287, 'n_payers': 1, 'n_codes': 12478, 'min_rate': 0.0, 'max_rate': 584436.0, 'last_ingested_at': datetime.datetime(2026, 8, 21, 13, 16, 24, 170964)}
+      {'source_file': '2026-08-01_United-HealthCare-Services--Inc-_Third-Party-Administrator_Texas-Health-Resources_GSP-901-C008_in-network-rates.json.gz', 'n_rows': 136942, 'n_payers': 1, 'n_codes': 7747, 'min_rate': 0.18, 'max_rate': 880842.75, 'last_ingested_at': datetime.datetime(2026, 8, 21, 12, 48, 20, 105654)}
+      {'source_file': '2026-08-01_United-HealthCare-Services--Inc-_Third-Party-Administrator_Dinsmore---Shohl_GSP-811-C775_in-network-rates.json.gz', 'n_rows': 121907, 'n_payers': 1, 'n_codes': 7723, 'min_rate': 11.34, 'max_rate': 993290.77, 'last_ingested_at': datetime.datetime(2026, 8, 21, 12, 46, 53, 959386)}
+      {'source_file': '2026-08-01_United-HealthCare-Services--Inc-_Third-Party-Administrator_Children-s-Hospital-of-Colorado_CSP-914-T364_in-network-rates.json.gz', 'n_rows': 90101, 'n_payers': 1, 'n_codes': 7692, 'min_rate': 24.0, 'max_rate': 806956.98, 'last_ingested_at': datetime.datetime(2026, 8, 21, 14, 5, 10, 799379)}
+      {'source_file': '2026-08-01_UMR--Inc-_Third-Party-Administrator_DOCTOR-ON-DEMAND-DCI_MEDICAL-COLLEGE-OF-WISCONSIN_-DOD_1HWI_in-network-rates.json.gz', 'n_rows': 89355, 'n_payers': 1, 'n_codes': 6802, 'min_rate': 0.0, 'max_rate': 37850.0, 'last_ingested_at': datetime.datetime(2026, 8, 21, 12, 40, 26, 705104)}
+
+==========================================================================================
+SUMMARY TABLE — every quantifiable check, worst first
+==========================================================================================
+CHECK                               LEVEL  STATUS       TOTAL         BAD     % BAD
+-----------------------------------------------------------------------------------
+duplicate_negotiated_rate_rows      warn   WARN     2,407,681     358,264    14.88%
+dollar_rate_outlier                 warn   WARN     1,891,538      49,571     2.62%
+code_format:CPT                     warn   WARN        12,037         169     1.40%
+code_has_padding_whitespace         warn   WARN        20,506         175     0.85%
+tin_value_format                    warn   WARN       734,803       1,228     0.17%
+code_format:MS-DRG                  warn   WARN           822           1     0.12%
+dollar_rate_not_positive            error  ERROR    1,891,538         552     0.03%
+percentage_rate_zero_or_negative    warn   WARN       516,143          66     0.01%
+codes_missing_description           warn   WARN        20,506           1     0.00%
+npi_invalid                         warn   WARN       238,277          10     0.00%
+orphan_payer_id                     error  PASS     2,407,681           0     0.00%
+orphan_code_id                      error  PASS     2,407,681           0     0.00%
+orphan_provider_reference_ids       warn   PASS     2,407,681           0     0.00%
+billing_codes_missing_code          error  PASS        20,506           0     0.00%
+negotiated_missing_rate             error  PASS     1,470,592           0     0.00%
+rates_missing_source_file           warn   PASS     2,407,681           0     0.00%
+payers_missing_entity_name          warn   PASS           724           0     0.00%
+providers_missing_identity          warn   PASS       735,130           0     0.00%
+billing_class_not_institutional     warn   PASS     2,407,681           0     0.00%
+negotiated_type_out_of_range        error  PASS     2,407,681           0     0.00%
+setting_out_of_range                warn   PASS     2,407,681           0     0.00%
+percentage_rate_implausible         warn   PASS       516,143           0     0.00%
+reporting_entity_type_out_of_range  warn   PASS           724           0     0.00%
+tin_type_out_of_range               warn   PASS       735,130           0     0.00%
+code_format:HCPCS                   warn   PASS         6,443           0     0.00%
+code_format:RC                      warn   PASS           713           0     0.00%
+expiration_date_unparseable         warn   PASS     2,407,681           0     0.00%
+duplicate_billing_codes             warn   PASS        20,506           0     0.00%
+duplicate_provider_npi_rows         warn   PASS       735,130           0     0.00%
+
+==========================================================================================
+OVERALL: 30 passed, 9 warning(s), 1 error(s)
+==========================================================================================
