@@ -3,6 +3,7 @@
 __pycache__
 *.parquet
 transparency.duckdb
+enrichment.duckdb
 ./reference_data/icd10pcs_tables_2027.xml
 ./reference_data/appendix_A.txt
 ./reference_data/HCPC2026_ANWEB.xlsx
