@@ -61,8 +61,12 @@ def download_file(
                 if response.status_code in RETRYABLE_STATUS_CODES:
                     response.raise_for_status()
                 response.raise_for_status()
+                # Manifest sizes refer to the compressed object. Requests
+                # normally auto-decompresses Content-Encoding: gzip while
+                # iterating, which would make valid downloads fail size checks.
+                response.raw.decode_content = False
                 with open(temp_target, "wb") as stream:
-                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                    for chunk in response.raw.stream(1024 * 1024, decode_content=False):
                         if chunk:
                             stream.write(chunk)
                     stream.flush()
@@ -88,10 +92,10 @@ def download_file(
     raise RuntimeError(f"download failed after {retries + 1} attempts: {url}") from last_error
 
 
-def append_run_log(path: str, **fields: Any) -> None:
+def append_run_log(log_path: str, **fields: Any) -> None:
     """Append one machine-readable event and flush it immediately."""
     record = {"timestamp": _timestamp(), **fields}
-    with open(path, "a", encoding="utf-8") as stream:
+    with open(log_path, "a", encoding="utf-8") as stream:
         stream.write(json.dumps(record, sort_keys=True) + "\n")
         stream.flush()
         os.fsync(stream.fileno())

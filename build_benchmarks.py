@@ -57,7 +57,7 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
                 provider_reference_id,
                 -- One NPI per reference_id: pick the org/facility NPI
                 -- if there's a choice (entity_type='2'), else any.
-                FIRST(npi ORDER BY
+                FIRST(p.npi ORDER BY
                     CASE WHEN n.entity_type = '2' THEN 0 ELSE 1 END,
                     p.provider_id
                 )                           AS npi,
@@ -176,11 +176,6 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
 
             FROM negotiated_rates r
 
-            -- Rate quality filter (remove garbage rows)
-            WHERE r.negotiated_type IN ('negotiated', 'fee schedule', 'derived')
-              AND r.negotiated_rate  > 0
-              AND r.negotiated_rate  < 10000000
-
             -- Code lookup
             JOIN billing_codes bc
                 ON bc.code_id = r.code_id
@@ -209,6 +204,11 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
             -- County
             LEFT JOIN _dominant_county dc
                 ON dc.zip5 = n.zip5
+
+                        -- Rate quality filter (remove garbage rows)
+                        WHERE r.negotiated_type IN ('negotiated', 'fee schedule', 'derived')
+                            AND r.negotiated_rate  > 0
+                            AND r.negotiated_rate  < 10000000
         """)
 
         n_bm = con.execute("SELECT COUNT(*) FROM benchmarks").fetchone()[0]
@@ -273,6 +273,24 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
             WHERE provider_state IS NOT NULL
             GROUP BY billing_code, billing_code_type, provider_state, county_fips
         """),
+        ("benchmarks_geo_payer_stats", """
+            SELECT
+                billing_code, billing_code_type,
+                MAX(code_description)                               AS code_description,
+                payer_name, provider_state, county_fips,
+                MAX(county_name)                                    AS county_name,
+                COUNT(*)                                            AS n_rates,
+                COUNT(DISTINCT npi)                                 AS n_providers,
+                ROUND(MIN(negotiated_rate),   2)                    AS rate_min,
+                ROUND(PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_p25,
+                ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_median,
+                ROUND(PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_p75,
+                ROUND(MAX(negotiated_rate),   2)                    AS rate_max,
+                ROUND(AVG(negotiated_rate),   2)                    AS rate_avg
+            FROM benchmarks
+            WHERE provider_state IS NOT NULL
+            GROUP BY billing_code, billing_code_type, payer_name, provider_state, county_fips
+        """),
         ("benchmarks_payer_stats", """
             SELECT
                 billing_code, billing_code_type,
@@ -289,6 +307,27 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
                 ROUND(AVG(negotiated_rate),   2)                    AS rate_avg
             FROM benchmarks
             GROUP BY billing_code, billing_code_type, payer_name
+        """),
+        ("benchmarks_payer_provider_stats", """
+            SELECT
+                billing_code, billing_code_type,
+                MAX(code_description)                               AS code_description,
+                payer_name, npi,
+                MAX(provider_name)                                  AS provider_name,
+                MAX(provider_city)                                  AS provider_city,
+                MAX(provider_state)                                 AS provider_state,
+                MAX(provider_zip5)                                  AS provider_zip5,
+                MAX(county_fips)                                    AS county_fips,
+                MAX(county_name)                                    AS county_name,
+                MAX(provider_taxonomy_code)                         AS taxonomy_code,
+                COUNT(*)                                            AS n_rates,
+                ROUND(MIN(negotiated_rate),   2)                    AS rate_min,
+                ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_median,
+                ROUND(MAX(negotiated_rate),   2)                    AS rate_max,
+                ROUND(AVG(negotiated_rate),   2)                    AS rate_avg
+            FROM benchmarks
+            WHERE npi IS NOT NULL
+            GROUP BY billing_code, billing_code_type, payer_name, npi
         """),
         ("benchmarks_provider_stats", """
             SELECT
