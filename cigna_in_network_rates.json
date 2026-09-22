@@ -1,0 +1,874 @@
+{
+  "reporting_entity_name": "Cigna Health Life Insurance Company",
+  "reporting_entity_type": "Health Insurance Issuer",
+  "blobs": [
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_pathwell-oap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_pathwell-oap_in-network-rates.json.gz?Expires=2108865599&Signature=KLKS-AwAwj0I35KILiz6cDf6rAyNEzAiITUk4edklvWwo6s8faQE67k6xlhvorQpbuR35QvpsbiiV1H0t4FncZ9~m39f~SMkjUyKpk9cAVJhr208wJWDKZYVOStDhVHFN35XH4o0Q00A0wwdvAPwEJ3IdesKJsBDlMV9iPD5WSXQfBKNcaiAY-YvIl~YyUsKij~seGWgZUp9jiD4snPZJXPPbOc1UhsJwz21s69B9fBEeKrSltKW40ZOAWswklrrMbOi65ANy6pAhZcrJs2ezHxvY103DyiRcPWmDAYiyofpQSl3Uab-aUA0GQ8ptV1AVglOpd7DT1O1tYc--VbVFA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_pathwell-oap_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "873081001"
+    },
+    {
+      "name": "2026_09_01_priority_health_PPO_in-network-rates.zip",
+      "downloadUrl": "https://priorityhealthtransparencymrfs.s3.amazonaws.com/2026_09_01_priority_health_PPO_in-network-rates.zip",
+      "description": "2026_09_01_priority_health_PPO_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "873081001"
+    },
+    {
+      "name": "2026-09-01_sagamorehn_cigna_in-network-rates.zip",
+      "downloadUrl": "https://myportal.cignapayersolutions.com/files/sagamorehn_cigna/2026-09-01_sagamorehn_cigna_in-network-rates.zip",
+      "description": "2026-09-01_sagamorehn_cigna_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "873081001"
+    },
+    {
+      "name": "2026-09-01_upper-midwest-affiliation-partner_cigna-open-access_in-network-rates.zip",
+      "downloadUrl": "https://www.uppermidwestaffiliationpartner.com/content/dam/plan-data/tic/mrf/2026-09-01_upper-midwest-affiliation-partner_cigna-open-access_in-network-rates.zip",
+      "description": "2026-09-01_upper-midwest-affiliation-partner_cigna-open-access_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "873081001"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_national-oap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_national-oap_in-network-rates.json.gz?Expires=2108865599&Signature=YW0FLRfEiBr8igvq9nr-2BzDq8mKOAmk48xh-dohBanrIT2LQTrKaVBH2iciLH2wyItzRfrghjF39zI6KDQdxLr3doHUOLTrFb8J3Z2GsKxgtw3Qdv1JkPOjMAcAoS~4PXbKb53Asa1IqzqK2fw2OQeMYdQVlivqam-tp2HWmsV5rdLinWP~wo5tRyN1UAC~jxyQ9lrPFym~ZqIYf-qA0biDam56bVoYOJFm5UEjb3cXU~Ax-O4r8Ye3UO7RW4JwtO6soVOmVl0HrABMKQmtmvKA5oqs7JYjASAQtXJMA4THqhzugFKux-IXGuZoFgaKFYNBjdzQMUPVC3RFXbAZwg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_national-oap_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "112167170"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_localplus-with-ebh-plus-pathwell_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_localplus-with-ebh-plus-pathwell_in-network-rates.json.gz?Expires=2108865599&Signature=MnS6aW-4Lplj5cc27KmG4lSuBx-jHMwOfWskrrIGKzEI68jZIZI9mebL97AYmBGaTJP4gB9V-M25jWnKCONt1Ltm9MNM5IrrW2uel99npoaZNd6q-QJeQeFgmxst6MXq4ef3nQzlnrczzb5QOX-D4hrD6OEIjrtNOlJAlUdSdKXyBVI0mOZAxeVWQatXolduey0QefOH~gRkaF5HCVjMdRReTBPjNYOBqnlrc9YftBwep0aBHrv4AdD7ZdCnsKWzTlfFS1OTRv57a6TlpIfb9QHjSeEcGTj9lfCcz0mtC28i4PkeM22rBqPKPIPQjAVjmd22OexT-eeWnQgL-L6wvg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_localplus-with-ebh-plus-pathwell_in-network-rates",
+      "plan_name": "Local Plus",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_kelseycare-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_kelseycare-network_in-network-rates.json.gz?Expires=2108865599&Signature=iL86BYmHJL8wsC~RFe1ik0g0p1ob~Jq~ivrZJU0tqwlwHc7-J9wFWp3MGPD0G-O6Wdb1cqrTwaMqm58L~a2cOQLaqi2mwnxNqUXu3Fh5seZ3O0djIyh2jQ60Bs0d7oTb1R0lGiXaq2jS2oFyUv5lSXHBvS30lhQcj4OaUG98otkJEYskWrBFxlFgD5GudM8VDdkm~V-SuWYD2IPJVVz3qktfFNZcMLYoFxjPkbQsiujwKa-jL7a8JqadyecMPE722KSj4MHPqio2QqRZElzK8vgGZCcKMErmc4HyHF9FDrLNT07RF7wbo9h4~jEKWM2IhvW8nwOxFewzPiwar5faOw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_kelseycare-network_in-network-rates",
+      "plan_name": "Select",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_kelseycare-network-cap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_kelseycare-network-cap_in-network-rates.json.gz?Expires=2108865599&Signature=tcTV2uKHK-ho-xxsTaqoyiEsRCHV1Sw2AVKy8SIGNo8y1h~ev-hBlhGaEZSAoGBBhSyKTrxoCMFT6zAIUzM~slhpCBudKAl446NoqVrW65m1Ul0BqAIQKtXm~aXfey01yS1TBZJM223DcYuVLudZcwVcY4~RwvPq5JleqRqJvCUx0F9ihPYNvgVXjucRdbqOYGc4oZg9Kyhv1hJ-p9xjEAWEsa~ye1P4Q6vTZoP6BYgM6Sa4ECWbUL0GvPtrkv224ktzR0LeBBSnpGbavkbBSkotUjSsN8bGA5-LsQ55eevUQ0rsfW8gzgkXtsGZqpXHzDSLuwm9dSaWib8dmAcbPw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_kelseycare-network-cap_in-network-rates",
+      "plan_name": "Select",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_upper-midwest-affiliation-partner_cigna-ppo_in-network-rates.zip",
+      "downloadUrl": "https://www.uppermidwestaffiliationpartner.com/content/dam/plan-data/tic/mrf/2026-09-01_upper-midwest-affiliation-partner_cigna-ppo_in-network-rates.zip",
+      "description": "2026-09-01_upper-midwest-affiliation-partner_cigna-ppo_in-network-rates",
+      "plan_name": "PPO",
+      "plan_id": "812888224"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_pathwell-ppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_pathwell-ppo_in-network-rates.json.gz?Expires=2108865599&Signature=WDzm9UjdEWhMzNdiTmabp5Y2h38xvZFMcK7gTkc9M7hoDu6BBrlPhhPAJ6fgueBe-0K-Spyv4JWA1HsXiF0DMpiEDM6PeyIanjURZhurq~GQ2hSHjKcJtZiUpyfDSksXgu2nVnFaHV~86b8gXxW-C7JNSzx5qm5LCvVipQ0WNBPvTzPBXApVL~jVxcp3QU-HJZ3k4qq22nyPxsFRHcgO~NYZYQxX4v-fpvyaYl3BUpXe53iXe4w8x0PukXdWpT4YeNvMz5w9HU7P-XtKmsnzlDi-WQShyygwUPhu-WHHkyiTzPjtEt~V6YDCPa4AOE0sgw0uABsYurCRQ9-vj-aFww__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_pathwell-ppo_in-network-rates",
+      "plan_name": "PPO",
+      "plan_id": "812888224"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_localplus_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_localplus_in-network-rates.json.gz?Expires=2108865599&Signature=eOmWLXnr2Rw14~TCZj1RPx72kY-OisxODs2xwPjL5qJiMXgxlBZTzmlE4QtgBO9JpPOxKlHPpioiES9tmjHoxXLnPEHsGGh~OmyLxZ3sS3yK9fRmLb49cpGl9uHSchQSp7iO0REl1ToIKe1Bb7m4rjcdlsyW4KugVWTNj3wXTjTqpDagidaJezNPjkZGOKjbtYQFjUq3rdHbCZBiYxeQJ4azg9QSu-5xO99MiXh9zIKS7O0sqJqO6O-dbuZsV1yw7KvM1ZPfv5eX1olTAwyhcLrSXKVcnn10s181z6pkQKffvvlEpb5EcQOarKezItUzAJLqyQuJhDUG--XPor1NVw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_localplus_in-network-rates",
+      "plan_name": "Local Plus",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_oap-shared-admin-repricing_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_oap-shared-admin-repricing_in-network-rates.json.gz?Expires=2108865599&Signature=TsgUtYklzVP2zz2BbbtuSsg7sFnNFH7dsdYXqYvcSYD0SU3kECdzFoEQ1AznPPEqe5oYbIXq49-jMtKeeStt5r4nYIYVr-LliLj1NnBz9FNKoMhNy9fa6wHc~m7VlYCRbstrXf8tV1Gm~VXhSu~WAvxi5XAOs06h-ENy2XN8CFaNhWNhYlVZjn5lMFEAMPBjsJPgQKXSXUvxhcN4Fpnmg5zYZnnQ9aUYhV5eNxWpxHhqX4OcaVw2WsQfsHr8Wywv0Gj5n3ByKDMQJ04fHQDub0b7ui~FL8Xan7R3jzZu9IGMXrALt-AGO8c4Y3PIAhRP3fj0JL2OOUBdhAlY2A175w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_oap-shared-admin-repricing_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "541850090"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_san-francisco-sacramento-hmo-cap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_san-francisco-sacramento-hmo-cap_in-network-rates.json.gz?Expires=2108865599&Signature=hfOpqia9zgoi~VjSuCDyC1lvKpVvgFDaAGM9soJa3lsOv~ED-vqmzSi0bTn8yJJsMW4lnPsB6Mpk0DfTqXlIlyY2khAP~pHgAePG-UV8k2oTpT6UFqAIjUREyuiDzVXUQgzzY~ovovaNGKAeifWKe87K7c8jqNmSzhuin4x4OeJo-KxI2Pxh02wkjEfCWTTJJ~Uolk4zhzSjpIyswAynWRi9maN7qXIm3gtj-21x3d2BRiyH7uCXvuvIlavGPlT6Zq0B4CwI~HfMd2Alr9xmtryiBZgb1PvJ4ApmxAloicr4pkvqFjRlMEfb3O4lWw7ZMA~bNxC5tFpH6UoVlXxmzg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_san-francisco-sacramento-hmo-cap_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "95-3310115"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_southern-ca-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_southern-ca-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=RDsFJIlh-ajGRKXk8wRziQhBwgM9rCcs2djvtwPU48uBc4ZEcnePiwmEF6sVYqDRrG8AMe6H6nesqIH34WYLD4ck6mPmlkpknwep-DmEf4RzUUwrD2JIbHLqD3V6Oa7OAz4F1j29XEk0~ogrnecfRn5VTxIQPibv6T7Rsd0AGOtp9bPSeZRHcRKtGvAob0VzqJPTLsAv2GtlhZrJiDtUOOflzeqZoArYipMaOitTwSDa7EDS6zQ-vxa6FHU7dVX7HntXmHpWha~J1~Wc4YdEUMtGlpGa~HLj5~dFpOYtpUZotLKs~V7bZyiRbOMrarw4dq2untrDM3BaeaAfAo-PqA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_southern-ca-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "95-3310115"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_san-francisco-sacramento-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_san-francisco-sacramento-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=eWSMpwfxUxiSgm87GSkJeX6~PCaThoZnXUHmVoWc~xpYzPrAXI2Pm9hIOtO~vM0xj4DLk3c0ot2mUO2V1mg3dtnjWOdWht7R6wGw1bKh07Sy2LeJd-fXjQ2IC7Ah-xdR~88bV4mALdaIpK4DxY~0xiLFn1ywPIko-ZW4KjAgA3Crn98ZunI3AZl7DCRwATLrWr1ZaL4WUaIIIMhMijvtUjpeTNhr1yJfYP3bdvvIulaexx0-lgCBeyVMroJoTPp3LsGzMRFSdIO12OLqruFpyX9bo-uka~BmU08HNdtpIxHB9LcDEYssEf4-peCBIEgfBrayRAYpDnS4h6Yh9pA0nw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_san-francisco-sacramento-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "95-3310115"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_southern-ca-hmo-cap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_southern-ca-hmo-cap_in-network-rates.json.gz?Expires=2108865599&Signature=aTXVugWQ3KxkgDzm5Jtf8RsLbrJCCyH8wyjDvQ7A7r7RacZGoqG6tTSxC1XerpOAPARwaRzAfjA2F4f3DVQkFiECh6~2UW0o-PClPb4Tho9bvz5VLAs7-9rOjsIPNgwT-9~RF-A-dg04ZLUCxVhjtSdvj9O5rIuWy87CvPjDzh93C~xpe25p2HfAE6jTCGqu1XnXoQI1j1O26eyqt7c28UKmYiNKOX38i0XbWT9FdgPDouZQlohPGIV0VJKjk0OBSbAgsuQeJ5fg~ZTDKPhftR3P~BO21axohFlPVrS6H65L4HMheIC5xlNAC-LYJxDSaBZCf2hSH8Ji-cisXmdN7A__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_southern-ca-hmo-cap_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "95-3310115"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_mvp-mohawk-valley-physicians_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_mvp-mohawk-valley-physicians_in-network-rates.json.gz?Expires=2108865599&Signature=FA9WG7OTRMm-mUqWCpaBbvmhV2hPrChApsHASCPhsj0JwwhKIp5cHmLBxab7n6j0264fFeDfJJFVvkGFQde~1qd5SiVRA9-e3ogl3XwBA87OQDbqsQ3PgJHRu527~NYluJeM2YODLm4-L0TdGv7EmupposSMcwuRH6trnjzCPjRI33NOBLtCsoPcYzvRdhLFrYc2mralY9p8DnvvdYmKIhLoCHByXD49jHQXUt3GHOtvGb402v4Mcu7~vFkDYtBEUz9VTQBNpn80Jto1bJhscr8~YHYWAnIrNd-q8Tcgxl1WNCh~WyhH3kWjy8YTTdRsOwSrA-OzyRfKR45iSm-i~A__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_mvp-mohawk-valley-physicians_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_south-texas-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_south-texas-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=bjm6EZ7Z5zJbW7~0gLDQ8MdJXqcsruTsSOfgaE7oaVrnZ448hEDPvjFAhh0pwTrnu53g3Dqq5iZqBc6mFoXjrzWvLULb~KHOPPj3uIfEb~u4exqMdU39NwZWJvrXx7F8bVNcXu30Ads92Op2SCxJX4Cvr~I5PU2p95RmRGMyKy9fRGpSVCqjFBxYUbg3-qlzyqmvaV~icb17tonI~Ju8oFWV~GkPDUTQGuoFAH~mMwg0hUt5K4r9pt4UFdVE6TgIG2Q4Z5XR5JEY3rCS4rPMtfIrfrB5VSBz3~A~BciNEvOxrEQZ77tlDF2Vuhnkkl6VdAFsxNassYkrlL8wcRw1hQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_south-texas-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "746000555"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_michigan-gppo-seamless_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_michigan-gppo-seamless_in-network-rates.json.gz?Expires=2108865599&Signature=AZZSByCyVVSfS1nb12oczTWijA2znBY1b6MRA1XPx-wzLL9XBkMWppMIz7WX7hZY43pwJsWXImCiAK8~YPh3WK7sTohc70oi~m8UN9dY2pDncntTl2Ke0oIKWhEXWPllNbiXJ-QlOzu3miVZK2cuss0Mw2XRp6p51lfcdyLpB9glMEiU8iXsPUYB0~EnAV7~91QOw3ZMTmWIoT620vh49y7ulOt~1-Mny4op6f1VZGMhPrqGZiO4GbS10EaHiCsy7TIzqldv5OqQhsz-ZKbViTKukkET1sE2A8dtL9-TuxHQLIdE4LgDELt0njsytsvxVEd5tXzMVWXrbnipZ6RHpg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_michigan-gppo-seamless_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_salt-lake-city-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_salt-lake-city-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=TDC9P3gInS1qcRdmYecWAT0n4JgSqyBF0CIVUTKs3zE-hz4iMMIyG0p1H8TpGAQxU6EtbCbTERlssXgJRMBW3n3qHvXRkj~Iqxf3ofmgGGggPN7eeFoNFnYjr7w7D~Rj8lSGTnKqhsotMR2Jl0oDsZMIm39cnxXICqaAqiTj6ao7-C~3ZyfzSeszbbJ81JDl9F7QQhmn0gfd9ZOXFxuXgiGafQ11aqci3mpf1-oKf3YvdgbYmse7jChJLhclD3KgMRz0rP3HaH1v8pgReunfP0A9Ct-3MmIOJoXF1iQGs2JlyrDPKcPviPDEpk8VHMeAV2fVxneAi97JNgI1r775nw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_salt-lake-city-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_georgia-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_georgia-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=TazsGh-7xApvh-h8QW784-x9ljMXWbNnooG697EdnF7FHc2qjUGLzSwIoiL577NwEQKy5u1BuBzPaytUC-nPmY7D1aV0dIcEkIirJk8riWPes8xqC1JnIPuSWxESlHwqDkuXCxzhtQrNqor6V-GiYFb0BsHizPWX~8MDo9VTaMJhkQrtL51w2nzA7l~npsRXfRCA8mC1kvthwX4PavxpHvjzT36LgE7x5FS2Jgz0nSwpeFU-cLjnHO2HjT6oAQhA-GyLRseECPV~Ev2Vin4x0QgXAyo-7~tk~KrCmCjFU6pmeY8NeXPPOQj1e-mH-d2E2liRIB6CMlCDIBiA1on3qg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_georgia-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_florida-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_florida-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=IOn8qA9ab551vsyGmdzxpr0stdYRcKSc3RgIeFwzgz5N3OrTfoJtAEa~W9scvmVgfZhH8HaVZOe68xrbhHvS6t5~nt4xpthL3CVNOByoVTMgI0W5F7t1aafzMJ1EGqVG2VKMO6beo8tQ1TiFXneiETmv-i7U1Z9XBlpVl1LYgpXux18OiXtnUNNhVJEHm-HTMnilyWsrYHQcYCnFSdrMeWJuAksEkIhfQ4HOeSlGqtb1cZwOiyeN3VYolYRxdE4wO7bpYTjuCKYq8E9gNQkhJjuTJuwPUMOIVtBhnlYFB1sB6Sxntu-Kc6Ji1p7Qnw5UYmm5-MkYPt80lzo2K0hTUg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_florida-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "59-2089259"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_tn-hm0-hmo-pos-seamless_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_tn-hm0-hmo-pos-seamless_in-network-rates.json.gz?Expires=2108865599&Signature=Zh25K5PsXi4uIgTLUHjzvYEQxSk5NEGSu9khyhY5VezwPeP1xJPkC0ewMy43me8x2XH19Gbp8fiX11Kq2PLA5h8xYqpHQCtXq2IkI9L4NaxdO9bLdkuKXMXVB6Jj90fLUVCJSxo19NfcCNGhmMPs6orTyHDASEY9R~na6MymZDjotAZLrpaQGjXfRrUe6E9rPwRv8r5PngQF2xfHEqABffKTshtpOQB9YIkQIktO71LYzchMUKkF7zLF3mKkE2Ubl8RnRJYCvnUSEh8ncpFsrBKXQMpEU~JgzCuOCwniuvfHWOiiFmw5tvKzUY2Z355d0wLbgh-iKQlsy77RtdEd5g__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_tn-hm0-hmo-pos-seamless_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "62-1218053"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_north-texas-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_north-texas-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=J9Hu7FpMtmYFfmDtSmkfMEuc~EVX-NclABP3mSgjBROJty573QkIhVXn7bS0u8A5Mlj31xmkgBJ5fzeJep6OV8Bw14nEn8HL9QWuUALdaIgermqPSK5sSZcCPsnkPuGRdj-tZMNNjzYUqyJTJZZGk-7~hALF2GE1sUdFD7uWacYmmuRC3EKfqyfHXGeHGrS-YYMjNBlsfblRLuFL-ZuP7QN~874QrR0aZqoN6iGsOmuWd4uL1WApdF8eakCNN9ouUsFigVZGPRePQwrO3o3swUgOScWwetHZGsJgwW5JwK3vKrXfFqUQuykKcBWaSubGhCos0Wt7t329DNJl64yoqg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_north-texas-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_south-texas-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_south-texas-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=Oo5s8IkMgZenTNtTOpYRdC9uX8cwf95kOFQsyW4gf0yZYZz0mkFdhoVXVHrdXNuFwUnmC4EivF4MkFmg~N3-zq4bpa0BQRgh1R~Q5F-gQ~-~oWWTtwnhdFaA-Xsl2Cz2~ODyrDzZepaaxK5GO4C9L5l69BebOEmIk92arrwDtGFYvOADMXdRRjrFA0cpqnmdw92Pi8gey9GqCcnmprnKDVVrHCaw2wkMwQHruG2mI0u8s~3HtAp5t98mEk9GLLWkKRr3h3ghIn-0UWS9U6ibRJjz79~phlM2XBWGekyc1JstpSJ8DQ62bDGJWFwviYzfRlFaSiTwoLlUHHtRAXOREw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_south-texas-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_southern-ca-select-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_southern-ca-select-network_in-network-rates.json.gz?Expires=2108865599&Signature=Oz~~iu7zK-mhXH4X7QWKnDbKxD4nF0HmsiScd9dX-RyeRSdbbzuloMpoPMQVQheLv7WSXv-xgeDfEtUsddHOXRzzjYm~KYwEeAxLTIHV27oFy3qcwlmEqwXY-1QUKpFrplx3JhN1F1-Y~0tbQ2rVPVg2Hi4Y7xCdZNCIaTbUZTA1Ut~1SFWiY1nU5Rqg6TDAVA-EAF5zWoxByjtGAhltNUcPGE2SMcqLTdBwcHDBYo2qkIzQwwwYHBJ7uYRy90Zf~754ywjJSv1IBvG7a5g72Hd588b4M9-S670J1TgP9PKCUIrWold4n8JIB8CIuQVO-FO1WsWzy6W2Lq8tsFNWmg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_southern-ca-select-network_in-network-rates",
+      "plan_name": "Select",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_southern-ca-select-network-cap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_southern-ca-select-network-cap_in-network-rates.json.gz?Expires=2108865599&Signature=Lk77EirnCsr~jr4da6DQz~xN8onFiFLMDl1xCdQTuyFrgBNd-ITdunTpsm9ahTKwZtlc9IBiOOBvYY1lG5kOxsr1MUDWhiRFAy23zQoXOVWmLtdOuozD93n97phrSjeVJBCOhjk-yIW17N1g5oITjF7EDLv~~O2b0Fq5T~itqPRXDPXKdfczu-a2Q~MEy-z5HRQQJWJO5uhi-fdyMhVA4kQFzz2K1aF8e6r~wvrMqAcihbypmZ4j0mC9VedUuQ5YAHZVAINUzoCbIQSE7atm08P6Ue9g87-J2dJDytGSSmRfVfM2-EOmlG0bm9cPFnnF1bppDH-rCKGlpeey4ixSkQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_southern-ca-select-network-cap_in-network-rates",
+      "plan_name": "Select",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_indiana-ifp-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_indiana-ifp-connect_in-network-rates.json.gz?Expires=2108865599&Signature=pGOCKaCC8drnZO5M74zrvotSbQnJ4bXbytgm6V0ZmP9mwUMX7BP3iAxbQ2HmSzY4RBV2BSY8upgpTcrxXT9tR22F3ex2qe17Z-~iN-6JfumXmt74I9t~ybHpRbTaf7jt1MP~8WckzE5gX7KFqhlTjZ202Ns~GH2ubZ8m18vjCayjgfxpjHMO~ZhvkzX4sDsxBDdDPcBTnTDE-IKWgtt5vO-cFhq3kYt2v8Vx7ee31kqhq-hWdFgWaadtwpMEijlyyOI47kYCOFTQhrRGUxArZvfw~g6Ep~Or1JkGG1obuJANSFH4pRSvBka8d95rIqcHDxOFaSlkfkTLqKtWipC2ag__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_indiana-ifp-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "94419IN0010023"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_tennesse-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_tennesse-connect_in-network-rates.json.gz?Expires=2108865599&Signature=aupfZmkUuEdRDoKu30i2n5-iNUAhMU90I5OVOQwXeMb3Gpgfsfz750Ktu5BbTo3PbclrLij4Def7Mw7nZfDJ6sHq0Kx9sVpvYBX77DZjBevOku2A2R63pg~SRD8Yre~UnW5Duk3VsP2CGYBSux5ES-EyyNJYHbPsrAjv21bJ7cvUqDw~WzjbinrHArGw2Gix~WRcc7x5UXYneUYPC4BV8RL2oskCK0FbAcj9mShwVlTf6aJs6sx8eWEYqafrt-VyLk0awHdklRgOBSRAxMHiPsei4e7rrNXyEsVGUrlhZUFj1Xl85hp-aQZ38phbd0kwDePgTUaZ6QYAuhMeeQ54Pw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_tennesse-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "99248TN0060101"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_priority-health-alliance_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_priority-health-alliance_in-network-rates.json.gz?Expires=2108865599&Signature=sHE2SU4T~Qiwdp3G5Lnfg0nOYGmiEsgg~ifl2aMvy5eWedE7O0PD2pp-65tqMQkHg~af0yI7GptWTwhZaVW4Rt3fn-v4R6bBX~ZE4TSW2i9lgjxbozf76JEkc0w3qzrSU70sxmhOOR3LLiQ6RzmDZDIlf3Vrwtbnk5k~YNFwNxAm2IQDlvNwMAzffOOiyx-nFfDlv7Xhw11JQO~YTHmDIAD7Wc81O~YVL0axZ3OP9SHIx-t52opfPa4I64gLWsCHNyb4WEn6AqJ7nfAuCDCsk0ITAQPBaMc9PxsOjsOmoiISVLQ0y52GMV53Z-Yfsjo8ixivEmH2cl5Qm8vmvjULMg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_priority-health-alliance_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "000000000"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_national-ppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_national-ppo_in-network-rates.json.gz?Expires=2108865599&Signature=kHd3IZkA1nlFtQkwtquKC0Y8KUR91W~HD5okNVvsnoP2OJsaQgfL2yguBnE1oxrsowo2o7a1umJCuzb75xTQ3vU2nMwbppTd60EJAAkfXhRGKYwqM7N5jGQpdWiaai0grE67PR1suYjTv4eKYaQge0rOjjNSCxN3EZWVTcyzACDAre~teWvHrmrF2q-Oq5EttOdmx2SJag2oDiyG9NwunwW2Ub-e988dD9mr8zHwz79j5iFx~GgUyQhd3jGxiNNWCBy32d6ptFUnUQo53kpbM6ymb3W2p9iebmvoxBd3IJnW7XmQaNjmNXMLlECuQGVN7KqDRwqQ~IwkoLvlRgPWgA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_national-ppo_in-network-rates",
+      "plan_name": "PPO",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_richmond-and-northern-va-oap-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_richmond-and-northern-va-oap-connect_in-network-rates.json.gz?Expires=2108865599&Signature=BY5-ERbKVsvNMceC6IppMThberfbbshNQgaMxpMWs5rT9IOpwT1YSz8pizmHU7M09X7D~~zY28NA9UcfdFMZIR305v0KR7V0f0CzI8g~nKzIT~tjJetFzi~VdimkNWm7cJcZ7OYFCX1dtW23jtHMlBArGZ4EQz5zX0qKv6DR0WTIVvXZWADlJ~HVF6CccKCfXVetydiT0XKfFIcUfWB9qUEfGgV~0L13AB6t6q7ai-Rd7svz1rYQ~bcKnMt16CfrgNta2oxUWVfDQjCUCK7wxZM2y8tKRBHzn29d-gDJoDFEQQEdDGkg1V-IA~-h5y4crOV5yzzsenZug-UH3vNJpg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_richmond-and-northern-va-oap-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "41921VA0020079"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_az-localflex-incl-ebh-and-pathwell_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_az-localflex-incl-ebh-and-pathwell_in-network-rates.json.gz?Expires=2108865599&Signature=CuWZuBzj2AtVMjc76JXnxtafHeMgLFgXChL9V-LWmF1X9J7TwXKSMX9G-qAHAhT2K8hzglnyKAO3rQ6toLTjqoOxuYVoAiB-NPePzEIZK-WZgmwN2nVOYXzvVGia1ntjhiLXmpDZ6nwYG-aO6YRpRj7rAaJ2P3ktjYOIZIW5jgg1rF2UXSZefp7oAGM72ADGiI7QkMSNQoVlA5Om7igUCsvfrNI071AttHpyK2GBbYBEyioIhQG5ilCNWYpP3FSng7e5rotaufg5ZwwLdJ5qT4uKhVt8I8wewNBgzM40L21uVgxMcKC8c81-CxMVnw8nnsBYJOkRtKomS6uKj5CoZQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_az-localflex-incl-ebh-and-pathwell_in-network-rates",
+      "plan_name": "Local Plus",
+      "plan_id": "860380284"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_arizona-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_arizona-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=fs-AHMxLYvW1abucjycvGLgV9X7~d3zEqbL4WIEg0chVfUSrpnsSIn2I3vuDKe5NTm3JjUtvHcmjBzCGo107Q77dRSj7wGJuz~IPnjU8h5klWHuNWchNed4-Nk~mxk4K4djxSlXsFsYZOSYAZzfEK79l6v~pabUwqmv1gq9IBRCKVg6yQmBoCjcoKfSc05GCDQwPDGYE00Lq5co4~6vc9kuNCXVHPBLx~BIHYV925noZjvcHKlPk2ldE2ijD3z1kyJPqXzeJ1rHUERl4oCslqmzI0tilvqEZ0fU68v~pblBEenLobffO~L1hIv7dUER7rU8KkFEhNa2JW5NnaCNZqA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_arizona-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "86-0334392"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_phoenix-az-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_phoenix-az-connect_in-network-rates.json.gz?Expires=2108865599&Signature=GVmuHq2qIre7LyNcbuqfkcYTJRBo3mUvmuF~vcsfoqchOkQglZWrQX99TC-TUzKxvrL5hOjAQ2624tNYlPxcbBM1Sz0YCIjoonD5mHLnSn~Qv1kxOnW2TnwZXdTKmTEInKv5tETxrSkre~YJjHOt4e-HtEomX55QhEpfqZRnvPkfIFzYlbdtD4UbPLM2YDjk7nO3ZJI2df~0o8xVMly9hmFgkt9plRc6hO5Jq040LFlFOQGBNUvNkMS5eS1MAH57M3Z0P~YESGoEhIZLeMDCMUxZDLbP3AxtxQh7cvi9CS7R77jrSRFkH53uW4FFN1C4wJqmZIqM3ihc~Aw3PV5XEA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_phoenix-az-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "97667AZ0110018"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-one-health_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-one-health_in-network-rates.json.gz?Expires=2108865599&Signature=kJUPclUTQxp03ja9yHHPob5ZJOZ-sUDpr~SwXN0iDQ28MJ1AV6XKr-CILU~8Ie-yBDfiF55rK0p3RsyflEzYZH~nRPwDm-yiFtYIAQLj26J1Vpk-rHb17Msv6VB9eY09ybwKH0ihBzNEVbKD8fFib3FnIdTeX9BDdWa52lbi2JXBsDgX8dfNTw~vkdKi4W7CvX~8XYGkpbnDLF1st3UP21F5Aqq8cn4y0eDFZCOwUSRTW2Jrt4fl4z6n9yR0SWguSs3g3t8YB0OzY15bK8Jr8DfQSfIMtsiJDRgdCZPuCBQ0y15729d6KdxGXHKaDPDsjj1EgSWEKn8KAu07ON3~7Q__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-one-health_in-network-rates",
+      "plan_name": "Select",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-hmo-plus_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-hmo-plus_in-network-rates.json.gz?Expires=2108865599&Signature=JInpc54qSJGh3Km9YHBHAfuNousN6qlC650lRvVlXR3WPLcm4-lDZOGa7HGjMaqkWnqoWz06QuVC7AeBOzUuDMcoe77ThPQMp16AFhIwdo13s07f9I0L1TRs~OvUyq8aFFYyNto8Ajm-MQw1W-N7FxC2XFDNpwAXxn-EXVef57GC4mvpVtWCNP2qAG9v1QJrHwvqdxJGe952DM4hReeWBTlWkOqzMGcp6ic7fiRYfPLNg~bqtqNVJCXNiXiFC4zqvz7l3B66zOTqThf8~v7ua4cian~WPZxDe97iR8xh~77Fp9hVmpKBNFkpW06ylf5idh11RjQDG5fdbOSbJZtZ7A__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-hmo-plus_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "84-1004500"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_western-kentucky-gppo-tpv_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_western-kentucky-gppo-tpv_in-network-rates.json.gz?Expires=2108865599&Signature=VpEj2oYXgcUdLwTTlRmKNnFPM7fZK-hZzTJVlRCnZSxF3pEQIOfI4WXKXfud26WdYOyu3XRBUamaFtN2C8zfZ1fIDw5rrHDbCFJSYIBdokvlJN4xVHpKI99a825QcHggQ8v-hKVAgYoSm-W1sc7XQPEo62D5aW8x0ibIrciGilOOrTeXbZB8yT9fClJ9FIHEqKJKPSyPS~zwf0TxZBZrZ2AQ54JbgvvFb0eV9UnfzH5FzW~v~5ZTyMxCA4HEXu27m9ikYKvZuiDpbZbaSkibCtFwHhcBqKzlljMWtMyvqpshEENiUF4o8rqhSKYMFXx0rjVyAH3XUK09rvdO7tZZfg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_western-kentucky-gppo-tpv_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_north-texas-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_north-texas-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=mr4wPpXP26nRlmQ6WMtQLy~tCrOloaomJDqyrqISWZsZNTXK9RWzGOS~XtqYYNunAtLL36zoK0lnTIGDSimpde4lS5t8JmEPV5HqOS4Pbl1nVcvHMn0d-OSyNfQPCppwv6EMtQ0qi1~ng45iWr0FMIJujyXPQ9KaEKWKGCpWDO-T5Wq5ru5OswUb94Qt6QqLO9x~YAVeIrUwV3PF4F7AFQB0e9b~c8IJHsBNFcBfnX-3no-SU5P6ugTSlxmzxAMW-FUZsuZDA~q3Uhv2aR1u3bsA6fAw8vIa-wSoUmZ7duLqD2xf8mFoUUWjG9~FQX803yDKxzF6b7PIOrv0Stfp2g__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_north-texas-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_milwaukee-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_milwaukee-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=QnpK7kh3nDpf7OxHaqmjA2HMjW~hnWQi61a~SYoFBGBkZ-J3GLQmh-yB5YvcYCQmj3Rok9RijR1Ye5h7EB0MhyooQE-HO9n-oV7JMm7K2MNuMilm6BX7T1djXzaSypBdaf8PsQ6HTK0gJPzwZUcZJU4-fZZjS0pqR3tH7IDSwxKyxnmQMDB97jIxagaiVPi3UfyqkKnO0dXWskrsmgvkSXRb~81Ozxvzaig37dfg4d-BGIwptrOcRaRKgk7e8aFo-b6XCSgMmjOl-W8FLxzn0f34Q~iaRE02pxJf6TI4jQDSpl3v5PlKAVr~pYKrm8Y-l2Ko8fiWCjgy~Uk1BudmlA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_milwaukee-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_tennesse-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_tennesse-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=m4T~xAV2V3rwigTWdar1xcA~u6G4DmYcj1yh~GJ-cjfsa~y2~bEHiUX8nwLDYJDADjowE5p8hJgpe6xyh54mXcmIBjagZQtFPdmLkDIcJpp-xfFqgei0Rt6xtxJ65Mq7b70PWZdJJYlpLAMQEqOzivgNrmnJCkPyJEf5yGWbNkD1deyomdX224j7mv--2sJyZYLK46Swt8-CjBbbTxPqCpJKpG3uzojVr7Qo4ftjXOisBhjz9u-do4DQ-CwGcJ0QKXrKBPSA6L3Mjn2EyMDRa4yaDSaVFbDBm2t6RACS~EOrA5N~NpwdSIQonOrrqJUoA-urdVk7rCLlE5Jkn6ZIJQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_tennesse-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_pittsburgh-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_pittsburgh-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=otTWMAxhCu5bMRIk-fR2JF1aVqeaF3-Rul5LRMAO58-tK56SNlNy2RR6wqw4ey0p8ZG49DtTucbMlQOam4ZZn793NTvdV7MwfljpfqUP6WcSaYdQ0c-IYfluGcDDV6HkPRrDCpEsx3Lup4QNGqhTz4JuJR7MzqDYIxhEm4J662JJK8kcVcmMFzSHVz5dtmR6T7Fopbe-VQNXM4Pz9sbfk6hha59phjaA0gH9A6sx-oZm0aOLnmIUXhjSOW~lmBJ1p~H7N9j1cTBCEnl4zJkrmgfEc5v408P8UNmw01Dwc9DxNxOo2VimTxH4oj-hsAoK3b3nbN~ZiIXlSwRSHX59aA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_pittsburgh-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_central-missouri-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_central-missouri-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=pTibHNKOYDBIXj2uddR7ARjaPpz5FsFT1DVkRRhluAqtueGzIsBFD1QgwQn2inIz-Uih0508cTz54JpQAZ4AUkZazuMuqOFTL21hSFG-chvIGqKM2~6Gzg7lnXXehu8YEzMXUjEPWWm7Pg-Bb13x-QTEdm7tx4Rew1Ym5UK9jty~OygUWlMOuPjvReCGHLbomj~ssWzdvHN6sqxoyokJDAmBmmC4pXEv1REz4OctJz4-MlvWu84tgc-mAvV81hXeENvEsznxx4ZnkX3AizOjKxsIo4jB5U425nslmRGpoE4rzcLbNw2~fSK3A9MudyO1B9Pr0NFRmNOFxfqPd4encw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_central-missouri-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_south-louisiana-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_south-louisiana-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=PQA1qDjPX5dDMXUUgXyIjouqfXEyY97EeWTCDFvktd1a~cMvCPNijAoNFOmpFOesNuGc5LcJStfn9zEFuC4bGNk61g4HGNkorfbnvHRNWjiM3KWWXcJ6CWjzSZKkNvsyxj6iFbKrrcci5mraOWL15izcwkCKJhAbI2xUDNAmNys7OMx9U4VGkSDmWJumR4Fjcv4UaYaju1z6pg~e2nL-zb7u~8GnvFNkZHtLyqx0CXfZle7u75Me7ChHhgHFmJB~Rvg0NKTWLNLw3Xl~2oT0gzHGBsLTOFH6GSB7TxBuM36TIEdEC8I3cIMOJaAcH0fhnRjA91YmI2V886aKLGp8Bg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_south-louisiana-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_oklahoma-city-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_oklahoma-city-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=ou1Ecdq0xF~foqj3m5hCgs3yPksuQRPMQEjCF3G~BFO7u~2hX0xxES6yxmqWpQeEacW2KnYXAH9s2ZXAc1QTAbE1iO-zV1IVECcov1zHI6Vb4dYvY-NDdLivwM7HaDri8h4vD5eWTQECmiI1g--L7ch805CSodanw94BTP0EeX1liG1YeCT0AmX80yncNBVyCDocykdqeNT5Q2cGkDaWAUCvP3nOasDbnJxL~xGzFSYrBfJdO0GoUwKsL-3MDegu8WsOFHxB91z~c9ynUdVMrxS~5W0zftUqBrwjwvGB2XV7pk622XFFDFHD-M6IwXtxxYKyba~P-NJwp~k9zwE7Aw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_oklahoma-city-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_panama-city-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_panama-city-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=pthaJPvrVwdQvvEaW5VRbvzbEa1QLVrV9VZVO-bX0segMIg~UxUDK86qlpnnEfL-WytHGmNpBAst3dNKL98w7DzEJ9NDXXdlziBXHnbWJwLgCs2O6ggon6QEHXK0yr1eyOjf69cduahk3aCokzYJ5D0Qc3uuRYesj2t3O0N9NlJ-kWdjLgaXyW~WAKmIuznwMh27usJhWa-QoeoTips2ugBl1oXaWEBto1yYw~t98FZRJoy6PE8xbww8IJVIxIBVenJHiRKfXJexrB5SEEjeAPxKUasAnc-iXIlGUcASyvakEFvu65J-o4lHxURX0NulFwJMCOQES0b5Lek1vjm1eQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_panama-city-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cincinnati-dayton-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cincinnati-dayton-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=I5PRqej3dCUV~d8iDgxjhlr9cyJIG~6JB94JEBZ8uYd7vl-gKIMs36lzWMQ-9KjbC3aCNfwI-oZfbo4YLT5ae4GScVaqgDprd3rKVrAiylVzifkxJVJiDVAte4~A5-lX8~M-s1aNVo0rmPJRptQE--I1YIKaVAekBbyaAnsyhHieuEfat6foiqthlYf6QV35V1HTyQbTCPFWMRhO1fNdGZqQiHycA-EqKMU2qO9ZCySJiT1J~8OmLKwaoPBypyCzoVDcKrSusOLF327v4MLw5ykRfZfshfW3g0uFINi52s-EItlpKkp~vUHZHHxBj9ycPllSoBEGjZP0rKU9pPeM3w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cincinnati-dayton-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_chicago-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_chicago-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=B62FPrFQoMqBgpDuPP-yq3vujj89e8QwVXe~YeHdYgoem9lkUlaNUvfUQfJpiljx9UYwWOMOEEQiDqUhJYWXqPxZIxBKmKZDTyKpXfUIvPDXb3cVXAU-rZB7IbxpUxZlfQs7Eb3L0ysB-7cYGy3q-~8sCzB3SV30oWvExLdWy7g~Ee98PQkU4cml7rEWW8HbeezIJHg8XjQZz3NmXrM9o3C8a1uMgDE7EMnubwnXctIGSWUR-MUdgeLnxEvALkqSSKgO6jUIhAGfPPt4-DttGUXxq6bRQiT4O6YWxJJ8d2MIoZ-IsUkaPxbjRPeVulVflT5XueJjEJE4hOiV32VbVA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_chicago-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_metro-new-york-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_metro-new-york-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=nCo3IKqM2jdX6QtF7-Nw0l2DKfgpJyrC7iRRiqC7bI2xi2QI0zQ-aZBmJK395QLGo0D2QfteMX2OKExA~IbYSDbY92lsJ7JelhY84s7y0qw~qkF2ZIQyjg6nQcNChXASsIFkN0l8~VeGCAvf-FhwHaCVNqP~an5vVxQOzsbmABqpdaKPZ9lzK14JYUSj10WCEa0imeB0IV7yVch96N71~9bhxEM1BhiIJFhuyN2S6GHZwcyh7bnMvtrC7g6r4hyhcVpJAUeP6h0g2KJ4MRgCnj4v6zm-GWWZtdNRaCS7OkX9sEkd3QrrVxwBAbS5ZrxD3Pj4gJZ6zhtKxh7sDC54bA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_metro-new-york-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cleveland-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cleveland-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=YviagOhdBvJmjyg4SbS4cVvO9vTfU766cpPwv6p0b8UyWUAkdFjFZFxAbHPHHh2KcabSXDbvoFoOLloEeIqKFOdQbjkLZht9iYJU9oi2j8PHWfaqWakTA5vCpYmjUFHAfWP6LrGnrpsNPJ7psG7gaq4Sy3XTl0DPsttcmHPG07f8GG2L6qbNvLJp0Fe3uJMNckxjJJF5N3Vw3hY7giQRaQDeP-CcqI-E-1UljP13NX2xG~M4~Wq1mjrDaMsNZ4gHxSW9hIUPdtamh9d0r-y9e3RPcTa7iD3I-Lg31VmB~zTHC0Jkgjj1DMMiee0-6csHiUX97NmUeb5mYHxwOWlHDg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cleveland-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_pensacola-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_pensacola-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=Pvrphe1peKwPq0pvqksuxjJSgqBuePFlNGjkbWaYe3kmUGtb1uP7rxKe~quD1v-qfsyQKoTsNM2463fQWMMbuDuzTXbiejhrL6~B0beePBiXlkGFE9Ay9YqQM7--hb7oHuNbRv6DQCu0F-uRCeHf5dUfpAAX5IoHmkCoW0CAO2KKQpY4QniEe~4PtpBYTjFj7Lx3kBGtFX~ih8hWLl5D4BZ3dZwU93XXPvPAla1r0SMT~q7QM29un86UJUD6swu7InHVRW0G0guLwr0pTXk6aMoSBPR9QJoM-xEdCEuwG7W1ZIiD3oUbeUbr6ofdMS0uVF3C81PmyuxzZN7Pzt45kw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_pensacola-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_north-carolina-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_north-carolina-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=m5pRXL8P2amzsBof2Fd6FyExv338Jwe7XUqFmvuG~8oHmLahM3I9vFWcNm37pCNG9sXGschvORR~GUxGABFsX2QRSmIfzGWgV~gwpKReqKREKj8tfA08qlRbteIuM9BanC67fbDqcMVcpGBc~MOYERR8rzuV0l9K9IUis7ieTf1gAEGaJ0Id-fYnB~LRLpQtB0mUCuaYAfbROfu6TuCQiv0GkHUsod0f1NsoiH8tssqw1yFbAIj2ZO35zanKMYL4BbCQUqeN5co2uQvQqJm-08OVT50gdjwBi7-uLjVELCmPPKfjvvJJKB5LuUnN6y8UvqswMYZAfWxy57YQm4YbCA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_north-carolina-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_central-ohio_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_central-ohio_in-network-rates.json.gz?Expires=2108865599&Signature=BbwevbXHlgZ~6gyq-bqRsMBTkY9cnWl6TzmXgCYSnQvn-brMzwyHgwqI5ea0wZgD8-SFe8WwMI9xsjgW9XORa40Ac5c-df1JnzNK9M8Jmvk9aXwlbXKciCQ4rXVOtuM69ytyECB4qKDDnLsEaeQgE0NW67y5tMe0-agJZPWt8rf6Es3rSr3VXHeIMq4OBQBKzHF0ButspN0aVwC6iE5pJ-RpkpH3t3U3ia15W-S2YqeF6ikZc~u8WVugnx0NbaW243jkVEjgvOPoLQF80j4r13I05xznbpKFCIVMdpeIlIHDo6-UbplwALzktTMXi6vvJT6~-BM2Jt3f-oJ3kQPAMw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_central-ohio_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_shreveport-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_shreveport-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=L33TSaBudrr-9-iQ911X1NjNqnG8hb4L0PSAtHVG1b4xgInL4aLWygiSnAvxgj1VpCbHSVreGJ6JOfjD9b-T4dpvU~3P7EvZZg~7xgfj5Tl8y~75mJK~ml~MaozTO18C~76CFAN~qKUR3iJS~yvn-uIp65tZk7OkyQVa5Zq1V7ME-DLKdEKTv6v7rjd1iJlsTJmUl8dkADFqXjSSjv7JWY7jQPoHPM3GGLEMEVo5IECUlYSbMv-UYP2e5ud1Q4qarV-L3TfMKbGeK-wTvioqxnVe9bN7mRcdfnADYvYOElqtkDajqBC0TbRR7UpJ1yU2p8yJkayihka63vyL-OMCZQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_shreveport-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_new-england-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_new-england-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=jvAzZ-sCZNOuDY7GqWt3Yhq0-QGEGUWpvcfjyitrLGktr9QoUAVgeGOFgwUcetvRaugCVEvCa7GGOPWtFV-3KHjjwe-dVv7e9SuukJltYcqcvr70CkBSQE5a~Be8Qg8jXnedR259VZvgKbFtXMmqLydRGb9k-L9ovuD-AYHbffr3BdG0epWxlo5rr2tn6ALGXvbsvUwjwNXrTyfypU36ocRle78c4P14w7q31UhT~x7HQJHQVvJVM-cCnrOkc8G2nlDyZ2Hfo1IWY0sriOofJv0WOaUrWxKgZnuhjSei79KPOqmZDlc1g3BejQf3P-B~h93SAVZwjS7cfFPXMOAdKw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_new-england-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_tulsa-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_tulsa-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=hWBquhC8z9RoMClDDf06UbuZtCWLP23uBc86D-w-93hki2zD-7ycpQC~3gY7Ve-kW~yM9FhmQoOtJwV0eQ8vXtTrV6ErExxh9w8cDfqxUYfhUdMbjuvUUOso8a3Kw2aPd355tv42NJyBILYQK7BY6KUv6gIdeHzQcvv-U2pA~XzqqE87psqtiTmWAcrDJQBLWaQw1eCwrI53HZH4Jpyk5S2xvsvY80~Tue7XVco4vUiQ2anmy9~F-hLgYskQNn~g6EuPji5l0OtTZ7-KJwkG~y5UtkP0Hhxdocsx4LSCLAv6-YdUGRPggMm~FbHzkAly78SjjSWCD3UTRFZcry0JAw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_tulsa-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_louisville-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_louisville-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=CmIxCvz7tQue7CLK3GLy8JxRKr9a11cEw0BkXPDg8bh212BAyM-7fpZu4guF21gz1p5NiiuKQ-olUx-VchBk6Q6hzWMLxtFq0vrlbRT0ewwe9L4mEVq6pZMp~WWgCYZW5KHxugAdkrrlp8vBzVfj6sLFBNjo5L0bU5oPX5kDobSXifg9KxeiLAJiquWOxXOyOM4a1U6CQydOcz04ANm6Yz3HY5JzrbLfjGux~1C2swOLrX2h-FdvMvoKhNAV-jzrTtZelu81-vOy1z7A~EY3nX83ujJ-Fj3x4w26apkXRbHhj85jx7EoM7OyrqEasK1MSbewO3YJPqGkBQXUsNexGQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_louisville-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_washington-gppo-direct_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_washington-gppo-direct_in-network-rates.json.gz?Expires=2108865599&Signature=WVurnVuvY3~YIQJZShYARhC4xy8rPnLFUilOt69C8WV~sRtws~Bx5OoFGb9xnA0KftUgSUHgLdPgLumZWrUNeB-CQokiSzoEY44be~buwHkSSzubjw~zyhLQurq1XpzxeMKTvx852lf9WjxjxQySqMNfOEBhgYsbLtg0QoBO01DwSyLzhl2FYT8d4BR~n3f36Jaf1600kljKvnnTJ5B0rdbAWBPxlUZM7M6KPuhAy8S-xhHqhLH4XrTtZTjRCYRQJy~vUG6rI4SzZW7N3MVQ2maSLUvGxX~jUG2XTQNl58atJoEkWcOuFUOKs-PIiA56ffKmySjoxWSjLFN7dmn63w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_washington-gppo-direct_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_central-pennsylvania-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_central-pennsylvania-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=RSCKNHUXSJwC69Rv9kTDQDt0sDv2lBrLMR6-fpyTZrJlDtBntSL-~0DmPrDm3lxkSNFdg00WlOWfoWq6d9VOR5y8W0YODu~Veec~CRFbDeb-set4dly2VsemzHOKBDVq7Q67alYSDK1eV-pX5aOteFCaHgzTLsa5VV2OXBj5WknIDBEOpUCyaZQf5Ezby-PmwaXmTvXJBOqx82MQK8Q2PI2SurAqAUVQf4txIttkT0WL~0MAQGC~9k5MGyUsP8aZJm9zQ-JcfM1qPU~qdWH5jY0HUJy-8M0IpX2d6B7olLtMTOGTKFCvIBIGkIEjzvNCQw6c6Uui9h47LPyGijCaPg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_central-pennsylvania-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "131988190"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_national-ppo-sar-1_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_national-ppo-sar-1_in-network-rates.json.gz?Expires=2108865599&Signature=EjxEXeQP9rD72gYZ-Bvb6mFg77OUH9QQY3tAic2w6dhrTjPbFcKnr1xnTzS6DhZrJBFwVay11P1YrLJ-SxHPyQlACIxsQ-gM-6~0O3U3tQ-C6eBL9Ctn8VuAs7H59jTA2P45Xq65ZFAUnoxNzmJrY7Z2cJnVPIyC74Iw6d0B5U7ZX0ZU9hQxjoIRuuk42hvHa5xURkYOHWV3MVpFqPOXbsn1qonuHuihr7ZG7OXxM4lIHiySpluwpMSrNXXeiZi6YCfY-cNBktv0kwbQdqXXWqPbiitZHFJI3F1KRoPa2JzmQ-AfAMdzkgoXjPzM6Gh3rM-629V92mJ80C5wSS0NJQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_national-ppo-sar-1_in-network-rates",
+      "plan_name": "PPO",
+      "plan_id": "391737360"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_nc-connect-hmo-rural_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_nc-connect-hmo-rural_in-network-rates.json.gz?Expires=2108865599&Signature=Uo0ahhNwxpWYL6uLOLZShA4SbQkzvH~LQFtcIZ7rjCxlceFxRYgIvBnIOC0wS8iMt9KRTBRKEIWwY2Ue2CqcTZQ9lhdFqltwEc6jHuyhZMF91skn8s-3q5ppNiJPnHDUL0mMS6R~BXM5qY-fnDlIUuT30WFUxlYbwpIVZrsySKI6YbCZBIJT0EfzBTesdY8i3-gj5UJZJlcYcjcjF3ayO~JZEpbdFrIegS6o4Z6mfAplH7EA0CDCSSYZEad4yktq3GjjH~~xigP8XDLtvjSNXNVlmZyAMoiAHnXfoKU8VB1YtA1dQt5-pOJ8RJam~n0wkeeBRU7NDGdYgFKUmTIVmA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_nc-connect-hmo-rural_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "73943NC0070030"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_florida-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_florida-connect_in-network-rates.json.gz?Expires=2108865599&Signature=btIDkhIQR7AiR3~loHvPdaoQ~xn05QlIvMSv0eFUYOZvdE6-8B8VCeJwCZH135av2af4~LuOS0VdR~mEM2fv3gtEd4tZiLULBYBNpMa728Z1xLViSX5v5Bd0PGHsHSGNAEZK~IYPqGoMVmzVJd6z7oUH56hfb0S6v0~m5vzVHKliMeA2fJxkopBSH1wnZLeqKh9lFouC-5vGhgSQKOuDcM74BxoAso1w2Tgr7czYLXiutC1G8Y015tX8VL8KEK1yBK1btNJ9Oz-Ds94VpSmd53y8EMnMZOhGHvencX7SMBJzPi2HRe6OG43XrwNbk5dnEwncknI7z2G8WUOZc1Y2mg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_florida-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "48121FL0070136"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_denver-co-connect-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_denver-co-connect-network_in-network-rates.json.gz?Expires=2108865599&Signature=okiiE6DpZxSPc2-UD3MMXXTBYZzf3PZrkFF9cypwfIHw9Jjh49a2~gKYy5qjUYiz-Rj1OIluTpC8K8ATNSt9~lwOD5elNDdq05g59WXKXq2yoHziaIKm8z1QCOhwA99GTt-9OWhzAc4MAIH7SgRHZqMvvFMV67tbIxre-LVm-uW5G8P3JNwikEK2fxhxtbikn0Y3ABuFovI3UZxE4Oi~MJU09WUQenk6mqAMspXshBwGZIt6BGAXR3m42eqvB~UZTYwKOaravgbaceAe~Z6CpvMTWDVY4rHODyVEv1tsaEIcrcMy8SmC6O5COfqbrLnAMLiHaujQTfTRzv2k06aK7Q__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_denver-co-connect-network_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "49375CO0060015"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_southern-ca-value-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_southern-ca-value-network_in-network-rates.json.gz?Expires=2108865599&Signature=mB40Q9GAJaJQxTh7vFPttB7INpiZjsoEqm7VwX78xatBIylRxSknHvn0E~GfWrhZ3kunKdMbmFmcVR~cPuGqJ7MY-hk40xUePw4Nu8XA2~bQ7wiEsKGciQQIcww2Fya9gK2QiDgzrpARe0MzQ7~bMFNnAGmX9HX7NqQSqsmjdWnevlW~1TVHKmTlgSjzJiWoMWsmYkcUUJx7dri9Q6Jo~vrg1ZslzqqcALmVMMupgtfNXTCwB9vD7nX8GlSWCvLYSfLeMqVMcZfsmzqlK8V0MvoggskQHhNa-8b1AUlUD2XO0juqk1BONTqB7heiUl03sv7nUQ260D310fba4wBCJw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_southern-ca-value-network_in-network-rates",
+      "plan_name": "Select Value",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_southern-ca-value-network-cap_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_southern-ca-value-network-cap_in-network-rates.json.gz?Expires=2108865599&Signature=AbHxgBGQAQeu8J53eabmTIllmXuvyTqn7tYW8PWKL9ckNphPMeiN-Tdff~ooqNQ~TZHGKjZrI1TLX45JB8L2Hah0nmqXZn~psQAblhpUqlNJKZwVfA-MI0sU3~TlJII7Mi1s6BltsCYB7CBwXAjm2dIpBsu1Y8G8MgX2ZuL4PEHqZq81XC7ixYP4Ao72qaNKqOqQGKq16fjfqmAs-fN9B4o5xjLaYpoIIxN4kxYEbzE3bpSwOuEY1crg~mqSx7xtVQLw~LKBrzp7tIMwLoju92k2e0FvyU08Ofsn2BxypfP1BeaKOYqXKHysOIZK0YOpjZDSyWv7AwNZQz5hQqvU1Q__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_southern-ca-value-network-cap_in-network-rates",
+      "plan_name": "Select Value",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-open-access-hmo-pos_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-open-access-hmo-pos_in-network-rates.json.gz?Expires=2108865599&Signature=lXufGIDWNohbiIvvJrey~jEen8BLe9pgSvqbO~s7Gwx1likRRUGZk9clW8GOEpdDbWSbZbLWlmJJZXbY2T0YySig1uY7i1znAPue9isXuxUYKwqjCo3jadZX5t3WFIGMciDZtv~U~R0rJp-XMdbCrttXkVC5ZrPgmOFad-wQ2xLo6p-T3FFR1bal5GfwWbRqUM4wtB0gnKv3~wX0dGAhsK3ZVcVD0S2zL2pk1TrKpgQgTDNsDkaPdT-Elbfrp1p9sP8QEiwRwmiz8V0jVDc9db5gL3cedYCPUZhe8oH3cvaXmtJ87LKgRWrAu4PPihAIOcz0htoE3~yhKZwoYJa1gw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-open-access-hmo-pos_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_ifp-texas-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_ifp-texas-connect_in-network-rates.json.gz?Expires=2108865599&Signature=NT9pGcc7cJ9Y9~JdCi1D9NkHpsFwq6R7A95CYVWdxfUY0CKfsOcYxShlquw5VWiAL1R0b8BQJ8IZd1DWh1vB5ybkr2gdItbtrE4HXuOpBzGm9Wg6HXIdk-7Fn~tLvk7i3bJOrAx9bS2bjOZzniglflXUL8qxNEBSeGw3umLJ~XQwd4GOPobTEzQL--Gnyn4~P23wZGzWId~~XSVVt5aifBWgDPHn39yJIpnAhZRCCc55wWjzrgkt5O1xZGVaNAZrD7bULZxw2~dDf6hsTaG1qxh4PPXHuZ2odvCXyZvVvWlrWeVJ-oU5PhyThRDjPPL9WQhijw92PWngF6Ris7HwVw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_ifp-texas-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "76589TX0010017"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_ms-ifp-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_ms-ifp-connect_in-network-rates.json.gz?Expires=2108865599&Signature=spvDuItaiFOxH~NQrXm0rcW4QMMMn-xIY5WTNePE2r8TL8A~R5L-VYG5yveeUNf4GsM10NfxxQb0OB8L9UN30eWkFCnVOLJYQZjIIidgtsMU2r4XzIJIpnNss1KBx4oQNTC22Pyd1FfFam74R1nWZtSC1xuSntOfqdgGUkqJzwFHC7MFhJPDjCZeLg1kLNE5wOf2kkvMQFAhwX14vftOzR8c5K1DcLzYG2vIMm7MK1PhOh6XqBVzSnIdwNhWREb-ypyTgSY6ZnK180ZX5jAm2yV4T1bo5lA3ssSmIxoiMpFkHpCAi70u2n8h0VVGehFP8DimmXdelZrjP~digrhddA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_ms-ifp-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "56766MS0010008"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_st-louis-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_st-louis-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=Z2jlIDzTgQCMGc3Y~wFtwFAmzX8jjlx5~yCMPilUZOuQqrMvVFQ0erWqLbfBEU~UjkPiGkVUUOQrJNMmJSWTbA7yVmoyCd~Ntd0gZiNWiKwpoTHs1xKGjh9C7aAml2BeBGewZoUP6HN9pfbAhAqM6WeVwM5DmvSuUdHeN19Vc4~pojURFenr-U4MI5Iu1bqQGcCgheBqZf4ZeQE07g0u9mj0uFaZdVDtiRntbeQcABx20o155GyAQkMs~Tm-dnVlyDunCYV3TOejLD1TlH21QOcFVkyYP5WGqmpriqr806g~4Cz5OWr5NewyR1FnekZ5oqcWqXxKy-kEDYo5s2F1xA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_st-louis-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "943382187"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_indianapolis-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_indianapolis-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=I1y3yJjD0coOzTHYkkjPGnQTw1EqaUC~KS6Q25ae2lHESyP~cGPvpPxd6VdxqhHQf8351pGl3lSWerz~avw7dCyBbI6HOeYoV-4IByDnYLlfEIvMbRcr1rD5vi6MGKdfE66CWsiPkxVBtuQrAGwgepmJp1M8AYdVfVzckT23AlEnm~Rqp-K65Ev9ndSxEW5wXGfN6CvlpWmERX15slr12hxAyfTJ0pXwMu0wXy0isNMno7X6Y26f4bpjfJ5OWB8m1eF1jeETmsOahRmxJkRye8jVi3SlDev77F4NoZAJzS93Y2ny43Ko5N-PleQXPq7I8wjLV29pbnsrVHIfyN3CyQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_indianapolis-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "943382187"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_kansas-city-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_kansas-city-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=FD~CgPvqHt6aoXB7zgTaqDd1AoGNDObqaHfZDMwBClf-Xc0t~UR2bKyaFLzLeDF-O5ScrWrmJf-g0bdqAIoyBxEepjiINDfRCQLZjghFsSX2OHL0ZTyV8~6q8pJOgjMm9mitYWvdioiZvD2QxLn9BU4hEmSrWKATe35U2hyhI5Nw9VcB8f5Y3bNcDp-OZ-2Ojov~svpUnCiZDHWIrS7QGxVN3z4hT~Edj5-93dJOjmjOz4YuPZunvz79bECCMUB4RLrlDHV8NWZxbIYXwL-H41439rPqz37K5b6zzkP-rMTB7OnO9MwMV-gPH-mRlJLsj40OphxORW5Y~DYCzeMWpw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_kansas-city-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "943382187"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_mid-atlantic-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_mid-atlantic-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=OGqO0STsUNlDxwugMNdmJwazaiTO73EEDc0CGrgIWEjjl3zl8PqSC2uuOWt8BYSLw4n8227hGH8caS8sqRzHWKkSqhgIaJAwCNAPivlGp~N0TgTI6uqCOj~WOWED3EoMvifr25iq9ymQ7gHHZfeRYut1UaZ66s3HmzyWn9ZQGkoc5DPGNonw5qE69nUL29OFOJBS2CXGpe8oOtNOCoieEOHXuggysol7O9krWUHT0iAsiyVVGUFTBMTNybDhCXlic-TqUQhE5uON9ZWKQklK3ipqzdiIl~TPO5fbe8GRdeuN86j~Q9dNOCmOf~xkgFMbXqvPDkgddbwRD1qa6zRdLQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_mid-atlantic-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "943382187"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_sw-missouri-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_sw-missouri-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=ccpO0M~ghbp5ANYaZGvHPKlhCqaXXa6TPKtpicuP0m~fcfnChMaVf30sbAeRIYjZgqMJjsBGerHUhEfalbEtONZ62vZKkVW~fzSd82Mq8DeZHov6mpvbamavmO3pVN~r4raKUSdfTYzZHGJF8zTWGspx9hIEXc5mxlbO7f8jOTI~JOFiTm7DZXAqtdbYttS0mN~~h6eyb7N-SHn4K9xXu5bx4fNz3Pb7pKExQ0~7NgIOucezZduVsOpxGR~o~Mm0PEjOXpctkOaqAv8b2w8LwZ2GAcqHso-ThpjJ~Dea0i8Rdssl3sUXMIQ-4t-JAno8mcPziXcBa8ypZtb7Z~q94g__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_sw-missouri-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "943382187"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_ga-ifp-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_ga-ifp-connect_in-network-rates.json.gz?Expires=2108865599&Signature=AfX-Rk0UoMK23bAPfGEugfzeFeS7Y38j3bVtKRxTBVI1nRPmVDRhIDTFKIScBZQHjVQZbiYSHDyPgcYSxIpseq-TEr1e-IM9o6QvC~FunUt5i8Ts8vw9e95GfEA17SRon17wNjMncvadNfFZ4xqIhcYW7FzDzimlleYeRII-tn5qwv88Zp5KcbamZHyBdv2itpN1pT5Wv~HNFgFLkRuziTDRZeKwK00b4c3qKBeHkOG89N9oVrP36jsIwHkOOT--8lkjVWCVIMYjnm9zSpV3MJ-IUtJNPSYkvSpox~YCZQ0n0Bbyi08zGwRHj8GgoeJeeX3~qMXTo4nIGskvcQk31w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_ga-ifp-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "15105GA0020008"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_north-new-jersey-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_north-new-jersey-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=P5Uv6aRxt9ZqOrTjSh7OsEoi-eRzJPCsi7SWpp5Bz~49xaroOYuVKnD10ISGqHBFUAJhRdN9YiC3ZJgdHXmoRchUbrPY~rh3YM2Myzy~Fht03Yx30TuXzRH826KyjD7iwEJbSkNIzha9bTy~4sqRBnk43BNrzIRNnbK09v-ZWDeblNs8IO4sUfKNkCMhQAvrjCAXi4wJWcyrMC0ap6JHrAdodR~LSaBA6OlebhIABy0wn1tQ7HHAaY99It09CHlrvWUYLzamznE3MFNypxkv~~WkuCi-Z4yT7~sKGTQh8alx5B28vzbZ2j1I~seCRauvg6JKfN9HlKO6HFDfQHNwzA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_north-new-jersey-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "22-2720890"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_south-new-jersey-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_south-new-jersey-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=qaJUN9~mDdTzCofQmOmCqUoGClTdHBYuWZx1heFOfth7YbOyZ-Fkc-2kdUbHwSxE8bBiwSYE6MkMUnR6wMLZnVdd0JWtWMjjPtej2clz23eeaH380-nhRdkWPB4Czn086yGFmCs9EsNpNfy-VcKLTw0-mWIMbf51C8YifeZaD8BZ-hOFwXFTEEstVPhKUNaYqZ7DY~5hFppqFdPGCjTO2FgO9Iqxqg4-yPoIBYjgoL87nn1aspZw1O7E7zDaeh9~UlBFZGir-I-Vl49AnndO67Ibwo3vhPnqAjhQFu4cH-~5cVhtpiSUrMqzaU5n31wOCF8-MLp61lQEDyvbJNMRUg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_south-new-jersey-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "22-2720890"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_arkansas-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_arkansas-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=NRQhOe7B3ZR1LR0INxaGRL7joS03XuYAzesOGZOrmoFApT0~oJw~kQ1Fxuz0cKBUFnxTQjV3upIaC-KEW~XwOXs1YspretTDrPSmCZ-p~n4CF4cgeoA5W1naykHGmER89S1~801qxDSZ2SWg5rWqZa3YpvhpvTeDFlwxXWxOIEOELTPZbzTUFz85Fe32Ydlh9Dz2tGfAjSDf0~sMCDFDqhJ1T8RpUVTsAwyFt7xCPC0ufrMBW9ktKegkIWf~~JbkWiuengaD-C-gTgyWsTeLRwHGQUlYNso9I1lK~stB4y96u1ibBGEo~hxNv4T7Z3ZbWNRE-YePa6R7aEUfgwuucQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_arkansas-hmo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "454482782"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_nevada-tpv-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_nevada-tpv-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=tJf37sJNSAHvb~4TFZZGNZGmDlnvv6U9lDEbNSPdr~0wryIYaajOyZjp9KzO2eHOL4THxRasMd8zyRMzGW7jljh58QOZg-X0-Gc4pWqObDPBm3V41HwRsvdSVtqtj7etzcglNRXWovzIkXtCTQE32c072Xa-8x6pIG-c-yoKD4SPTFi2GEt8-~BruixNYBV~~plHnEpvXSwMTB-SnFCSAnrEqLkgmegnHvVBor4RrBw~y9mbpVAfLkrgM7xctV3GZbcpxCpcEciibB3HB4xTtMU6eVoj2pp0DC8qCBT6OgeBYlUoC~MtPlBrK~DfkWPaQA7DpC~KwvROB~h4Tyn5Kw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_nevada-tpv-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "454482782"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_alabama-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_alabama-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=F9imdKbIG1tdZCY8WzO6t-OnPDtjJyye8kPoQ3IFHhtQOUXllsTv5uDviw5B~iGyMTcsD8gxaa3vGTkKcuYtzJy~9lBM1L~mE6qi3H6T0tYull7G8XHylpw~x77n9AvNuggmfa7FE1W3fuc14F6kjDWi8qZug5QsAcjPJiXJN-rmgtHkiBqf5GJbrDXhuuluvONhZBXL8UQcOm6GAGYTAjJSa9ZS6QymGPYObpUH~yI1btsOjRKw67Q5dLkXXlWCanrDwR-BxL4pDCuYLRQ0VD3s46QKoT95WkDcBHL4ZKlFtZoIEB-9Cws-y-8DUwsjMMvxf-kpIjeU1Xtd6QFzTQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_alabama-hmo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "454482782"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_west-virginia-southeast-ohio_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_west-virginia-southeast-ohio_in-network-rates.json.gz?Expires=2108865599&Signature=ZdEORhQtfMSRLwrsWns5Uxgb-dHNRHBwGDH0qczulkl3OmS5mazVYOEw5yB3Lz20h0Sw9lJwo7XT5hozSYsz-9QPkJYZXOOYUzS8aFsuSR6f4DSsCSu6NIHZy5sZdgtQQ5ixAJU9O-cZED5Db0maEvzT81ig0D3s0XbrzxCuIyagHWjw7mKgzFXrthPrRTO~QYWXsqBmKuopmi8Wf2c35M0G~WIG3MrvNhBIEWwk2p3jEfVhab5lYqtl4x1C87SF~h1s~bRonfAr299t-hB5argtUbuGErNNb2BNUC1E4WK~A-B6TVI61M~~yZ6fNEAgAQd1hLraBM1u4GpwHqeDeg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_west-virginia-southeast-ohio_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "454482782"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_healthpartners-qualified-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_healthpartners-qualified-network_in-network-rates.json.gz?Expires=2108865599&Signature=IMhv~shE6GNyGDqdObs~oSQUATARMm3DnS7HasQwPabbctQM9QjQMa7lXbXtJZs08NRZu9AD4wtWzqWLe9D9FzgqXW9HG1wOb4jVS9GnEAkX3zAW9d2yXmccqvz3j0po0wK1ILRbNG8TI5GSrZ2q6nG8aqrJDGgL5FunGw~uikWFilID-mOB-MRaDAXZvh7NHdaqfbOUnuzqaszzjfTsWCF6rJUpSt-plph2~g3g6qmDFLMUb5vtzFWPoZwjnailewcke1rqfMcT3bpWJaBMC-FqgLxmAXKNFCkZqfdfJaSC2W6DWNb77-W63qzQ5sxkubHTsYritC7r8fklBlwQfw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_healthpartners-qualified-network_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_atlanta-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_atlanta-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=mbS8uKcOsq3iYqPTbtT5~00KavP9GUL3MP82bGeQScIwfq43rvNYCTX-vckvwgWmUgNXji9D1jrv093wahZyX3bX9sb9i2Vl6Pqj~Oq1ePjjg~5-oRunTSXJj6ut8-1U8gfJ-~ysDWSRqJGVhCPRckMSfdsr5z7bgcaI03Wlw25B3QY6FGlCLaC24O8OQp~ykhP~wk0olDERfsBOHyQUG5fnv3vE6FQsJJfwUlXuYOFCUVBqLLB7HU0XEDcuDTFSiOW6p1dBSyPej-AojWkVTPP1Wje13MLgu9eRIespDYfpseHrymW0SfEgquHZ46uYzzdqO20gEji7eJZL2q5wvA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_atlanta-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "58-1641057"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-surefit-south-florida_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-surefit-south-florida_in-network-rates.json.gz?Expires=2108865599&Signature=eJ~jt57YloO2FGKAX2QxD6lcCIRmLFjvTKLwnODZ7~ddO650IYPosSVnAqwMuGnL1TLqSguledZUvasREoQuslKOYK6Pj9C~26i3WJWtSzhBjfQb367VR9mfjGiJtXhX4XnR~rzAwpe7TKDqs-jNEK0d-Oq7oAtJagF0hV7VvgOxBoSQ93-0q1XASN7P--u3pdqHzi-RJ8tYf-HaL-f7AiRari-lwut0AIuuJKLSYolKhX6O9YgB6i3PtAT21FxlBKgUEwy~oh1dKq0t-SBc~zm1O6N~MrAp3wrljlhDUPIe3fFjShbRc99LyyEVrkPFnr2X3UMsVS2Oet59fG78Eg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-surefit-south-florida_in-network-rates",
+      "plan_name": "SureFit",
+      "plan_id": "650223419"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_national-ppo-sar-ii_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_national-ppo-sar-ii_in-network-rates.json.gz?Expires=2108865599&Signature=Xeo2EKL9h9LiwUBuMqUe4dTp9tmjOOzQJlbBQBLcimAwoluB0r~rT9dr6m9lmzX~uUXj96Rvm9dQKW-9HI2LM4kS7K-lCdrroiXl-WivDKuqenjPZY3OD1Pgsv5aISWMOPeEqgkMb3ZR9Hzg~wk8bOHuNdrYKV~f3Vnyflx~aTplUltXrhgTMh-GGPgrugCtb0KxBux6VPfON6gj4SozX9cqcaFrKvAYFXWGNny3GMtAO7dMUwevWrj8~CtSIWgyiYOt3BhFY4BRA1QjlPezNkPRMQt2wMbB8-C-IXi-SrAJxN~bgaSBTfUUmDYy3odX0w6AnhwZ9kcW3v6JoaQMiQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_national-ppo-sar-ii_in-network-rates",
+      "plan_name": "PPO",
+      "plan_id": "000000000"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_north-carolina-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_north-carolina-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=WlAyZkzHDiz8811rEO9m~mMrf57GxHyYa8OVQYNgzo8~YdxIjrygEDgqe4AgT0hnn0MLD6iUGluccr~LeFb6oMxV0cQUwGlbZCSQlnqGkGknntk5cbL61553VHrnHj7YEUnLFU2KzXWBKY0VHV9YZeROrmIxi0qiorCmXCs1HsJXsHxSAywXtlP0b-JdMv09eczD06DCJaTZnnoYc5MjlE9Aol8dEm4z1PKzR6BnentUQeKltL4ygRgE-pSnMN0Fj1y8CCywWED662yhY4QipEB4PPMhFkz6G0PmOGcq~wmZhHB2aH4UOpIwmNxVQbLE7KUPvCih7KNbrOPtBONUZA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_north-carolina-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "56-1479515"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-healthcare-of-mass_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-healthcare-of-mass_in-network-rates.json.gz?Expires=2108865599&Signature=tmNgfg5qlunguV8r4duJknQuqdXvPJeVZ8xAdgNZIEm4IR-7wJG380QVym8CWPEHbT9chNoD17ftrWjXfAW12P~8pMLViaTJavqXpTAwAvbytswokB7w6PrNq2Dujmud1rjCjsEKMxIi0J0a2whTalElNa~KwW~ZatKXZ91E93r12a8~P34d4wqSkhelN8VDXTCEQSTDtanvEHy8c2dYzkAd6AZ9CElBfcYrt4sfyR0ww7qSaghvvxeTg0R20jDcLooFACzqk6DzZ4pl88PMWtIV5QFou9tAQP1WISZHKFlaPaFPsWj11AsUN8A3VlgXw1TL-fBNnCx8HEUwNvhRlw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-healthcare-of-mass_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "860206507"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_orlando-ipa-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_orlando-ipa-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=O2E3~iJQAXe-LqO5hyzmShyp6VOnHeSbHXuVZkGK29GnQIg9Tqsw3qtoxE4fkahqllcFFyOmNgd8CS2wJ1PA9Ci2wnlBZIMOCFg52MQ~8AusGmcUw9CLjevwlGpDRUJjmEUYfZ5rWvTHy-3ukHmcFjdU0314RiUWJTNon-8~1GwWt5y9k~4GG7UU8BV6YodcUZuCUpSVWhppxCOXRCdmDoS9zlrcX0BTio8YcKIpKuV7VUivEknn~Xq4f~8sw7~2H68EHXtUVhnOTAdU7UpIQFGsGG9ys1lwZz4UZzdXaLhrSx8YEuGf7V9NoeBVDkyhXUM6GHof2LLjgSg77ggXOg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_orlando-ipa-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "860206507"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-one-health-hmo-flexnet_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-one-health-hmo-flexnet_in-network-rates.json.gz?Expires=2108865599&Signature=nnnQhbGOaWrs4HJObrn~FPiInKZCGSSeedfOxyN6fAUvDItKIbDDkgGyKtpV58Tz8eQCPZo4vbEjpaC8xouVDJ4m5~Xk4nFaluqAx3GIlBj2K~kc9FhHqODFyDsmmplK4cDB~Ehegg-IC6WzFuajvclqM9Hgsr1kwwdEsv3dzer-EXc2wWLEIkJ-43LauvEbrtO5wHTwMnux7qRBiCxeb2~vK3HicwsVPs93pBwrM4LR-aT9a7xq88ud-4oEgGCY6HeiXBiSeqFik8LOIOIJJr9Ap9hb2CQ-MurDIxhO8qIyThHzWpOz2NBwvnzuGSXJDPcIBIBCyWy8QpgzijK8rQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-one-health-hmo-flexnet_in-network-rates",
+      "plan_name": "HMO FlexNet",
+      "plan_id": "363520509"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_colorado-cpop_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_colorado-cpop_in-network-rates.json.gz?Expires=2108865599&Signature=SRgL1sNn6Ho8YmcSwd0ZJtwOWWQO~dR0KgfTz69Zbssu~cQHD~SoZOPGNJLTPCIBfKqg23370NMweNwPRDx02RJw2xUAjAP3zBGmdubGQzaLXGjBw~hsLKZdoKgsj1Kws99zhnRZDD~2rW~KYwzE7qeane6ceu2x7Pv5~KXk4D9coCrGU9gKy~Wvep5SZTigNSEEczVRwf7BOXmGYEHs3KwSFAHoH4HhcGj6qASLdmXjEBSuAYtP-7lRTccDkS51SyI-t9ffk6UPS8eR~0FfOuclZhZ6lGUgf-scnPmWqgmtpi-8dNhtJ79f~PcAutfscsjFZHjm9NeePegcci3foA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_colorado-cpop_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "49375CO0060033"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_chicago-il-connect-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_chicago-il-connect-network_in-network-rates.json.gz?Expires=2108865599&Signature=G0VaLqOdJBJ8NY92yxRY9JVNmrqzGYTkjmWalfScHUsqJ5dEazlcys4fgSLuBdfKjFHMHucw9C7c8-8JTFleVUBwg6kIbY85pIgPX15ySw7XtswpC7k1l4~ltWFvPqQn5vaVnqqjG5PfvhubuU-3p5~LlYjAi3O~gRVdaN7JCfdog6zuWSIevAtIrrm3XTxKlJAjAn6Yl660aPWAt7lX2hwwfOZD3gBCP3iirsKvQnoTE1uOxNKcEbhpS5v70hHRuvPN6B7~7GXIuomJYeA7X7ZFjYYhgIvX2ib6uFrzZgL4m59h1jUi1RXAvWIqIvEdEPWl2NVRP0-8PnGNohDBwA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_chicago-il-connect-network_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "53882IL0040059"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_missouri-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_missouri-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=HzzXVCu~6zKXmTdLFdJq~zhO6jPVDwHUe-ST1-HUMFcopLysZ1Y~dz-gbmH4uUR~SJkg-dtRk~1eP1Z2bIo1DOx8klAmMGYEZT01W8Llmw8UZdvD-s1vGfwJZ~K4P4bIo5ssnfu3myNr5IbFO5h6YU01ASIGsdz-gA-vQVxmAmo-5CrrvnOKGmKLFQp2SQQTo~t4-trG8zpTN0khtMSrgfF0Zw5661Kx4CeFvVk4h0ePS1qenbPGIZAMPPmQLBjMnBVduW0MrKOVVcOxAf5Q5ubz88NJ87zV7giuRyZSHwmSaJES58teAE~aIeRfdGe5l0YGrTLqCeuriiy3VgEV8Q__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_missouri-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "596015290"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-medical-group-cmg_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-medical-group-cmg_in-network-rates.json.gz?Expires=2108865599&Signature=STHXJGSH8gcRsXIvOgoE92VgGPKAv6OV7iz~SIcvkmzdqTFBZ6sicL6psekSoqRTPVAUdDxfkYF44MRYFuZH2c8EccfOjfMTRaBn-QI5kxTGE35ryGIEpecHO7beRC-6HHFsSlUxXh3SuLwS8J1J2l76vaOddxm1q2~-7gk-b0eZrULCQjIriiYZaOHCprTmqx20iywozSoOyCVBMaemNkLtHbZ6oidXZaMu55VO-Je3ox3PphhkZm1hTBsta6OBb2TzMNVH7okNMtxjB-DECgzFBONTUYfkk4vriCVX4ULlCDbsSjNRAKY~MP4CLYqRhH9ThpDPbUb0Yh-Q-FN5uA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-medical-group-cmg_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "710986725"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_vsmed_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_vsmed_in-network-rates.json.gz?Expires=2108865599&Signature=DsmGn0XxQcBa0AUolyGTATDR3hmMwD2BBT3829e8l7OuzHrOhUF9ARgInuGMuisEUtRpQJHznTLCIgwMGDVukHydliVGMiTzdPpTFWuXXww-WTY7C8ehL56Gok92MqJA~qnPyxAxW4Cz4TqcjTo3Om2WPRGjGC~q091eh6n7-hPt9LTmv1BLk5UTrpmlXW~OuT42q2MR452AB2aaTijvrhaLXFDMRUqzfd4iHkt72LGpAu2AraBAY78QogqMfshG~10g0ntpVxshaamNIBn6eY7egxenCCW3bfavhrAl4r7qgdo-xmcQwU48~eHG0G5CS8RDCxjM-G~pxDcCYoBLLA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_vsmed_in-network-rates",
+      "plan_name": "VSMED",
+      "plan_id": "330729397"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_south-carolina_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_south-carolina_in-network-rates.json.gz?Expires=2108865599&Signature=fpjkGS84Ia9in-ivIc8resm7iA9op2z4M9aGL2MDOCjd2R0kqwPXLzxe5Qa1YrXDirOuOGwGvWh8dIax1~SKF~6VtBHtUqx2pmqUGyeVI5sCd0QuP9ffckIbtLmPdx9ha5Hg9eWIaFpLbIm4KKre2HVc6OVr0QYKE4dDBbj7P2chXby-sk69dgilelrsSwxOHnSIoffh2kLNFBUgfRfiQ2IRtoFK44EPROIhvgPGdBK7265DZ7Xr4WOZzIkLNqSlayai-MKpvfDkP7RFrchQ5MSKmaFy6NbcDPd3ueDFMbD-7kjP0BrGOV6u8N1s2YVNHHM8K4w1EEO7GAYyznYgEA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_south-carolina_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "951528961"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_nj-oap-garden-state_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_nj-oap-garden-state_in-network-rates.json.gz?Expires=2108865599&Signature=Mfo11PkOfzEEEPQ5fSNPpdZXw-J8MBE4vo-6K0SNjnR25~mFuMs-FSXEjeKUzQZ8UcUukimnF4jFeHdonDu0jLhPu-XlkcbsfwSMI2Q-cQEjxUk5Vbg3dci7OWW7l8N1y7~6O2qcFMBTyZ-P6wn2pfwg9tzn~WcMeWMAUvp4y5mpKCftTCzl8ugxyHqbkMaf8quaCag~tH8BflNc~w3j3rBgbug2vawGQIjKL4yGQreDjV2uhBQ62lGKGktdrdQOyh66uTz-2cWXNcsISJXWukT1bFbG0aq2OvciLBanHZvWNd5VgF5A1JtJfUXCRPZDkejRSiNx9ItIcIi4epJn6g__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_nj-oap-garden-state_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-surefit-florida_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-surefit-florida_in-network-rates.json.gz?Expires=2108865599&Signature=SO116axlaehoD7ChXGEFu1MPv~pVzFuqysJzlBNirDy08kCyV8W6i2z~oMV5IEhMGQWqw8dukA-OCIB9jufNsMD6reYR5-JnfHbGil79NLxP6M3EfUihUtkZDlXlB~LjMcBJETCc2VMj1W2InxYmJ7HLkvdpmt0lB~ST-tbgIeXIsks5R-KWiaMhO7A-thj0ybJWbVIuL1Kd5F79fgUsLT5wVUoLPj0SrlmMpJvZIttSylPliU4Ja5W74Au3uEjLM9nopWB0gshNMEm4GlT5lRhL4TG~WYS1O58hDgKXvAv0xn0ZT-JHMwHT0dGzTUa0eR7dGcJyUoVDd~WllPdCTg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-surefit-florida_in-network-rates",
+      "plan_name": "SureFit",
+      "plan_id": "112161663"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_wichita-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_wichita-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=PynNhD1cmLOedznWAyXvJzFyLiKKPItVLryfmYMgxa5EYuS0x-UqWn0Y-BeEz7cVpzDnIqRdWyKtj2hfC966QX9xkzbQMW5B1tQ3QsN~BVBby0FaWjBmIaKkp6VH1CGGcAmPb-2FZ8YOEELCJULykI7mg5-jJ~74NE1ztPy-yp6e0thqFB2s9Da7Wk8sLxmg49XizUojbBP-2jmDMRZXGg5CLTCqlxR0oKtaQkhK12-NlDBWT8r8lJV98O4noWCSfAhXpO7lgRwknV27apjsyZZE9L6XNNtTaOldKgcBcWxz7HzaZUdYeOdXtouJMp4q3M9eFN6R4r6xL~T0lJc8NA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_wichita-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "953545901"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-surefit-central-florida_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-surefit-central-florida_in-network-rates.json.gz?Expires=2108865599&Signature=ZtBKu3jf-vrAK8mfuJnm4RQzfepDBt2HNTOZlCVxDcqh7Z~VPMfkbBwd5tuO3jhjWMMxi58OQAUaUv8wIvwLBMsnkiO-dUc0Qf2CckaJ-4J1J-RQ9X6rrq5aIJBd5u09GmEZVgcLGXzp3wDkzD~x-3o5pKUaFi41jA4uAHSsTWRD7LkpQKT7bZnylQhX1hFcI9BsxUfAz~umBwjIIPtXFXrxcm5RgVuVsFsR5UJrU0GhE71F-jrB8ozQrIDzfw83muR9BIrEmMIVsjgbiUgc~6Lh8YPg2dXFOJwoHSTqUmfWIEy3qYtfuTgh8FcR9pKogGa8FelK-OmjMv0HQqB69A__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-surefit-central-florida_in-network-rates",
+      "plan_name": "SureFit",
+      "plan_id": "208288983"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_localplus-sar_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_localplus-sar_in-network-rates.json.gz?Expires=2108865599&Signature=iBt4723r5nDebo6F6WdEHjgo5XwWeG1bvhVOvam6jbSDeFP2hkMyZO1mKW8fJlNC1iwHHRqXa8rdKA59XeVS5mz-NCZPqemNn5TV1xHnWqkXlzjPxuUCPwNievDb3W2KKTNZ63rX3dRj-is4GZc7d14ZyCKd2T0x6PvCdimdj68shiFRQehsQr4d33p0n7ay7hxwst7m2VCZnyVbhr8jItBYugF3MOoCcpm0JuZ6xklKE6itUqFfhv-MRJSpu0AQCE7LKcvfvqncraknOlxyIG59DtJb1wfo3uccN2nyZwnBMg1uxAues-AenYYXdjfEnaRPqwzoKlrr4tugb7Kh6Q__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_localplus-sar_in-network-rates",
+      "plan_name": "OAP",
+      "plan_id": "876000531"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_houston-flexcare_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_houston-flexcare_in-network-rates.json.gz?Expires=2108865599&Signature=Jk4P9gP6s6IY4M~HFfyByHwKEd6wr1PrDnOJW~5fsSiSXUaH-RdSwGjnE3aVJztfXDZTRCgRQaELzwc9FQdvcVnS5wSebFJO-qLGfliuyhzKkrAamIUdfw0YqX3IRaaevA8zHPIVq8PHGyN7la~jjVhjTHdvqx5RIcJV9SdHso0q3SXjvVdpuOIFCe840EqxdhParvdThE4ME1mxwUOwp5xR0d2I0Gw2yEXIttIxJXjpqb25pFqZ2VumLSUFlg9MAGwz9w1xv~7pbqjHVhBZF2JhP07BEtIRxI4CRn4aLp3dHMLTvrLFtnE6avE2Ya6NQMIc9JaK~dHInsSQxOHj8w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_houston-flexcare_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "910862945"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_georgia-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_georgia-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=LiHwVQk6BUg5K4VjfauTAZdpfXyJTjWsJiQyz36tc9BLK9oooW0ljtQfuLBj24a4ooCrfC3yQ7-iu4ptFqoOnGWIXNME-sWpmya5nJQSOMRGZw2MRJF1pZOfHVt9QRbmUy6bsLg0fIzgB6Rp4Ni7-RDjowevnR06jrQmcqCuXK1N7e9hs9OFvRhKyLuHd6WUrX5SxsQpSu6ZCeQLz-M-00HBOC1FyozpNud2p3jAxTsIUoSrb-02nntWb2gioQnhtyzuxs7b-U2wSQp9lJsF3TAcSv-hXYFHNJXz3LXgPvAoaU8V3LskNxw8-eErIWv1tDu-5fTwzYGuSvTsyvtkHA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_georgia-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "58-1641057"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_fl-ifp-hmo-connect_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_fl-ifp-hmo-connect_in-network-rates.json.gz?Expires=2108865599&Signature=Z0f1HFi2IeM8cCtz1jkpqfH9MqAR0MJnivqMzpiJs713GudfqYwVwW~DQpT-cD0fxJt25v-sLTMoYoYqsOWEc3DPnp4PCpB4uuHqejuwsYucSYTPDEN0b8g~rfO2KlHR2Iaez4PK-DkL-xUTVJfBSqf7bSFCrZrGXJFf1kPurDD8ysjKfmrGAEbWCnN4YbVcxi1Rmst0D3dk5rld6iNd9yFkE~EJToeurMyooCyW4qXQNCDfR8xIAf1yJSx4XxCDFoHOBW4diPUB94D9I8kELqdw8JFalYjyfw4wUd6x8yLwnoQv-nesuTHb0y7XFXwrPTk8KbBw0EVVMalOEZYozQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_fl-ifp-hmo-connect_in-network-rates",
+      "plan_name": "Connect",
+      "plan_id": "79850FL0020005"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_dallas-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_dallas-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=ehPx5g3grXq-SssNUuplw410DGtAoFWvCRCSlkyPAGdkaXBCGjfHLADbmqr8nKCku5wNTwir2BliqgdYTsSFvCMMUQplFn1E9gfLspvnWwDvfZH2NZdmYAaJpQKpA7v74XrHK703XzBqKmigDlNGEP8rw3G0DbvJdGkAYJOrPq94DM9y9shX6Bz55YM41ybMhMosWbqEIG5Y9Ff~PHGMk9cuJ-HiO2cI8mbwzBKOw5DNtEQptjRhyjoNZpavRnNv9-N8b~4cbrypyO0vR9cdkp66J45kHsSH181ehMNuDIucFL0qBbmgfxR7hg8telBIIbYzVYk2o3ynbKf5ma3~9w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_dallas-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "223382140"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_columbus-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_columbus-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=X1hwFRD2HxYmd2UpWBZzGAKmcS3OWKK2WxzNpTCXEWRe1xDWDYj9W2KZvPVophSp-K8AivjjQkHBqFHEDc7cf7RuRfFwVjwJCi1f95dDbxMuwO~LSiVdolovJkVfovHnlyt6Q5CA6ahn9wnhLv-3kNQWLj48v5l2mwwtNubi6vje2iruOJl1k4wRrWKb9rn-hra~pE0DnOPbPzi70Wh7sP1Q6jcnhZybWm6yIFQ1d3mZ1hTx4Qcb9PUOHcwnNBgWbFHuyn4rQJ0s7tnrx2eIjFjzZxAyiKtK9Vi81hELdUknZM-fY0b44XAgiua4h8vHVPtL~zzJU-YxI-7j5~mPnQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_columbus-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "951528961"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-managed-care-of-waco_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-managed-care-of-waco_in-network-rates.json.gz?Expires=2108865599&Signature=VA-DQBKD1i3fPbwkg5xSqUv8fYXzlpvjsWdQ5w-m~vsnQQbdXby8zXgEpCEty-YAiRROdZXBXGRbbSiERy37golK~aWPb4~0Q8sGjjw1yWA3pEkyD9SS32XgnQX9KFHt0q2oPkAXewrr9hS6Dz35m6nhc8zoJKEskRxSItHalEPNKOpeZfPP5NeS7qyK~slJ~LuwBCFaKFXDOWF4-pMflZI-pqRiYMlwv3a7G48mBJNEdmMr5C65SEJx-KA80B~LjXKa5QSKk0dGzoZDpVATyn2beYTLmajmEHPWROd5OBtB-bZ5y7aicGjPbYAcWJQg17CALNCPXVj3P1z9FvMt3w__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-managed-care-of-waco_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-tn-select_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-tn-select_in-network-rates.json.gz?Expires=2108865599&Signature=KOFumj6XfuvUc30PrWyUCiqmfSMDEAritqb0pw8DdVPvPmEuZ~-bQW3wo90YIRxpQEV43L3pAeB5EWwS7z2EuK~IWjqWQlxCBUbCfVbzdTGgmxJCIDoWm3yxIEUr-SQRDcTOOar0HaTEALMBaWGFfTkkce8kpshttowSX1LlkBjofGRm8x3MN-skwA5T5iZfSx4og1zbE7rKxhWAJVdlhuElesBHVmnDU3InSqH~hpZZ4RTq1~PS42qUiDsh2Mf4cn5MTXjRb5wDEW~ran1y4phlOZpNXenw0T84b4~7cXJJYQxfIjjZzMGhs-OjuE8M3GWbrj6fobPl0nL3lktaUg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-tn-select_in-network-rates",
+      "plan_name": "Select",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_chc-of-new-york-njpcp_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_chc-of-new-york-njpcp_in-network-rates.json.gz?Expires=2108865599&Signature=BQlzB~bW8gTWtWUAxVJl~ABySLral1tOamj9wPeIivRvpBky~9ckGrdSq07OMVX-50NmdrNF4dtFJ42oFjhpqmtNoeSoDrlscVaHLsvVsdX93NOUUEX6sn8xvPwBO-wZj4RpjCrAxYWvZAT9T5JLWVGI4C1RlJW6TZATeILrQFjtnsldAgqKbJ4gd-n5CCYfn5aCoGgIBX0AG6EhQ4c9rlvMN3fiQ8gFrvf42Vq14REFIRdCFV0GFI4UbrHFR6G3AD0fzpb7nY3kVdjeyCCwl1QDdNHA11EYtBIhfW~NkD11Iy8XqAvBwXE8HQYjQ~l5h1cZAtnYSfPFZf3z12WnDA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_chc-of-new-york-njpcp_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "751039736"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_chattanooga-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_chattanooga-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=CJ5UsbZxddgFSAHZI7zjKw7YVBBOgxksB3PLvfSd-rgW3AG3IvWp0dT4lMzz4gbOQFscY9VmqTqCm1fyP8FIXFKZ2M4GbGbQLqoqJkDd0ylklevPLTENNSfHgLQgeePg4lqYker4ok-7CWMTLP-ZMRNfkJ4pBgbMUVnadxyGoZCp06P9W1AVbMIqEOekMyqDn48VhI5UGX8i1q71XVHlBetzGdFkGdFFk2m6d4GOIO51XqfNZPw~hFj756URdZu8Y9OPIre2a0OGvawTwe3Cw8BXqIvWmAPFK-hcbcQILg09oiffD0GvV~X8dyDljxBPPrFRd~tsBPoWN4GDjepQWw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_chattanooga-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "330664371"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_austin-commercial_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_austin-commercial_in-network-rates.json.gz?Expires=2108865599&Signature=n0SeNKexBTmSVo0NTyT27RkMjxmZ8hHq6omjnYsC4TtXSlylISjXVW5qIJLy6o3jVqf67AIb7rtsPtEWVdB0tFMeLpbdi89HvXDdNwrsLmEq8Z8z6B89mGYNVI9BkrJbFy1Lqmq9-YI4cRQZWjiMERo010oJP~wOW0zkwb-zehwHk34xRfR8B1EdVSvHp7V3ic0hLoJYCrlrRfhVuq-zj7oj0EF692hT0dK5S7P2PbXJioUAeVcmwbm8ZWicY3cuBWveqJ8tnKVmkyEw1x4QeIYuOV~QscCWrI8w0aNEyEa7JoY4bguYuh6g797AwulSQYruiey~GJsJA2xx0IO6bw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_austin-commercial_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_houston-commercial_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_houston-commercial_in-network-rates.json.gz?Expires=2108865599&Signature=qtCElGeUYgBq~bPlShvPIg~Kmcv4gEk8A1Zyhco2UuAlJY8rxFBjY-AcpO3J4NaV6H1qCzgpuOqwSTbSMNPQJUWbUKLdTTy2FkjDJeojUc09q3FnKYJ3QmNXjd~3iSW68Sfv~6xZmdspJvWy86CscFo9PWoDYBhQ4VbuFDElQhc4i4pA2~t2xbKFVtSeXp2ymmT5NTcEjdx17E3LJ0V9C46WVH39X5Ak-3-LwTaWmoAFeeVpKZPfycwiVXuG6bkXfbhaVHAE~PTAru3jsRwuPFvuH1R2d5bzxOkO7HW40hSqv3R96pYWwEIfHh1hRJoFutF-XwPLaMvS8cB1Tugjag__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_houston-commercial_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_nashville-commercial_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_nashville-commercial_in-network-rates.json.gz?Expires=2108865599&Signature=joOPxVNTBnM0gXUwed~-TxeG-HBPeP2vEYK~KPWXXOeBeDgHQKs7B3-KGtfd4x6MSq1cdlN19SbLL84yHSLXDBkusBLUG-rGBi35DpMAa77frtIPED97~kxx7ZrfeP4tBR2hoOhyHlrw8sSOZm47pZFTgREBpo7MuEVyya6wgS1SYMuG2g1M5yHFe2on1~-bc922tpX3rbCUw5rJvTO~zlrITjkvsbwe~90ycYY7Q6HWP8X2rBDyHef5O2eGkgQsrX0LdZzEfBVN2yrPgJ-WdL-rS~DgltQYMA-jskiQH-wWEaJ4-IXkl4SRdlrTfFogWZt6jlQtxIsMGEdTmbF-jw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_nashville-commercial_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "62-1218053"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_corpus-christi-commercial_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_corpus-christi-commercial_in-network-rates.json.gz?Expires=2108865599&Signature=TQaXtm22Y9Df10G3YWMyUcbDqIKJR~YsnEbQm7Xuq4zJi9MGHMGXsA464l1WTIGzkXcaMRcDl5RaOI2awiITCKbspHvV8Y~Y0nQsxPkF1tkifBP3moaDUNxbBL-6s1R4rMxK5QAIdqhVBN-yNqN-rcRgK2CmZqu5ZYVX2VdZlk-2qDLaxFZlxj6TYbi4LCwvmZ-KEgUbv55w1u0i04jyCGLHkYpJO4eJNFBOD3s0IwSpydMwcR7DBMvlRVi6fkyQT2sx2~YZOUPebNwAR5iUvSAXM01YD-gK8IDxQKpB3syCSeSQcUFoobUJi6wFBilH6gq8S6ECVR8H1EUe0LubPg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_corpus-christi-commercial_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_golden-triangle-commercial_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_golden-triangle-commercial_in-network-rates.json.gz?Expires=2108865599&Signature=nKpfMOljWS8BkD53qDOUv~klz6tNpNodI8URlyH-8R7btkOFUjMmOLUxJHeqb2Q8ovLcWOR7C6LbPbmRKhum-ESPNmMFvD6lJ2dtk9bFZB2vSJzELy2I1baeAMEKnntaTX6I0KD4PqPzR--IqoVONP--kC0W9d1GEITYa-Wo~1~F-uqzwPCxJs05wxb7RLE9PYevAlFm-e~KSnRdQe1K14HznuAQMLFjGOCt3UKOQRDvE9kVkaqigPPN7fi70ijx8Yu01N~8MV9~D51G620FaNc60hQrxmJ2emuSOPz72vuTk~9DgSh64iQBpIlGKbMDzE59jfBhNqhaRLLsQSWMxA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_golden-triangle-commercial_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_san-antonio-commercial_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_san-antonio-commercial_in-network-rates.json.gz?Expires=2108865599&Signature=CwV2F4zGhRYbpbFJbDRPT0rRSIxsvPKE~s572UX7L9XHefmVtbjYdtOThopP0C5oHmtjDxrZs4rSgs0OFdU66HncQU12d-9ic-~pJzHbgmXKi6gNy71XRxXyHkBw3XCl1iuE2nOLCOtCU22wmChn5HDHNUGD4bw0v7goZ9G2jpXrBWGR00joinzGhi6gEK6kBbTn-~oxyeUJzm1nB8yENDzp-zEqaw9nT2u5qaoTkJDlo0Qjj8Lv2iDoSt7k03ivNA5aziZR5D73vcVRhLj3uY4kB50oQaa-iI~AjiVnIlNyZu78tHSX1G09oxJpDlJhjQlLYZsaFkWXSuveMdPMKg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_san-antonio-commercial_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "74-2767437"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_health-care-alliance-of-the-front-range_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_health-care-alliance-of-the-front-range_in-network-rates.json.gz?Expires=2108865599&Signature=IqVjBWLkxUAYnUZxa-zIl0ZhwNNWuZ0tFMYZOa2blwnExGkt0-iX~zeY6jCUEjua4vDtJ62csbwe4FhfWW~2hHaa64gEnud-2jIm5sd2MtmkWq1qrLnSf5PA5B2dR3SDMXUt~PVA8N6xVdGYyeg9r34fjUFLfN~hrWltATt8Tak0qg6GlWoPP5YTcA2hLYtgiuzKSTdwY325YIPeDNvklLnwfxQzY7EPQ7kZsG8J77fOc5gkQ7l0nx-tTW1-HP8jkdfLt4wTirxJadbkZEgAO5gHdc~hSidpE5D2FhEDsNCEL8qtVZP6ApUxoe-tjvf~RFZCDJcn6pfZ-U-XF47OqQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_health-care-alliance-of-the-front-range_in-network-rates",
+      "plan_name": "SureFit",
+      "plan_id": "200697269"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_az-localflex-incl-ebh-excl-pathwell_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_az-localflex-incl-ebh-excl-pathwell_in-network-rates.json.gz?Expires=2108865599&Signature=YA7Vdy2ejZydaWNEzK4StE5BvTo~oQPMt4a~UMngjM5-iVvxh0cn4WLpSQQKU8YHzyfvqVKTXcRD2Bj8HDmGnnRvXKUmb31u4zP41mhlIzzFmwNdMNQT9kepiumsiY~sQmytTvcQPUouAHCUduguhXhpWMpcqtTGzz5AqUrbeozVz5EbotFLdnHuruC1Iwebn1Yj3xl3ZCLURk6hEMlUlSAGbgH6veUtttxceCus8gQJyQmR7qRDQtBF2pmppBfHxiHveM9pblKnUHmRN~0D7N9OM5AiW2QQwwH9RVYdUkxJjHNs2TtbTO~8hPSZNiC8R1IM4GD-nNeUqvE66Uu1TQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_az-localflex-incl-ebh-excl-pathwell_in-network-rates",
+      "plan_name": "Local Plus",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_savannah-hmo-network_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_savannah-hmo-network_in-network-rates.json.gz?Expires=2108865599&Signature=OPJP~h2fD~unX5LSdjAAUZLUJjlsRdtUbD2p~1CAxssL-ZYXRylX42ilO52g85DDmbh7-N6HiSqqlqeKGezKpEr0psNPdFUh8HK0ZI~pzlSuCPQicuu6rsO40yVW6jsq2DkDOT7LYL5N1jHNF0kZZ8rf1ZgR--PU4lb0CXFa14vCcvduU6p160-3sUqi0WDSfmAHRE2OhGqyVPBRRHrJwLAOOnwyBJUvtfXmbyMHeT-kVJYgyFdH9BR76zipOBIBbIoOPoa2qmLPVkIsz09SA8b0dAKicMZarcAgNgyKUObf3sinLXajXqQXQmqpVUJL12oobHG4dUXhjR0elJnROA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_savannah-hmo-network_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "58-1641057"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_coh-limited-for-prov-selection_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_coh-limited-for-prov-selection_in-network-rates.json.gz?Expires=2108865599&Signature=tFROXyCy7cTFy0doePu5YbNEgRjLA2DedhkXzMKgLiAv8UCcZ2jvhRmzSqdwLlxJQ19gcCbwo3a7GjAi-GSmex87GFfnh6o1WwTUpIMEroO3hPnV74GRifPAjqpNa3uAr0-jqZK3kI9vXM0BCEUf0ErCR4RYKWIMlCAEWpj5gbj4y9P70ZRliGZaDMUekznPnJ996OLZojIt0fMgkBIY~E3ZpgwhxdgdOOpCCUguD6IuD6SrsK0GLnVUcxer6NVo-7z5fu6qj6ggHyDcsnqPQ3kaR4ogMNzUVDrziXzj9SPkZoXgZ6bd9DGTrj~kQikVEULwywTkd5y7CPCabfwnzA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_coh-limited-for-prov-selection_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "746001164"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_central-florida-network-seamless_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_central-florida-network-seamless_in-network-rates.json.gz?Expires=2108865599&Signature=RZ-mnk~rmh~wii86D1n4Z3MKIi0wbj~EVejmPnfdrFch1ABqqIOBE35Fk3SuUSDdl4CpljJ~sv61xEWrg3aub9L2-M2HRLMZofnNbQ1Nxjw5kQFEZrLqD5LWBBMKytxiFjLUOK8dWefhpzJH0JqJ8rzQxK2yI3ATIMP9~3nHn9XoqdZO7cYSRjbHxMZGPTREDYNrRayZGd-Nv5cTq3JwTWDmiIkL-Zs-Q8viKOsZPngMTrCDMGy2ZZJVgkvwGI~oKXyESd-Uu2v2njGo4XTmH9mUL33DFHkt528HFARt9IEeQNFDnPzaXhtj-96zff2Ob23yZc3zT1IXvF-pG~KdJQ__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_central-florida-network-seamless_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "954245682"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_rhode-island-gppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_rhode-island-gppo_in-network-rates.json.gz?Expires=2108865599&Signature=RZutvifiCbFVv6Qf5vdMT0OOcEteV2V2Oq9moVdECdVkQZeaEPTq0lTrjW5vEpNxcgNm~EavO0~Dn8MT694X50AtiJEUDLgbUm0iyQxY0gq1nRxE3m7O8wjk9bmdidumuPj3MHKY7LLLGTeqcOgS6qh3mZ9wuratD5dsbvzzovmnEWlc30v9oFwmSuAqdbvh8O9B8WAcFWWB3pUdyNIJyRj~qmONYU6XZBUt9oajTzrMGCX82q5SyW-IrdwEVuGyYmdxvL1UvAsPmm6wBKgRxS27w3NP~hdWAOuNXKhEa9SJkDhsK18oRFIlioMVqOdRZBf565zdiJvrBhzNwJiYpg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_rhode-island-gppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "521893632"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_cigna-managed-care-hmo-of-nh_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_cigna-managed-care-hmo-of-nh_in-network-rates.json.gz?Expires=2108865599&Signature=NvTZNL1~yfimoaF7o~GgE4yHI4hTFPFps6m4TwvTjaYexibxWDuBMRHkmf8rYnJ0yYp1FBJGxjoMxGXzLaj5oLRbTbuRfCUmaXZxlhGwVc-ym76zYVNP3z7hsIeqVI0kNrxyCbViLiGHnbisn6PyzJhUQPZSYAk34sO2wUlMvWBH-R~2dZdQLIn84ckDooqoTKoD~jc9e6RD9zPDA-yAV0WchBo9QJMUkeZR8luOvE9Esf4T51KVicDwoRX8W-HYgLCcLhYAOQUiZ2D2ANPGCMznNlOKJRvEU78UyKjzCs~dWAI9kaPGUYFR7SAXlDPJ0k9Zxkgf9S-vAZDSK6R7xg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_cigna-managed-care-hmo-of-nh_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "02-0387749"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_maine-hmo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_maine-hmo_in-network-rates.json.gz?Expires=2108865599&Signature=RlOTB~VXScouZVSi9ZvsP4CKXe8iYLJGeRY6HjIGsNbacAZzbnivECmnFK3kXoLoLIeZom5KTgg53IJxuKT-kMPAqBzdiJBNVU3xH4xP66LaHogO9e405O3TagNSYYB4NZVZ-ar-20tc-DtHZCt4VPi0NxOOonr1px4G1uXlO66Ro5XdI6EdvRjb5plg01rftVTHY2LRSgfo9A-F67u-KaxO5BuAWU4IS5W7ANvga21HZF5iYLj-c8sZkn6Vc9x6SGfa4lxBCynYsH9nWF~HpuXT6j3qcL4yW4hGwMKbeRNHoucM0CgsGELyBuyo2Kjl2j4yM3YbAoH6uaLJGLRYBg__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_maine-hmo_in-network-rates",
+      "plan_name": "HMO",
+      "plan_id": "521893632"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_savannah-gatekeeper-ppo_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_savannah-gatekeeper-ppo_in-network-rates.json.gz?Expires=2108865599&Signature=RhkbM-D3T7x1w--C-vyTB1m1V1fMp4lP9c2ZEjEBjUv9BxAoWVF-~BXdxFHZDhT0fn9nPEbcUwqcHzEfLXre2e9AFNrsPic8GhHVJwC81tHlNUzL2pAoDifMqJ0Tl9MUJgDr~sikAcPvgOAQ8CZDOtkbabGeVbwkhJD1G~GEyAAXSAzvx2wQSKhuI9pwN-iTvuTAn8hxEb0z~xRMX12vpnq8meOPE2lKgG3LWQto6T11nYHvIOTdgx7vzlQ8KIrrqjuNIimQiGGpenqsSirBtFc3yLDf9PHiRN99uXEP4qZOr1R7opGYLg8A1GJXwsWUEJD92ZDlRBL6sDq0YqbWfw__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_savannah-gatekeeper-ppo_in-network-rates",
+      "plan_name": "GPPO",
+      "plan_id": "59-1031071"
+    },
+    {
+      "name": "2026-09-01_cigna-health-life-insurance-company_az-localflex-excl-ebh-and-pathwell_in-network-rates.json.gz",
+      "downloadUrl": "https://d25kgz5rikkq4n.cloudfront.net/cost_transparency/mrf/in-network-rates/reporting_month=2026-09/2026-09-01_cigna-health-life-insurance-company_az-localflex-excl-ebh-and-pathwell_in-network-rates.json.gz?Expires=2108865599&Signature=iG2TjOhqxGffpslNYl8y7Dy74~EYIPuSOQwKR2sOZ0z4YHNO02gHlIr7KlRe68bMBWOviESNR4Y3GQ1lxvP6IdUoYOY5-jmVBISieviBiPJMsZK4ltLImB54NYnYVA~7AZFt5geK5m4nh3~FU8pAHf00h7I~af5JrReOXwjQY9er9ljoJhG2y4QWK15OilnqXnkqKTKN4rD~0TYf2bd-j5B3VdFc8T8jNd7ccx9qMqMOw9KI7nYTnneaM7dnslIVTxley54eAq10t0gbOYZ1RYnVzP0UV88sFspDVP4-Mpu8KaWfGPbX5h1tzuKhCodEi28pTbIHG~c~fl8byJrtOA__&Key-Pair-Id=K1NVBEPVH9LWJP",
+      "description": "2026-09-01_cigna-health-life-insurance-company_az-localflex-excl-ebh-and-pathwell_in-network-rates",
+      "plan_name": "Local Plus",
+      "plan_id": "59-1031071"
+    }
+  ]
+}

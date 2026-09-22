@@ -21,6 +21,8 @@ Usage:
 import argparse
 import gzip
 import hashlib
+import io
+import zipfile
 from contextlib import contextmanager
 
 import duckdb
@@ -58,24 +60,48 @@ _HTTP_HEADERS = {
 def open_stream(path_or_url):
     """Yield a file-like object of DECOMPRESSED bytes, streaming from disk
     or HTTP, without ever writing the .gz payload to disk."""
-    is_gz = path_or_url.endswith(".gz")
     if path_or_url.startswith("http://") or path_or_url.startswith("https://"):
         resp = requests.get(path_or_url, headers=_HTTP_HEADERS, stream=True, timeout=120)
         resp.raise_for_status()
         raw = resp.raw
         raw.decode_content = True  # transparently handle any transport-level encoding
-        stream = gzip.GzipFile(fileobj=raw) if is_gz else raw
+        buffered = io.BufferedReader(raw)
+        is_gz = buffered.peek(2)[:2] == b"\x1f\x8b"
+        stream = gzip.GzipFile(fileobj=buffered) if is_gz else buffered
         try:
             yield stream
         finally:
             resp.close()
     else:
-        f = open(path_or_url, "rb")
-        stream = gzip.GzipFile(fileobj=f) if is_gz else f
-        try:
-            yield stream
-        finally:
-            f.close()
+        if path_or_url.lower().endswith(".zip"):
+            archive = zipfile.ZipFile(path_or_url)
+            members = [
+                name for name in archive.namelist()
+                if not name.endswith("/")
+                and "in-network-rates" in name.lower()
+                and name.lower().endswith((".json", ".json.gz"))
+            ]
+            if not members:
+                archive.close()
+                raise ValueError(
+                    f"No in-network-rates JSON member found in {path_or_url}"
+                )
+            member = archive.open(members[0], "r")
+            stream = gzip.GzipFile(fileobj=member) if members[0].lower().endswith(".gz") else member
+            try:
+                yield stream
+            finally:
+                stream.close()
+                archive.close()
+        else:
+            f = open(path_or_url, "rb")
+            buffered = io.BufferedReader(f)
+            is_gz = buffered.peek(2)[:2] == b"\x1f\x8b"
+            stream = gzip.GzipFile(fileobj=buffered) if is_gz else buffered
+            try:
+                yield stream
+            finally:
+                buffered.close()
 
 
 def extract_header(stream):

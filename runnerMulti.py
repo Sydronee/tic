@@ -22,32 +22,32 @@ SCHEMA_FILE = "schema.sql"
 DOWNLOAD_DIR = "./temp_downloads"
 PREFETCH_COUNT = 4  # Number of upcoming files to prefetch in parallel
 
-def initialize_db():
+def initialize_db(db_file, schema_file):
     """Initializes DuckDB schema idempotently."""
-    if not os.path.exists(SCHEMA_FILE):
-        print(f"Warning: {SCHEMA_FILE} not found. Skipping schema execution.")
+    if not os.path.exists(schema_file):
+        print(f"Warning: {schema_file} not found. Skipping schema execution.")
         return
-    con = duckdb.connect(DB_FILE)
+    con = duckdb.connect(db_file)
     try:
-        with open(SCHEMA_FILE, "r", encoding="utf-8") as f:
+        with open(schema_file, "r", encoding="utf-8") as f:
             con.execute(f.read())
     finally:
         con.close()
 
-def get_processed_count():
+def get_processed_count(progress_file):
     """Reads current processed count from progress tracking file."""
-    if os.path.exists(PROGRESS_FILE):
+    if os.path.exists(progress_file):
         try:
-            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+            with open(progress_file, "r", encoding="utf-8") as f:
                 content = f.read().strip()
                 return int(content) if content else 0
         except ValueError:
             return 0
     return 0
 
-def update_processed_count(count):
+def update_processed_count(progress_file, count):
     """Atomically updates progress text file with the latest count."""
-    with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
+    with open(progress_file, "w", encoding="utf-8") as f:
         f.write(f"{count}\n")
 
 def download_file(url, target_path):
@@ -83,31 +83,43 @@ def main():
         default=None,
         help="Maximum number of files to process in this run (e.g., --max-files 5)"
     )
+    parser.add_argument("--manifest", default=FILTERED_JSON_FILE,
+                        help=f"Input manifest JSON (default: {FILTERED_JSON_FILE})")
+    parser.add_argument("--db", default=DB_FILE,
+                        help=f"DuckDB output path (default: {DB_FILE})")
+    parser.add_argument("--progress", default=PROGRESS_FILE,
+                        help=f"Progress file (default: {PROGRESS_FILE})")
+    parser.add_argument("--schema", default=SCHEMA_FILE,
+                        help=f"DuckDB schema path (default: {SCHEMA_FILE})")
+    parser.add_argument("--download-dir", default=DOWNLOAD_DIR,
+                        help=f"Temporary download directory (default: {DOWNLOAD_DIR})")
     args = parser.parse_args()
 
     # 1. Load the filtered JSON list
-    if not os.path.exists(FILTERED_JSON_FILE):
-        print(f"Error: Filtered file '{FILTERED_JSON_FILE}' not found. Run the extraction script first.")
+    if not os.path.exists(args.manifest):
+        print(f"Error: Manifest '{args.manifest}' not found. Create it first.")
         sys.exit(1)
 
-    with open(FILTERED_JSON_FILE, "r", encoding="utf-8") as f:
+    with open(args.manifest, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    blobs = data.get("blobs", [])
+    blobs = data.get("blobs") or data.get("files", [])
+    blobs.sort(key=lambda item: item.get("size_bytes", float("inf"))
+               if isinstance(item, dict) else float("inf"))
     total_files = len(blobs)
-    print(f"Found {total_files} total files in {FILTERED_JSON_FILE}.")
+    print(f"Found {total_files} total files in {args.manifest}.")
 
     # 2. Setup DuckDB schema & progress tracker
-    initialize_db()
-    processed_count = get_processed_count()
+    initialize_db(args.db, args.schema)
+    processed_count = get_processed_count(args.progress)
     print(f"Resuming processing from index {processed_count}/{total_files}...")
 
     if processed_count >= total_files:
         print("All files have already been processed!")
         return
 
-    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
-    con = duckdb.connect(DB_FILE)
+    os.makedirs(args.download_dir, exist_ok=True)
+    con = duckdb.connect(args.db)
 
     processed_in_this_run = 0
 
@@ -133,10 +145,10 @@ def main():
             if not download_url:
                 print(f"Skipping index {index}: missing downloadUrl.")
                 processed_count += 1
-                update_processed_count(processed_count)
+                update_processed_count(args.progress, processed_count)
                 continue
 
-            local_filepath = os.path.join(DOWNLOAD_DIR, filename)
+            local_filepath = os.path.join(args.download_dir, filename)
 
             # Ensure background prefetching for the next items in queue
             prefetch_end = min(index + PREFETCH_COUNT + 1, end_index)
@@ -147,7 +159,7 @@ def main():
                     if not pf_url:
                         continue  # no URL to prefetch; the main loop will skip this index itself
                     pf_filename = pf_item.get("name") if isinstance(pf_item, dict) else os.path.basename(urlparse(pf_url).path)
-                    pf_path = os.path.join(DOWNLOAD_DIR, pf_filename)
+                    pf_path = os.path.join(args.download_dir, pf_filename)
 
                     # Submit prefetch task
                     futures[pf_idx] = executor.submit(download_file, pf_url, pf_path)
@@ -180,7 +192,7 @@ def main():
                 # Step D: Update progress counter file & run limit counter
                 processed_count += 1
                 processed_in_this_run += 1
-                update_processed_count(processed_count)
+                update_processed_count(args.progress, processed_count)
                 print(f"Progress updated: {processed_count}/{total_files} total completed.")
 
     finally:

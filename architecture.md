@@ -4,7 +4,7 @@
 
 This repository implements a small end-to-end pipeline for working with hospital price transparency data:
 
-1. Discover real `in-network-rates.json[.gz]` files from the UHC blob listing.
+1. Discover real `in-network-rates.json[.gz]` files from a UHC blob listing or a Cigna CMS index.
 2. Stream-parse each file into DuckDB with bounded memory use.
 3. Export the core tables to Parquet for browser-safe consumption.
 4. Load those Parquet files in `analytics.html` for local, client-side analysis.
@@ -15,7 +15,8 @@ The design keeps ingestion, storage, and dashboard loading separated so each ste
 
 ```
 Discovery            Streaming parse            DuckDB storage             Dashboard export
-fetch_uhc_index.py ─▶ stream_parser.py ────────▶ transparency.duckdb ─────▶ export_for_dashboard.py
+fetch_uhc_index.py ─┐
+fetch_cigna_index.py ─┴▶ stream_parser.py ─────▶ transparency.duckdb ─────▶ export_for_dashboard.py
                                                                                    │
                                                                                    ▼
                                                                            analytics.html
@@ -26,6 +27,12 @@ fetch_uhc_index.py ─▶ stream_parser.py ────────▶ transpare
 `fetch_uhc_index.py` crawls the two-level UHC blob structure. The top-level `blobs/` endpoint returns employer-specific index files, not the rate files themselves, so the script drills into each index and extracts the actual `in-network-rates.json` or `in-network-rates.json.gz` URLs.
 
 `fetch_and_filter_blobs.py` is a smaller helper that saves the raw blob response and writes a filtered JSON list of likely in-network-rates files. It is useful for quick local experiments, but `fetch_uhc_index.py` is the more complete discovery path.
+
+`fetch_cigna_index.py` reads a local Cigna CMS index, extracts unique
+`reporting_structure[].in_network_files[].location` URLs containing
+`in-network-rates`, and writes the `{\"blobs\": [...]}` manifest consumed by
+`runner.py`. The runner accepts separate manifest, database, progress, and
+download paths, so Cigna and UHC can be processed independently.
 
 ## Parsing and storage
 
@@ -63,6 +70,9 @@ The dashboard in `analytics.html` loads those Parquet files locally in the brows
 pip install duckdb ijson requests
 
 python fetch_uhc_index.py --limit 50 --out manifest.csv
+python fetch_cigna_index.py 2026-09-01_cigna-health-life-insurance-company_index.json
+python runner.py --manifest cigna_in_network_rates.json --db cigna.duckdb \
+        --progress cigna_processed_count.txt --max-files 1
 python stream_parser.py path/to/file_in-network-rates.json.gz
 python export_for_dashboard.py --db transparency.duckdb --out ./web
 python -m http.server 8000

@@ -5,6 +5,7 @@ Tools for fetching, parsing, storing, and exploring hospital price transparency 
 ## What is here
 
 - `fetch_uhc_index.py` discovers in-network-rates file URLs from UHC blob listings.
+- `fetch_cigna_index.py` converts a Cigna CMS index JSON into the same manifest format.
 - `fetch_and_filter_blobs.py` is a smaller helper that filters the top-level blob response into a local JSON list.
 - `stream_parser.py` streams a single MRF file into DuckDB without loading the full payload into memory. It uses a single `ijson.parse(stream)` pass (no double-download), persists top-level `provider_references` into a `providers` table, captures `negotiation_arrangement` and `setting`, and writes array-typed columns as SQL arrays so they can be exported directly.
 - `runner.py` batches downloads from a filtered JSON manifest and feeds them into the parser.
@@ -40,6 +41,48 @@ python stream_parser.py path/to/file_in-network-rates.json.gz
 ```bash
 python runner.py --max-files 5
 ```
+
+For a Cigna index, create a manifest and use separate output files so the UHC
+run can remain resumable:
+
+```bash
+python fetch_cigna_index.py 2026-09-01_cigna-health-life-insurance-company_index.json \
+	--out cigna_in_network_rates.json
+python runner.py --manifest cigna_in_network_rates.json \
+	--db cigna.duckdb --progress cigna_processed_count.txt --max-files 1
+```
+
+Remove `--max-files 1` to continue through all 124 files. The runner supports
+Cigna's `.json.gz` and `.zip` rate-file formats; ZIPs are streamed from their
+`in-network-rates` JSON member without extracting the archive permanently.
+
+To check the remote compressed size of every Cigna file without downloading
+them, write a sorted report:
+
+```bash
+python check_cigna_file_sizes.py
+```
+
+The report is saved to `cigna_file_sizes.json`; its `smallest`, `largest`, and
+`files` fields contain the summary and per-file results.
+
+Create the compact manifest used for smallest-to-largest processing:
+
+```bash
+python create_size_sorted_manifest.py
+python runner.py --manifest cigna_in_network_rates_by_size.json \
+	--db cigna.duckdb --progress cigna_processed_count.txt
+```
+
+The prefetching runner uses the same manifest:
+
+```bash
+python runnerMulti.py --manifest cigna_in_network_rates_by_size.json \
+	--db cigna.duckdb --progress cigna_processed_count.txt
+```
+
+Both runners also accept `cigna_file_sizes.json` directly; they read its
+`files` array and sort by `size_bytes` before processing.
 
 4. Export dashboard-ready Parquet files:
 
