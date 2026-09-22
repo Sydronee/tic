@@ -81,6 +81,13 @@ python runnerMulti.py --manifest cigna_in_network_rates_by_size.json \
 	--db cigna.duckdb --progress cigna_processed_count.txt
 ```
 
+Both runners retry transient HTTP failures with exponential backoff, write
+downloads atomically, validate `size_bytes` when the manifest provides it, and
+record a SHA-256 checksum for each completed file. Progress updates are also
+atomic, so an interrupted run can be resumed without a partially-written
+counter. Machine-readable success and failure events are appended to
+`ingestion_runs.jsonl`; use `--run-log PATH` to choose another location.
+
 Both runners also accept `cigna_file_sizes.json` directly; they read its
 `files` array and sort by `size_bytes` before processing.
 

@@ -2,8 +2,8 @@ import os
 import sys
 import json
 import argparse
-import requests
 import duckdb
+from ingest_utils import append_run_log, download_file
 from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urlparse
 
@@ -21,6 +21,7 @@ DB_FILE = "transparency.duckdb"
 SCHEMA_FILE = "schema.sql"
 DOWNLOAD_DIR = "./temp_downloads"
 PREFETCH_COUNT = 4  # Number of upcoming files to prefetch in parallel
+RUN_LOG_FILE = "ingestion_runs.jsonl"
 
 def initialize_db(db_file, schema_file):
     """Initializes DuckDB schema idempotently."""
@@ -47,33 +48,12 @@ def get_processed_count(progress_file):
 
 def update_processed_count(progress_file, count):
     """Atomically updates progress text file with the latest count."""
-    with open(progress_file, "w", encoding="utf-8") as f:
+    temp_progress = f"{progress_file}.tmp"
+    with open(temp_progress, "w", encoding="utf-8") as f:
         f.write(f"{count}\n")
-
-def download_file(url, target_path):
-    """Downloads a file if it doesn't already exist locally."""
-    if os.path.exists(target_path):
-        return target_path  # Already prefetched
-
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
-    
-    temp_target = target_path + ".tmp"
-    try:
-        with requests.get(url, headers=headers, stream=True, timeout=300) as response:
-            response.raise_for_status()
-            with open(temp_target, "wb") as f:
-                for chunk in response.iter_content(chunk_size=1024 * 1024):  # 1MB chunks
-                    if chunk:
-                        f.write(chunk)
-        os.rename(temp_target, target_path)
-    except Exception as e:
-        if os.path.exists(temp_target):
-            os.remove(temp_target)
-        raise e
-
-    return target_path
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(temp_progress, progress_file)
 
 def main():
     parser = argparse.ArgumentParser(description="Batch process MRF rate files into DuckDB with prefetched downloads.")
@@ -93,6 +73,8 @@ def main():
                         help=f"DuckDB schema path (default: {SCHEMA_FILE})")
     parser.add_argument("--download-dir", default=DOWNLOAD_DIR,
                         help=f"Temporary download directory (default: {DOWNLOAD_DIR})")
+    parser.add_argument("--run-log", default=RUN_LOG_FILE,
+                        help=f"JSONL ingestion event log (default: {RUN_LOG_FILE})")
     args = parser.parse_args()
 
     # 1. Load the filtered JSON list
@@ -162,14 +144,19 @@ def main():
                     pf_path = os.path.join(args.download_dir, pf_filename)
 
                     # Submit prefetch task
-                    futures[pf_idx] = executor.submit(download_file, pf_url, pf_path)
+                    expected_size = pf_item.get("size_bytes") if isinstance(pf_item, dict) else None
+                    futures[pf_idx] = executor.submit(
+                        download_file, pf_url, pf_path, expected_size=expected_size
+                    )
 
             print(f"\n[{index + 1}/{total_files}] (Run count: {processed_in_this_run + 1}/{args.max_files if args.max_files else '∞'}) Fetching/Processing: {filename}")
             
             # Await download for the current file
             try:
-                futures.pop(index).result()
+                download_info = futures.pop(index).result()
             except Exception as e:
+                append_run_log(args.run_log, status="failed", index=index, filename=filename,
+                               url=download_url, error=str(e))
                 print(f"Error downloading {filename}: {e}")
                 break
 
@@ -178,12 +165,16 @@ def main():
                 print("Processing and inserting into DuckDB...")
                 stream_parser.process_file(con, local_filepath, filename)
             except Exception as e:
+                append_run_log(args.run_log, status="failed", index=index, filename=filename,
+                               url=download_url, error=str(e))
                 print(f"Error processing {filename}: {e}")
                 if os.path.exists(local_filepath):
                     os.remove(local_filepath)
                 print("Stopping pipeline due to error. Fix issue and re-run to resume.")
                 break
             else:
+                append_run_log(args.run_log, status="complete", index=index, filename=filename,
+                               url=download_url, **download_info)
                 # Step C: Delete local file after successful insertion
                 if os.path.exists(local_filepath):
                     os.remove(local_filepath)

@@ -11,6 +11,7 @@ __pycache__/
 *.docx
 analytics.html
 report.txt
+ingestion_runs.jsonl
 processed_count.txt
 cigna_sorted_processed_count.txt
 2026-09-01_cigna-health-life-insurance-company_index.json

@@ -2,13 +2,13 @@ import os
 import sys
 import json
 import argparse
-import requests
 import duckdb
 from urllib.parse import urlparse
 
 # Import stream_parser helper functions
 try:
     import stream_parser
+    from ingest_utils import append_run_log, download_file
 except ImportError:
     print("Error: Could not import 'stream_parser.py'. Ensure stream_parser.py is in the same directory.")
     sys.exit(1)
@@ -19,6 +19,7 @@ PROGRESS_FILE = "processed_count.txt"
 DB_FILE = "transparency.duckdb"
 SCHEMA_FILE = "schema.sql"
 DOWNLOAD_DIR = "./temp_downloads"
+RUN_LOG_FILE = "ingestion_runs.jsonl"
 
 def initialize_db(db_file, schema_file):
     """Initializes DuckDB schema idempotently and sets optimization flags."""
@@ -48,28 +49,12 @@ def get_processed_count(progress_file):
 
 def update_processed_count(progress_file, count):
     """Atomically updates the progress text file with the latest count."""
-    with open(progress_file, "w", encoding="utf-8") as f:
+    temp_progress = f"{progress_file}.tmp"
+    with open(temp_progress, "w", encoding="utf-8") as f:
         f.write(f"{count}\n")
-
-def download_file(url, target_path):
-    """Downloads a file in streaming mode with atomic writing (.tmp extension)."""
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
-    
-    temp_target = target_path + ".tmp"
-    try:
-        with requests.get(url, headers=headers, stream=True, timeout=300) as response:
-            response.raise_for_status()
-            with open(temp_target, "wb") as f:
-                for chunk in response.iter_content(chunk_size=1024 * 1024):  # 1MB chunks
-                    if chunk:
-                        f.write(chunk)
-        os.rename(temp_target, target_path)
-    except Exception as e:
-        if os.path.exists(temp_target):
-            os.remove(temp_target)
-        raise e
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(temp_progress, progress_file)
 
 def main():
     parser = argparse.ArgumentParser(description="Batch process MRF rate files into DuckDB.")
@@ -89,6 +74,8 @@ def main():
                         help=f"DuckDB schema path (default: {SCHEMA_FILE})")
     parser.add_argument("--download-dir", default=DOWNLOAD_DIR,
                         help=f"Temporary download directory (default: {DOWNLOAD_DIR})")
+    parser.add_argument("--run-log", default=RUN_LOG_FILE,
+                        help=f"JSONL ingestion event log (default: {RUN_LOG_FILE})")
     args = parser.parse_args()
 
     # 1. Load the filtered JSON list
@@ -144,19 +131,28 @@ def main():
             print(f"\n[{index + 1}/{total_files}] (Run count: {processed_in_this_run + 1}/{args.max_files if args.max_files else '∞'}) Downloading: {filename}")
             try:
                 # Step A: Download file to local storage
-                download_file(download_url, local_filepath)
+                metadata = item if isinstance(item, dict) else {}
+                download_info = download_file(
+                    download_url,
+                    local_filepath,
+                    expected_size=metadata.get("size_bytes"),
+                )
 
                 # Step B: Pass file path to stream_parser engine
                 print(f"Processing and inserting into DuckDB...")
                 stream_parser.process_file(con, local_filepath, filename)
 
             except Exception as e:
+                append_run_log(args.run_log, status="failed", index=index, filename=filename,
+                               url=download_url, error=str(e))
                 print(f"Error processing {filename}: {e}")
                 if os.path.exists(local_filepath):
                     os.remove(local_filepath)
                 print("Stopping pipeline due to error. Fix issue and re-run to resume.")
                 break
             else:
+                append_run_log(args.run_log, status="complete", index=index, filename=filename,
+                               url=download_url, **download_info)
                 # Step C: Delete downloaded file upon successful processing
                 if os.path.exists(local_filepath):
                     os.remove(local_filepath)
