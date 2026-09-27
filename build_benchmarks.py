@@ -13,6 +13,7 @@ Run from TiC/:
 """
 
 import argparse
+import re
 import time
 from pathlib import Path
 import duckdb
@@ -25,7 +26,8 @@ def hms(secs):
 
 
 def build(transparency_db, enrichment_db, drop_first, stats_only,
-          skip_indexes, skip_stats, threads, memory_limit, temp_directory):
+          skip_indexes, skip_stats, threads, memory_limit, temp_directory,
+          approximate_percentiles):
     t_total = time.time()
 
     if not Path(transparency_db).exists():
@@ -369,6 +371,13 @@ def build(transparency_db, enrichment_db, drop_first, stats_only,
     for tname, sql in stats:
         t0 = time.time()
         con.execute(f"DROP TABLE IF EXISTS {tname}")
+        if approximate_percentiles:
+            sql = re.sub(
+                r"PERCENTILE_CONT\(([^)]+)\) WITHIN GROUP "
+                r"\(ORDER BY negotiated_rate\)",
+                r"approx_quantile(negotiated_rate, \1)",
+                sql,
+            )
         con.execute(f"CREATE TABLE {tname} AS {sql}")
         n = con.execute(f"SELECT COUNT(*) FROM {tname}").fetchone()[0]
         print(f"  {tname}: {n:,} rows  ({hms(time.time()-t0)})")
@@ -423,11 +432,13 @@ def main():
     ap.add_argument("--memory-limit",    default="4GB",
                     help="DuckDB memory limit, e.g. 8GB (default: 4GB)")
     ap.add_argument("--temp-directory",  default=None,
-                    help="Directory for DuckDB spill files")
+                    help="Directory for DuckDB spill files (use a large local disk)")
+    ap.add_argument("--approx-percentiles", action="store_true",
+                    help="Use approx_quantile to greatly reduce stats scratch space")
     args = ap.parse_args()
     build(args.transparency_db, args.enrichment_db, args.drop_first, args.stats_only,
           args.skip_indexes, args.skip_stats, args.threads, args.memory_limit,
-          args.temp_directory)
+            args.temp_directory, args.approx_percentiles)
 
 if __name__ == "__main__":
     main()
