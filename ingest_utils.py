@@ -18,6 +18,30 @@ HTTP_HEADERS = {
 RETRYABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
 
 
+def validate_manifest(data: Any) -> list[Any]:
+    """Validate and return runner manifest entries with actionable errors."""
+    if not isinstance(data, dict):
+        raise ValueError("manifest must contain a JSON object")
+    entries = data.get("blobs") or data.get("files")
+    if not isinstance(entries, list):
+        raise ValueError("manifest must contain a 'blobs' or 'files' list")
+
+    for index, item in enumerate(entries):
+        if isinstance(item, str):
+            if not item.strip():
+                raise ValueError(f"manifest entry {index} has an empty URL")
+            continue
+        if not isinstance(item, dict):
+            raise ValueError(f"manifest entry {index} must be an object or URL string")
+        if not isinstance(item.get("downloadUrl"), str) or not item["downloadUrl"].strip():
+            raise ValueError(f"manifest entry {index} is missing a non-empty downloadUrl")
+        if "size_bytes" in item and (
+            not isinstance(item["size_bytes"], int) or item["size_bytes"] < 0
+        ):
+            raise ValueError(f"manifest entry {index} has an invalid size_bytes")
+    return entries
+
+
 def _timestamp() -> str:
     return datetime.now(timezone.utc).isoformat()
 

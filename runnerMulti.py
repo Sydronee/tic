@@ -3,7 +3,7 @@ import sys
 import json
 import argparse
 import duckdb
-from ingest_utils import append_run_log, download_file
+from ingest_utils import append_run_log, download_file, validate_manifest
 from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urlparse
 
@@ -85,7 +85,7 @@ def main():
     with open(args.manifest, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    blobs = data.get("blobs") or data.get("files", [])
+    blobs = validate_manifest(data)
     blobs.sort(key=lambda item: item.get("size_bytes", float("inf"))
                if isinstance(item, dict) else float("inf"))
     total_files = len(blobs)

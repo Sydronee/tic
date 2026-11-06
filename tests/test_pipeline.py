@@ -7,7 +7,7 @@ from unittest.mock import patch
 import requests
 
 from fetch_cigna_index import iter_rate_files
-from ingest_utils import download_file
+from ingest_utils import download_file, validate_manifest
 
 
 class FakeRaw:
@@ -77,6 +77,10 @@ class PipelineTests(unittest.TestCase):
     def test_manifest_payload_is_json_serializable(self):
         files = list(iter_rate_files({"reporting_structure": []}))
         self.assertEqual(json.dumps({"blobs": files}), '{"blobs": []}')
+
+    def test_manifest_validation_reports_invalid_entries(self):
+        with self.assertRaisesRegex(ValueError, "missing a non-empty downloadUrl"):
+            validate_manifest({"blobs": [{"name": "missing-url"}]})
 
 
 if __name__ == "__main__":
