@@ -22,6 +22,13 @@ Create and activate a virtual environment, then install the Python dependencies:
 pip install duckdb ijson requests
 ```
 
+For development and validation:
+
+```bash
+pip install -r requirements-dev.txt
+python -m unittest discover -s tests -v
+```
+
 ## Typical workflow
 
 1. Discover source URLs:
@@ -74,6 +81,14 @@ python runner.py --manifest cigna_in_network_rates_by_size.json \
 	--db cigna.duckdb --progress cigna_processed_count.txt
 ```
 
+Validate a manifest and preview a run without downloading files or writing a
+database:
+
+```bash
+python runner.py --manifest cigna_in_network_rates_by_size.json --dry-run \
+	--max-files 5
+```
+
 The prefetching runner uses the same manifest:
 
 ```bash
@@ -90,6 +105,9 @@ counter. Machine-readable success and failure events are appended to
 
 Both runners also accept `cigna_file_sizes.json` directly; they read its
 `files` array and sort by `size_bytes` before processing.
+
+Both runners validate manifest entries before opening DuckDB. Invalid entries
+fail with an actionable error instead of being silently skipped.
 
 4. Export dashboard-ready Parquet files:
 
