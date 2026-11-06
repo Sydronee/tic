@@ -289,10 +289,20 @@ def process_file(con, source, source_file_label):
             provider_cache = {}
             batch = []
             n_seen = n_kept = 0
+            location_provider_references = 0
+            late_header_fields = set()
 
             in_in_network = False
 
             for prefix, event, value in parser:
+                if (
+                    in_in_network
+                    and prefix in TOP_LEVEL_SCALAR_FIELDS
+                    and event in ("string", "number")
+                ):
+                    late_header_fields.add(prefix)
+                    continue
+
                 # collect top-level scalars
                 if not in_in_network and prefix in TOP_LEVEL_SCALAR_FIELDS and event in ("string", "number"):
                     header[prefix] = value
@@ -303,6 +313,8 @@ def process_file(con, source, source_file_label):
                     obj = _build_value_from_events(parser, prefix, event, value)
                     # obj should be a mapping with provider_group_id, provider_groups
                     # and network_name (all three required by the CMS schema).
+                    if "location" in obj and "provider_groups" not in obj:
+                        location_provider_references += 1
                     group_id = obj.get("provider_group_id")
                     network_name = obj.get("network_name")
                     for prov in obj.get("provider_groups", []):
@@ -389,6 +401,15 @@ def process_file(con, source, source_file_label):
             con.execute("COMMIT;")
 
             print(f"{source_file_label}: {n_seen} billing codes scanned, {n_kept} institutional rate rows kept.")
+            print(
+                f"{source_file_label}: {location_provider_references} "
+                "provider_references items had location instead of provider_groups."
+            )
+            for field in sorted(late_header_fields):
+                print(
+                    f"Warning: header field {field!r} appeared after "
+                    "in_network started."
+                )
 
     except Exception:
         con.execute("ROLLBACK;")
