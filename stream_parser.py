@@ -27,6 +27,7 @@ from contextlib import contextmanager
 
 import duckdb
 import ijson
+import pandas
 import requests
 
 BATCH_SIZE = 122_880  # Match DuckDB's native RowGroup size for optimal storage
@@ -35,16 +36,6 @@ TOP_LEVEL_SCALAR_FIELDS = {
     "reporting_entity_name", "reporting_entity_type", "plan_name",
     "plan_id", "plan_id_type", "plan_market_type", "last_updated_on", "version",
 }
-
-INSERT_SQL = """
-    INSERT INTO negotiated_rates (
-        payer_id, code_id, negotiation_arrangement, billing_class, setting,
-        negotiated_type, negotiated_rate, service_code, billing_code_modifier,
-        expiration_date, provider_reference_ids, source_file
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
-"""
-
-
 
 # Some MRF hosts (UHC's blob endpoint among them) 403 requests that don't
 # look like they came from a browser. runner.py's own downloader already
@@ -108,7 +99,7 @@ def extract_header(stream):
     """Cheap first pass: stops the INSTANT the huge `in_network` array
     begins, so it only ever reads a few KB — never buffers the array."""
     header = {}
-    for prefix, event, value in ijson.parse(stream):
+    for prefix, event, value in ijson.parse(stream, use_float=True):
         if prefix == "in_network" and event == "start_array":
             break
         if prefix in TOP_LEVEL_SCALAR_FIELDS and event in ("string", "number"):
@@ -267,6 +258,21 @@ def _build_value_from_events(event_iter, prefix, event, value):
     # Fallback
     return None
 
+
+def _insert_batch(con, batch):
+    columns = [
+        "payer_id", "code_id", "negotiation_arrangement", "billing_class",
+        "setting", "negotiated_type", "negotiated_rate", "service_code",
+        "billing_code_modifier", "expiration_date", "provider_reference_ids",
+        "source_file",
+    ]
+    df = pandas.DataFrame.from_records(batch, columns=columns)
+    con.execute(
+        "INSERT INTO negotiated_rates "
+        f"({', '.join(columns)}) SELECT {', '.join(columns)} FROM df"
+    )
+
+
 def process_file(con, source, source_file_label):
     # 1. Start an explicit transaction block for the entire file pass
     con.execute("BEGIN TRANSACTION;")
@@ -281,7 +287,7 @@ def process_file(con, source, source_file_label):
             return
 
         with open_stream(source) as stream:
-            parser = ijson.parse(stream)
+            parser = ijson.parse(stream, use_float=True)
 
             header = {}
             payer_id = None
@@ -387,12 +393,12 @@ def process_file(con, source, source_file_label):
                             ))
 
                     if len(batch) >= BATCH_SIZE:
-                        con.executemany(INSERT_SQL, batch)
+                        _insert_batch(con, batch)
                         batch.clear()
 
             # flush remaining
             if batch:
-                con.executemany(INSERT_SQL, batch)
+                _insert_batch(con, batch)
 
             con.execute(
                 "INSERT INTO ingested_files (source_file, rows_kept) VALUES (?, ?)",
