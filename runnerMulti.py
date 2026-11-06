@@ -75,6 +75,8 @@ def main():
                         help=f"Temporary download directory (default: {DOWNLOAD_DIR})")
     parser.add_argument("--run-log", default=RUN_LOG_FILE,
                         help=f"JSONL ingestion event log (default: {RUN_LOG_FILE})")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Validate and list manifest entries without downloading or writing data")
     args = parser.parse_args()
 
     # 1. Load the filtered JSON list
@@ -90,6 +92,13 @@ def main():
                if isinstance(item, dict) else float("inf"))
     total_files = len(blobs)
     print(f"Found {total_files} total files in {args.manifest}.")
+    if args.dry_run:
+        limit = args.max_files if args.max_files is not None else total_files
+        for index, item in enumerate(blobs[:limit]):
+            url = item.get("downloadUrl") if isinstance(item, dict) else item
+            name = item.get("name") if isinstance(item, dict) else os.path.basename(urlparse(url).path)
+            print(f"[dry-run] {index + 1}/{min(limit, total_files)} {name}: {url}")
+        return
 
     # 2. Setup DuckDB schema & progress tracker
     initialize_db(args.db, args.schema)
