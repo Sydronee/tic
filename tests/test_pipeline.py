@@ -74,6 +74,20 @@ class PipelineTests(unittest.TestCase):
             self.assertFalse((target.with_name("download.bin.tmp")).exists())
             self.assertEqual(get.call_count, 2)
 
+    @patch("ingest_utils.time.sleep")
+    @patch("ingest_utils.requests.get")
+    def test_download_does_not_retry_not_found_or_forbidden(self, get, _sleep):
+        for status_code in (403, 404):
+            with self.subTest(status_code=status_code):
+                get.reset_mock()
+                get.return_value = FakeResponse(status_code)
+                with tempfile.TemporaryDirectory() as directory:
+                    target = Path(directory) / "download.bin"
+                    with self.assertRaises(requests.HTTPError):
+                        download_file("https://example.test/file", str(target), retries=3)
+                self.assertEqual(get.call_count, 1)
+                self.assertFalse(_sleep.called)
+
     def test_manifest_payload_is_json_serializable(self):
         files = list(iter_rate_files({"reporting_structure": []}))
         self.assertEqual(json.dumps({"blobs": files}), '{"blobs": []}')

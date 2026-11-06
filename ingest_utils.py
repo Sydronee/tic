@@ -18,6 +18,10 @@ HTTP_HEADERS = {
 RETRYABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
 
 
+class _RetryableStatusError(Exception):
+    """Signal an HTTP status that should be retried."""
+
+
 def validate_manifest(data: Any) -> list[Any]:
     """Validate and return runner manifest entries with actionable errors."""
     if not isinstance(data, dict):
@@ -83,7 +87,7 @@ def download_file(
                 timeout=(connect_timeout, read_timeout),
             ) as response:
                 if response.status_code in RETRYABLE_STATUS_CODES:
-                    response.raise_for_status()
+                    raise _RetryableStatusError(f"HTTP {response.status_code}")
                 response.raise_for_status()
                 # Manifest sizes refer to the compressed object. Requests
                 # normally auto-decompresses Content-Encoding: gzip while
@@ -104,7 +108,7 @@ def download_file(
 
             os.replace(temp_target, target_path)
             return {"path": target_path, "bytes": size, "sha256": _file_sha256(target_path), "cached": False}
-        except (requests.RequestException, OSError, IOError) as exc:
+        except _RetryableStatusError as exc:
             last_error = exc
             if os.path.exists(temp_target):
                 os.remove(temp_target)
@@ -112,6 +116,18 @@ def download_file(
                 break
             delay = min(60.0, 2**attempt) + random.uniform(0, 0.25)
             time.sleep(delay)
+        except (requests.ConnectionError, requests.Timeout) as exc:
+            last_error = exc
+            if os.path.exists(temp_target):
+                os.remove(temp_target)
+            if attempt == retries:
+                break
+            delay = min(60.0, 2**attempt) + random.uniform(0, 0.25)
+            time.sleep(delay)
+        except (OSError, IOError):
+            if os.path.exists(temp_target):
+                os.remove(temp_target)
+            raise
 
     raise RuntimeError(f"download failed after {retries + 1} attempts: {url}") from last_error
 
