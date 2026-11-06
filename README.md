@@ -1,6 +1,7 @@
 # Hospital Price Transparency Pipeline
 
-Tools for fetching, parsing, storing, and exploring hospital price transparency data from UHC-style in-network-rates files.
+Tools for fetching, parsing, storing, validating, benchmarking, and exploring
+hospital price transparency data from UHC and Cigna in-network-rates files.
 
 ## What is here
 
@@ -11,6 +12,10 @@ Tools for fetching, parsing, storing, and exploring hospital price transparency 
 - `runner.py` batches downloads from a filtered JSON manifest and feeds them into the parser.
 - `export_for_dashboard.py` exports the three dashboard tables to Parquet.
 - `analytics.html` is the browser dashboard that reads the exported tables.
+- `load_code_descriptions.py` loads CMS code descriptions into the enrichment database.
+- `build_benchmarks.py` builds benchmark tables and aggregate statistics.
+- `validate_data.py` runs structural, referential, completeness, format, and
+  coverage checks against the DuckDB database.
 - `schema.sql` defines the DuckDB schema and benchmark views.
 - `architecture.md` explains the pipeline at a higher level.
 
@@ -19,7 +24,7 @@ Tools for fetching, parsing, storing, and exploring hospital price transparency 
 Create and activate a virtual environment, then install the Python dependencies:
 
 ```bash
-pip install duckdb ijson requests
+python -m pip install -r requirements.txt
 ```
 
 For development and validation:
@@ -28,6 +33,9 @@ For development and validation:
 pip install -r requirements-dev.txt
 python -m unittest discover -s tests -v
 ```
+
+The CI workflow also runs Python compilation, generated-artifact checks, and
+Ruff linting.
 
 ## Typical workflow
 
@@ -109,30 +117,61 @@ Both runners also accept `cigna_file_sizes.json` directly; they read its
 Both runners validate manifest entries before opening DuckDB. Invalid entries
 fail with an actionable error instead of being silently skipped.
 
-4. Export dashboard-ready Parquet files:
+4. Optionally load CMS reference descriptions:
+
+```bash
+python load_code_descriptions.py \
+	--msdrg reference_data/appendix_A.txt \
+	--rvu reference_data/PPRRVU2026_Jan_QPP.csv \
+	--icd reference_data/icd10pcs_tables_2027.xml \
+	--hcpcs reference_data/HCPC2026_ANWEB.xlsx
+```
+
+The `--hcpcs` input is optional. Revenue-code descriptions are embedded in the
+loader, and `CSTM-ALL` is represented as payer-defined.
+
+5. Build benchmark tables:
+
+```bash
+python build_benchmarks.py --drop-first
+```
+
+Use `--transparency-db` and `--enrichment-db` when your databases are not at
+their default paths. The benchmark build requires both databases to exist.
+
+6. Validate the ingested data:
+
+```bash
+python validate_data.py --db transparency.duckdb --fast --fail-on warn
+```
+
+7. Export dashboard-ready Parquet files:
 
 ```bash
 	python export_for_dashboard.py --db transparency.duckdb --out ./web
 ```
 
-5. Serve the folder and open the dashboard:
+8. Serve the repository and open the dashboard:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000/analytics.html` and load the three Parquet files together.
+Then open `http://localhost:8000/analytics.html` and load all four exported
+Parquet files together.
 
 ## Dashboard contract
 
-The dashboard expects these exported files (the exporter now also writes provider mappings):
+The dashboard expects these exported files:
 
 - `negotiated_rates.parquet` (includes `negotiation_arrangement` and `setting`)
 - `payers.parquet`
 - `billing_codes.parquet` (includes optional `negotiation_arrangement`)
 - `providers.parquet` (mapping of `provider_reference_id` → NPI/TIN/facility)
 
-The Parquet loader in `analytics.html` mounts each file as a temporary table named after the base relation, so the dashboard SQL can keep reading from `negotiated_rates`, `payers`, and `billing_codes` without schema changes.
+The Parquet loader in `analytics.html` mounts each file as a temporary table
+named after the base relation, so the dashboard SQL can read
+`negotiated_rates`, `payers`, `billing_codes`, and `providers`.
 
 ## Notes
 
