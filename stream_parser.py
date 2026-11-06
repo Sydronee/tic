@@ -272,6 +272,14 @@ def process_file(con, source, source_file_label):
     con.execute("BEGIN TRANSACTION;")
     
     try:
+        if con.execute(
+            "SELECT 1 FROM ingested_files WHERE source_file = ?",
+            [source_file_label],
+        ).fetchone():
+            print(f"{source_file_label}: already ingested; skipping.")
+            con.execute("ROLLBACK;")
+            return
+
         with open_stream(source) as stream:
             parser = ijson.parse(stream)
 
@@ -374,7 +382,10 @@ def process_file(con, source, source_file_label):
             if batch:
                 con.executemany(INSERT_SQL, batch)
 
-            # commit transaction
+            con.execute(
+                "INSERT INTO ingested_files (source_file, rows_kept) VALUES (?, ?)",
+                [source_file_label, n_kept],
+            )
             con.execute("COMMIT;")
 
             print(f"{source_file_label}: {n_seen} billing codes scanned, {n_kept} institutional rate rows kept.")

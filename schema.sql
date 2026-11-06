@@ -61,6 +61,12 @@ CREATE TABLE IF NOT EXISTS negotiated_rates (
     ingested_at              TIMESTAMP DEFAULT current_timestamp
 );
 
+CREATE TABLE IF NOT EXISTS ingested_files (
+    source_file VARCHAR PRIMARY KEY,
+    rows_kept BIGINT,
+    loaded_at TIMESTAMP DEFAULT current_timestamp
+);
+
 -- ---------------------------------------------------------------------
 -- Optional: Provider mappings
 --

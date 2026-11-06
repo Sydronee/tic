@@ -111,6 +111,9 @@ def main():
 
     os.makedirs(args.download_dir, exist_ok=True)
     con = duckdb.connect(args.db)
+    ingested_files = {
+        row[0] for row in con.execute("SELECT source_file FROM ingested_files").fetchall()
+    }
 
     processed_in_this_run = 0
 
@@ -132,6 +135,11 @@ def main():
             
             download_url = item.get("downloadUrl") if isinstance(item, dict) else item
             filename = item.get("name") if isinstance(item, dict) else os.path.basename(urlparse(download_url).path)
+            if filename in ingested_files:
+                print(f"Skipping already ingested file: {filename}")
+                processed_count += 1
+                update_processed_count(args.progress, processed_count)
+                continue
 
             if not download_url:
                 print(f"Skipping index {index}: missing downloadUrl.")
