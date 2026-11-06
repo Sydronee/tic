@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import logging
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -12,6 +13,7 @@ from urllib.parse import urlparse
 import requests
 
 
+logger = logging.getLogger(__name__)
 USER_AGENT = "price-transparency-pipeline/0.1"
 
 
@@ -68,6 +70,7 @@ def check_item(index, item, timeout):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", default="cigna_in_network_rates.json")
     parser.add_argument("--out", default="cigna_file_sizes.json")
@@ -94,7 +97,7 @@ def main():
                 if result["size_gib"] is not None
                 else f"FAILED: {result['error']}"
             )
-            print(f"[{completed}/{len(items)}] {result['name']}: {size}", flush=True)
+            logger.info("[%s/%s] %s: %s", completed, len(items), result["name"], size)
 
     sized = [result for result in results if result["size_bytes"] is not None]
     results.sort(
@@ -117,12 +120,12 @@ def main():
         json.dump(report, destination, indent=2)
         destination.write("\n")
 
-    print(f"\nWrote report to {args.out}")
+    logger.info("Wrote report to %s", args.out)
     if report["smallest"]:
-        print(f"Smallest: {report['smallest']['name']} ({report['smallest']['size_bytes']:,} bytes)")
-        print(f"Largest:  {report['largest']['name']} ({report['largest']['size_bytes']:,} bytes)")
+        logger.info("Smallest: %s (%s bytes)", report["smallest"]["name"], f"{report['smallest']['size_bytes']:,}")
+        logger.info("Largest: %s (%s bytes)", report["largest"]["name"], f"{report['largest']['size_bytes']:,}")
     if report["failed_count"]:
-        print(f"Warning: {report['failed_count']} file(s) had no usable size", file=sys.stderr)
+        logger.warning("%s file(s) had no usable size", report["failed_count"])
 
 
 if __name__ == "__main__":

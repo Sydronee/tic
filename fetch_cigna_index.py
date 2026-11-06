@@ -3,8 +3,12 @@
 
 import argparse
 import json
+import logging
 from pathlib import Path
 from urllib.parse import urlparse
+
+
+logger = logging.getLogger(__name__)
 
 
 def iter_rate_files(index):
@@ -31,6 +35,7 @@ def iter_rate_files(index):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("index", help="Cigna *_index.json file")
     parser.add_argument("--out", default="cigna_in_network_rates.json",
@@ -49,7 +54,7 @@ def main():
     with open(args.out, "w", encoding="utf-8") as destination:
         json.dump(payload, destination, indent=2)
         destination.write("\n")
-    print(f"Wrote {len(files):,} in-network-rates files to {args.out}")
+    logger.info("Wrote %s in-network-rates files to %s", f"{len(files):,}", args.out)
 
 
 if __name__ == "__main__":

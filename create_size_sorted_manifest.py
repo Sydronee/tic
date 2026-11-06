@@ -3,9 +3,14 @@
 
 import argparse
 import json
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sizes", default="cigna_file_sizes.json",
                         help="Size report produced by check_cigna_file_sizes.py")
@@ -30,7 +35,7 @@ def main():
     with open(args.out, "w", encoding="utf-8") as destination:
         json.dump({"blobs": files}, destination, indent=2)
         destination.write("\n")
-    print(f"Wrote {len(files):,} size-sorted files to {args.out}")
+    logger.info("Wrote %s size-sorted files to %s", f"{len(files):,}", args.out)
 
 
 if __name__ == "__main__":
