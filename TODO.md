@@ -15,8 +15,5 @@
 
 ## Engineering
 
-- Add automated tests for manifest parsing, download retries, and benchmark
-  table creation.
-- Add CI checks for syntax, imports, tests, and generated-file protection.
 - Keep large databases, downloaded archives, reports, and dashboard exports out
   of version control.

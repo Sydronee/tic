@@ -1,4 +1,4 @@
-# Hospital Price Transparency Pipeline
+# Transparency in Coverage (TiC) Data Pipeline
 
 Tools for fetching, parsing, storing, validating, benchmarking, and exploring
 hospital price transparency data from UHC and Cigna in-network-rates files.

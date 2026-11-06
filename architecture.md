@@ -54,7 +54,6 @@ The storage layout in `schema.sql` is a small star schema:
 - `payers` stores plan-level metadata.
 - `billing_codes` stores procedure/code metadata.
 - `negotiated_rates` stores the fact rows.
-- `providers` is reserved for later identity resolution work.
 
 `procedure_price_stats` and `procedure_price_by_payer` are SQL views built on top of that schema and are used for dashboard-style aggregation.
 
