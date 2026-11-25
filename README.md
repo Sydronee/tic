@@ -14,7 +14,8 @@ hospital price transparency data from UHC and Cigna in-network-rates files.
 - `validate_data.py` runs structural, referential, completeness, format, and
   coverage checks against the DuckDB database.
 - `schema.sql` defines the DuckDB schema and benchmark views.
-- `architecture.md` explains the pipeline at a higher level.
+- `architecture.md` is the developer guide, with the pipeline architecture,
+  data model, development commands, and a file-by-file inventory.
 
 ## Install
 
@@ -103,6 +104,9 @@ python validate_data.py --db transparency.duckdb --fast --fail-on warn
 The browser-only Parquet dashboard has been removed. The current comparison
 dashboard and its startup instructions are maintained in the sibling
 [Benchmarks project](../Benchmarks/RUNBOOK.md).
+
+For the TiC pipeline architecture, data model, development workflow, and
+responsibilities of each tracked file, see the [developer guide](architecture.md).
 
 ## Notes
 
