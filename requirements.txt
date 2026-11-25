@@ -4,7 +4,7 @@ duckdb==1.5.5
 duckdb-cli==1.5.5
 idna==3.18
 ijson==3.5.1
-numpy==2.5.2
+numpy==2.4.6
 pandas==3.0.5
 python-dateutil==2.9.0.post0
 requests==2.34.2
