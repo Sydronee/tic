@@ -13,6 +13,10 @@ report.txt
 ingestion_runs.jsonl
 processed_count.txt
 cigna_sorted_processed_count.txt
+*_processed_count.txt
+*_runs.jsonl
+uhc_rate_files.csv
+uhc_manifest.json
 2026-09-01_cigna-health-life-insurance-company_index.json
 cignaPretty.json
 cigna_file_sizes.json

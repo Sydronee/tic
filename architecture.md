@@ -2,37 +2,35 @@
 
 ## Overview
 
-This repository implements a small end-to-end pipeline for working with hospital price transparency data:
+This repository implements an ingestion and benchmarking pipeline for
+hospital price transparency data:
 
 1. Discover real `in-network-rates.json[.gz]` files from a UHC blob listing or a Cigna CMS index.
 2. Stream-parse each file into DuckDB with bounded memory use.
-3. Export the core tables to Parquet for browser-safe consumption.
-4. Load those Parquet files in `analytics.html` for local, client-side analysis.
+3. Enrich provider and code data from reference sources.
+4. Build materialized benchmark rollups for the sibling Benchmarks dashboard.
 
-The design keeps ingestion, storage, and dashboard loading separated so each step can be retried independently.
+The design keeps ingestion, storage, enrichment, and serving separated so each
+step can be retried independently.
 
 ## Pipeline
 
 ```
-Discovery            Streaming parse            DuckDB storage             Dashboard export
-fetch_uhc_index.py ─┐
-fetch_cigna_index.py ─┴▶ stream_parser.py ─────▶ transparency.duckdb ─────▶ export_for_dashboard.py
-                                                                                   │
-                                                                                   ▼
-                                                                           analytics.html
+UHC / Cigna indexes ─▶ fetchers ─▶ runner.py / stream_parser.py ─▶ transparency.duckdb ─┐
+NPPES / ZIP reference data ──────────────────────────────────────▶ enrichment.duckdb ───┴▶ build_benchmarks.py
+                                                                                         └▶ Benchmarks dashboard
 ```
 
 ## Discovery
 
 `fetch_uhc_index.py` crawls the two-level UHC blob structure. The top-level `blobs/` endpoint returns employer-specific index files, not the rate files themselves, so the script drills into each index and extracts the actual `in-network-rates.json` or `in-network-rates.json.gz` URLs.
 
-`fetch_and_filter_blobs.py` is a smaller helper that saves the raw blob response and writes a filtered JSON list of likely in-network-rates files. It is useful for quick local experiments, but `fetch_uhc_index.py` is the more complete discovery path.
-
 `fetch_cigna_index.py` reads a local Cigna CMS index, extracts unique
 `reporting_structure[].in_network_files[].location` URLs containing
 `in-network-rates`, and writes the `{\"blobs\": [...]}` manifest consumed by
 `runner.py`. The runner accepts separate manifest, database, progress, and
-download paths, so Cigna and UHC can be processed independently.
+download paths; use the same database with separate progress files for a
+combined payer comparison.
 
 ## Parsing and storage
 
@@ -47,7 +45,9 @@ download paths, so Cigna and UHC can be processed independently.
 
 Note: CMS marks `setting` as required on every `negotiated_price`, but real-world source files are inconsistent about populating it — expect `NULL` on a meaningful share of rows, concentrated in `percentage`/`per diem` `negotiated_type` entries. This is a source-data gap, not a parser bug, and downstream consumers of `setting` should handle `NULL` explicitly.
 
-Arrays such as `service_code`, `billing_code_modifier`, and `provider_reference_ids` are normalized and written as SQL arrays so they can be exported and consumed safely by the browser dashboard.
+Arrays such as `service_code`, `billing_code_modifier`, and
+`provider_reference_ids` are normalized and written as SQL arrays for
+downstream queries.
 
 The storage layout in `schema.sql` is a small star schema:
 
@@ -57,30 +57,16 @@ The storage layout in `schema.sql` is a small star schema:
 
 `procedure_price_stats` and `procedure_price_by_payer` are SQL views built on top of that schema and are used for dashboard-style aggregation.
 
-## Dashboard export
+## Benchmark build and serving
 
-`export_for_dashboard.py` exports `negotiated_rates`, `payers`, `billing_codes`, and `providers` to Parquet. The exporter normalizes the output schema so the dashboard can consume the files consistently even if the source database has slightly different column names or optional fields.
+`build_benchmarks.py` joins the transparency and enrichment databases and
+materializes code-, payer-, provider-, state-, and county-level statistics.
+The sibling `Benchmarks/server_benchmarks.js` serves the dashboard from those
+tables. See `../Benchmarks/RUNBOOK.md` for the operational commands.
 
-The dashboard in `analytics.html` loads those Parquet files locally in the browser. It now mounts them as temporary tables to avoid DuckDB catalog conflicts with the built-in demo tables that use the same base names.
-
-## End-to-end usage
-
-```bash
-pip install duckdb ijson requests
-
-python fetch_uhc_index.py --limit 50 --out manifest.csv
-python fetch_cigna_index.py 2026-09-01_cigna-health-life-insurance-company_index.json
-python runner.py --manifest cigna_in_network_rates.json --db cigna.duckdb \
-        --progress cigna_processed_count.txt --max-files 1
-python stream_parser.py path/to/file_in-network-rates.json.gz
-python export_for_dashboard.py --db transparency.duckdb --out ./web
-python -m http.server 8000
-```
-
-Then open `http://localhost:8000/analytics.html` and select the exported Parquet files (negotiated_rates, payers, billing_codes, providers).
+For a complete end-to-end workflow, use `../Benchmarks/RUNBOOK.md`.
 
 ## Operational notes
 
 - The parser is memory-bounded by batch size, not by file size.
-- DuckDB is single-writer per database file, so parallel ingestion should use separate shard files or separate processes.
-- Parquet is the preferred hand-off format for the dashboard because it is more stable across DuckDB build versions than a raw `.duckdb` file.
+- DuckDB is single-writer per database file, so stop the dashboard before ingestion or rebuilding benchmark tables.

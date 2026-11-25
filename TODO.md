@@ -11,7 +11,6 @@
 - Run `load_code_descriptions.py` with the available reference files and record
   coverage changes in the validation report.
 - Run `build_benchmarks.py --drop-first` after refreshing reference data.
-- Re-export dashboard files with `export_for_dashboard.py`.
 
 ## Engineering
 
