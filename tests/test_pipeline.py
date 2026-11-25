@@ -6,8 +6,26 @@ from unittest.mock import patch
 
 import requests
 
+from check_cigna_file_sizes import get_content_length
 from fetch_cigna_index import iter_rate_files
 from ingest_utils import download_file, validate_manifest
+
+
+class FakeSizeResponse:
+    def __init__(self, status_code, headers):
+        self.status_code = status_code
+        self.headers = headers
+        self.closed = False
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_args):
+        self.closed = True
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise requests.HTTPError(f"HTTP {self.status_code}")
 
 
 class FakeRaw:
@@ -37,6 +55,16 @@ class FakeResponse:
 
 
 class PipelineTests(unittest.TestCase):
+    def test_cigna_range_response_is_closed(self):
+        head_response = FakeSizeResponse(200, {})
+        range_response = FakeSizeResponse(206, {"Content-Range": "bytes 0-0/123"})
+        with patch("check_cigna_file_sizes.requests.head", return_value=head_response):
+            with patch("check_cigna_file_sizes.requests.get", return_value=range_response):
+                result = get_content_length("https://example.test/file", timeout=10)
+
+        self.assertEqual(result, (123, 206, "RANGE", None))
+        self.assertTrue(range_response.closed)
+
     def test_cigna_manifest_filters_and_deduplicates_rate_files(self):
         index = {
             "reporting_structure": [

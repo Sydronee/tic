@@ -34,21 +34,21 @@ def get_content_length(url, timeout):
     # Some hosts omit Content-Length on HEAD but provide it for a one-byte range.
     try:
         range_headers = {**headers, "Range": "bytes=0-0"}
-        response = requests.get(
+        with requests.get(
             url,
             headers=range_headers,
             timeout=timeout,
             allow_redirects=True,
             stream=True,
-        )
-        response.raise_for_status()
-        content_range = response.headers.get("Content-Range", "")
-        if "/" in content_range:
-            return int(content_range.rsplit("/", 1)[1]), response.status_code, "RANGE", None
-        length = response.headers.get("Content-Length")
-        if response.status_code == 200 and length is not None:
-            return int(length), response.status_code, "GET", None
-        return None, response.status_code, "RANGE", f"No total size in Content-Range ({head_error})"
+        ) as response:
+            response.raise_for_status()
+            content_range = response.headers.get("Content-Range", "")
+            if "/" in content_range:
+                return int(content_range.rsplit("/", 1)[1]), response.status_code, "RANGE", None
+            length = response.headers.get("Content-Length")
+            if response.status_code == 200 and length is not None:
+                return int(length), response.status_code, "GET", None
+            return None, response.status_code, "RANGE", f"No total size in Content-Range ({head_error})"
     except (requests.RequestException, ValueError) as exc:
         return None, None, "RANGE", f"{head_error}; fallback failed: {exc}"
 
