@@ -13,6 +13,7 @@ Run from TiC/:
 """
 
 import argparse
+import re
 import time
 from pathlib import Path
 import duckdb
@@ -24,7 +25,9 @@ def hms(secs):
     return f"{h}h {m}m {s}s" if h else f"{m}m {s}s" if m else f"{s}s"
 
 
-def build(transparency_db, enrichment_db, drop_first, stats_only):
+def build(transparency_db, enrichment_db, drop_first, stats_only,
+          skip_indexes, skip_stats, threads, memory_limit, temp_directory,
+          approximate_percentiles):
     t_total = time.time()
 
     if not Path(transparency_db).exists():
@@ -35,8 +38,10 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
     print(f"Connecting to {transparency_db} ...")
     con = duckdb.connect(transparency_db)
     con.execute(f"ATTACH '{enrichment_db}' AS ref (READ_ONLY)")
-    con.execute("PRAGMA threads=8")          # use all cores
-    con.execute("PRAGMA memory_limit='4GB'") # generous working memory
+    con.execute(f"PRAGMA threads={threads}")
+    con.execute(f"PRAGMA memory_limit='{memory_limit}'")
+    if temp_directory:
+        con.execute(f"SET temp_directory = '{Path(temp_directory).resolve()}'")
 
     # ------------------------------------------------------------------
     # STEP 1: provider bridge — one representative NPI per
@@ -57,7 +62,7 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
                 provider_reference_id,
                 -- One NPI per reference_id: pick the org/facility NPI
                 -- if there's a choice (entity_type='2'), else any.
-                FIRST(npi ORDER BY
+                FIRST(p.npi ORDER BY
                     CASE WHEN n.entity_type = '2' THEN 0 ELSE 1 END,
                     p.provider_id
                 )                           AS npi,
@@ -176,11 +181,6 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
 
             FROM negotiated_rates r
 
-            -- Rate quality filter (remove garbage rows)
-            WHERE r.negotiated_type IN ('negotiated', 'fee schedule', 'derived')
-              AND r.negotiated_rate  > 0
-              AND r.negotiated_rate  < 10000000
-
             -- Code lookup
             JOIN billing_codes bc
                 ON bc.code_id = r.code_id
@@ -209,23 +209,38 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
             -- County
             LEFT JOIN _dominant_county dc
                 ON dc.zip5 = n.zip5
+
+                        -- Rate quality filter (remove garbage rows)
+                        WHERE r.negotiated_type IN ('negotiated', 'fee schedule', 'derived')
+                            AND r.negotiated_rate  > 0
+                            AND r.negotiated_rate  < 10000000
         """)
 
         n_bm = con.execute("SELECT COUNT(*) FROM benchmarks").fetchone()[0]
         print(f"  benchmarks: {n_bm:,} rows  ({hms(time.time()-t0)})")
 
-        print("Building indexes ...")
-        t0 = time.time()
-        for sql in [
-            "CREATE INDEX IF NOT EXISTS idx_bm_code     ON benchmarks(billing_code, billing_code_type)",
-            "CREATE INDEX IF NOT EXISTS idx_bm_payer    ON benchmarks(payer_name)",
-            "CREATE INDEX IF NOT EXISTS idx_bm_state    ON benchmarks(provider_state)",
-            "CREATE INDEX IF NOT EXISTS idx_bm_county   ON benchmarks(county_fips)",
-            "CREATE INDEX IF NOT EXISTS idx_bm_npi      ON benchmarks(npi)",
-            "CREATE INDEX IF NOT EXISTS idx_bm_rate     ON benchmarks(negotiated_rate)",
-        ]:
-            con.execute(sql)
-        print(f"  Done ({hms(time.time()-t0)})")
+        if skip_indexes:
+            print("Skipping indexes (--skip-indexes).")
+        else:
+            print("Building indexes ...")
+            t0 = time.time()
+            for sql in [
+                "CREATE INDEX IF NOT EXISTS idx_bm_code     ON benchmarks(billing_code, billing_code_type)",
+                "CREATE INDEX IF NOT EXISTS idx_bm_payer    ON benchmarks(payer_name)",
+                "CREATE INDEX IF NOT EXISTS idx_bm_state    ON benchmarks(provider_state)",
+                "CREATE INDEX IF NOT EXISTS idx_bm_county   ON benchmarks(county_fips)",
+                "CREATE INDEX IF NOT EXISTS idx_bm_npi      ON benchmarks(npi)",
+                "CREATE INDEX IF NOT EXISTS idx_bm_rate     ON benchmarks(negotiated_rate)",
+            ]:
+                con.execute(sql)
+            print(f"  Done ({hms(time.time()-t0)})")
+
+    if skip_stats:
+        print("\nSkipping stat tables (--skip-stats).")
+        con.execute("CHECKPOINT")
+        con.close()
+        print(f"\nFinished in {hms(time.time()-t_total)}")
+        return
 
     # ------------------------------------------------------------------
     # STEP 4: stat tables (fast aggregations over benchmarks)
@@ -273,6 +288,24 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
             WHERE provider_state IS NOT NULL
             GROUP BY billing_code, billing_code_type, provider_state, county_fips
         """),
+        ("benchmarks_geo_payer_stats", """
+            SELECT
+                billing_code, billing_code_type,
+                MAX(code_description)                               AS code_description,
+                payer_name, provider_state, county_fips,
+                MAX(county_name)                                    AS county_name,
+                COUNT(*)                                            AS n_rates,
+                COUNT(DISTINCT npi)                                 AS n_providers,
+                ROUND(MIN(negotiated_rate),   2)                    AS rate_min,
+                ROUND(PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_p25,
+                ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_median,
+                ROUND(PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_p75,
+                ROUND(MAX(negotiated_rate),   2)                    AS rate_max,
+                ROUND(AVG(negotiated_rate),   2)                    AS rate_avg
+            FROM benchmarks
+            WHERE provider_state IS NOT NULL
+            GROUP BY billing_code, billing_code_type, payer_name, provider_state, county_fips
+        """),
         ("benchmarks_payer_stats", """
             SELECT
                 billing_code, billing_code_type,
@@ -289,6 +322,27 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
                 ROUND(AVG(negotiated_rate),   2)                    AS rate_avg
             FROM benchmarks
             GROUP BY billing_code, billing_code_type, payer_name
+        """),
+        ("benchmarks_payer_provider_stats", """
+            SELECT
+                billing_code, billing_code_type,
+                MAX(code_description)                               AS code_description,
+                payer_name, npi,
+                MAX(provider_name)                                  AS provider_name,
+                MAX(provider_city)                                  AS provider_city,
+                MAX(provider_state)                                 AS provider_state,
+                MAX(provider_zip5)                                  AS provider_zip5,
+                MAX(county_fips)                                    AS county_fips,
+                MAX(county_name)                                    AS county_name,
+                MAX(provider_taxonomy_code)                         AS taxonomy_code,
+                COUNT(*)                                            AS n_rates,
+                ROUND(MIN(negotiated_rate),   2)                    AS rate_min,
+                ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY negotiated_rate), 2) AS rate_median,
+                ROUND(MAX(negotiated_rate),   2)                    AS rate_max,
+                ROUND(AVG(negotiated_rate),   2)                    AS rate_avg
+            FROM benchmarks
+            WHERE npi IS NOT NULL
+            GROUP BY billing_code, billing_code_type, payer_name, npi
         """),
         ("benchmarks_provider_stats", """
             SELECT
@@ -317,6 +371,13 @@ def build(transparency_db, enrichment_db, drop_first, stats_only):
     for tname, sql in stats:
         t0 = time.time()
         con.execute(f"DROP TABLE IF EXISTS {tname}")
+        if approximate_percentiles:
+            sql = re.sub(
+                r"PERCENTILE_CONT\(([^)]+)\) WITHIN GROUP "
+                r"\(ORDER BY negotiated_rate\)",
+                r"approx_quantile(negotiated_rate, \1)",
+                sql,
+            )
         con.execute(f"CREATE TABLE {tname} AS {sql}")
         n = con.execute(f"SELECT COUNT(*) FROM {tname}").fetchone()[0]
         print(f"  {tname}: {n:,} rows  ({hms(time.time()-t0)})")
@@ -362,8 +423,22 @@ def main():
                     help="DROP TABLE benchmarks before rebuild")
     ap.add_argument("--stats-only",      action="store_true",
                     help="Skip benchmarks rebuild; only redo stat tables")
+    ap.add_argument("--skip-indexes",    action="store_true",
+                    help="Do not build secondary indexes on benchmarks")
+    ap.add_argument("--skip-stats",      action="store_true",
+                    help="Build benchmarks only; skip aggregate stat tables")
+    ap.add_argument("--threads",         type=int, default=8,
+                    help="DuckDB worker threads (default: 8)")
+    ap.add_argument("--memory-limit",    default="4GB",
+                    help="DuckDB memory limit, e.g. 8GB (default: 4GB)")
+    ap.add_argument("--temp-directory",  default=None,
+                    help="Directory for DuckDB spill files (use a large local disk)")
+    ap.add_argument("--approx-percentiles", action="store_true",
+                    help="Use approx_quantile to greatly reduce stats scratch space")
     args = ap.parse_args()
-    build(args.transparency_db, args.enrichment_db, args.drop_first, args.stats_only)
+    build(args.transparency_db, args.enrichment_db, args.drop_first, args.stats_only,
+          args.skip_indexes, args.skip_stats, args.threads, args.memory_limit,
+            args.temp_directory, args.approx_percentiles)
 
 if __name__ == "__main__":
     main()

@@ -21,10 +21,13 @@ Usage:
 import argparse
 import gzip
 import hashlib
+import io
+import zipfile
 from contextlib import contextmanager
 
 import duckdb
 import ijson
+import pandas
 import requests
 
 BATCH_SIZE = 122_880  # Match DuckDB's native RowGroup size for optimal storage
@@ -33,16 +36,6 @@ TOP_LEVEL_SCALAR_FIELDS = {
     "reporting_entity_name", "reporting_entity_type", "plan_name",
     "plan_id", "plan_id_type", "plan_market_type", "last_updated_on", "version",
 }
-
-INSERT_SQL = """
-    INSERT INTO negotiated_rates (
-        payer_id, code_id, negotiation_arrangement, billing_class, setting,
-        negotiated_type, negotiated_rate, service_code, billing_code_modifier,
-        expiration_date, provider_reference_ids, source_file
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
-"""
-
-
 
 # Some MRF hosts (UHC's blob endpoint among them) 403 requests that don't
 # look like they came from a browser. runner.py's own downloader already
@@ -58,31 +51,55 @@ _HTTP_HEADERS = {
 def open_stream(path_or_url):
     """Yield a file-like object of DECOMPRESSED bytes, streaming from disk
     or HTTP, without ever writing the .gz payload to disk."""
-    is_gz = path_or_url.endswith(".gz")
     if path_or_url.startswith("http://") or path_or_url.startswith("https://"):
         resp = requests.get(path_or_url, headers=_HTTP_HEADERS, stream=True, timeout=120)
         resp.raise_for_status()
         raw = resp.raw
         raw.decode_content = True  # transparently handle any transport-level encoding
-        stream = gzip.GzipFile(fileobj=raw) if is_gz else raw
+        buffered = io.BufferedReader(raw)
+        is_gz = buffered.peek(2)[:2] == b"\x1f\x8b"
+        stream = gzip.GzipFile(fileobj=buffered) if is_gz else buffered
         try:
             yield stream
         finally:
             resp.close()
     else:
-        f = open(path_or_url, "rb")
-        stream = gzip.GzipFile(fileobj=f) if is_gz else f
-        try:
-            yield stream
-        finally:
-            f.close()
+        if path_or_url.lower().endswith(".zip"):
+            archive = zipfile.ZipFile(path_or_url)
+            members = [
+                name for name in archive.namelist()
+                if not name.endswith("/")
+                and "in-network-rates" in name.lower()
+                and name.lower().endswith((".json", ".json.gz"))
+            ]
+            if not members:
+                archive.close()
+                raise ValueError(
+                    f"No in-network-rates JSON member found in {path_or_url}"
+                )
+            member = archive.open(members[0], "r")
+            stream = gzip.GzipFile(fileobj=member) if members[0].lower().endswith(".gz") else member
+            try:
+                yield stream
+            finally:
+                stream.close()
+                archive.close()
+        else:
+            f = open(path_or_url, "rb")
+            buffered = io.BufferedReader(f)
+            is_gz = buffered.peek(2)[:2] == b"\x1f\x8b"
+            stream = gzip.GzipFile(fileobj=buffered) if is_gz else buffered
+            try:
+                yield stream
+            finally:
+                buffered.close()
 
 
 def extract_header(stream):
     """Cheap first pass: stops the INSTANT the huge `in_network` array
     begins, so it only ever reads a few KB — never buffers the array."""
     header = {}
-    for prefix, event, value in ijson.parse(stream):
+    for prefix, event, value in ijson.parse(stream, use_float=True):
         if prefix == "in_network" and event == "start_array":
             break
         if prefix in TOP_LEVEL_SCALAR_FIELDS and event in ("string", "number"):
@@ -241,13 +258,36 @@ def _build_value_from_events(event_iter, prefix, event, value):
     # Fallback
     return None
 
+
+def _insert_batch(con, batch):
+    columns = [
+        "payer_id", "code_id", "negotiation_arrangement", "billing_class",
+        "setting", "negotiated_type", "negotiated_rate", "service_code",
+        "billing_code_modifier", "expiration_date", "provider_reference_ids",
+        "source_file",
+    ]
+    df = pandas.DataFrame.from_records(batch, columns=columns)
+    con.execute(
+        "INSERT INTO negotiated_rates "
+        f"({', '.join(columns)}) SELECT {', '.join(columns)} FROM df"
+    )
+
+
 def process_file(con, source, source_file_label):
     # 1. Start an explicit transaction block for the entire file pass
     con.execute("BEGIN TRANSACTION;")
     
     try:
+        if con.execute(
+            "SELECT 1 FROM ingested_files WHERE source_file = ?",
+            [source_file_label],
+        ).fetchone():
+            print(f"{source_file_label}: already ingested; skipping.")
+            con.execute("ROLLBACK;")
+            return
+
         with open_stream(source) as stream:
-            parser = ijson.parse(stream)
+            parser = ijson.parse(stream, use_float=True)
 
             header = {}
             payer_id = None
@@ -255,10 +295,20 @@ def process_file(con, source, source_file_label):
             provider_cache = {}
             batch = []
             n_seen = n_kept = 0
+            location_provider_references = 0
+            late_header_fields = set()
 
             in_in_network = False
 
             for prefix, event, value in parser:
+                if (
+                    in_in_network
+                    and prefix in TOP_LEVEL_SCALAR_FIELDS
+                    and event in ("string", "number")
+                ):
+                    late_header_fields.add(prefix)
+                    continue
+
                 # collect top-level scalars
                 if not in_in_network and prefix in TOP_LEVEL_SCALAR_FIELDS and event in ("string", "number"):
                     header[prefix] = value
@@ -269,6 +319,8 @@ def process_file(con, source, source_file_label):
                     obj = _build_value_from_events(parser, prefix, event, value)
                     # obj should be a mapping with provider_group_id, provider_groups
                     # and network_name (all three required by the CMS schema).
+                    if "location" in obj and "provider_groups" not in obj:
+                        location_provider_references += 1
                     group_id = obj.get("provider_group_id")
                     network_name = obj.get("network_name")
                     for prov in obj.get("provider_groups", []):
@@ -341,17 +393,29 @@ def process_file(con, source, source_file_label):
                             ))
 
                     if len(batch) >= BATCH_SIZE:
-                        con.executemany(INSERT_SQL, batch)
+                        _insert_batch(con, batch)
                         batch.clear()
 
             # flush remaining
             if batch:
-                con.executemany(INSERT_SQL, batch)
+                _insert_batch(con, batch)
 
-            # commit transaction
+            con.execute(
+                "INSERT INTO ingested_files (source_file, rows_kept) VALUES (?, ?)",
+                [source_file_label, n_kept],
+            )
             con.execute("COMMIT;")
 
             print(f"{source_file_label}: {n_seen} billing codes scanned, {n_kept} institutional rate rows kept.")
+            print(
+                f"{source_file_label}: {location_provider_references} "
+                "provider_references items had location instead of provider_groups."
+            )
+            for field in sorted(late_header_fields):
+                print(
+                    f"Warning: header field {field!r} appeared after "
+                    "in_network started."
+                )
 
     except Exception:
         con.execute("ROLLBACK;")

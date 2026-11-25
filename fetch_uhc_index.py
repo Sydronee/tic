@@ -24,16 +24,16 @@ the (often multi-GB) rate files themselves — that happens in stream_parser.py.
 
 Scale warning: the level-1 list alone typically has tens of thousands of
 entries, and the endpoint is documented to be intermittently unreliable
-(occasional 500s). Start with --limit for local testing; remove it (or
-raise it) once you have the full pipeline working end to end.
+(occasional 500s). Start with --limit for local testing; use --limit 0 to
+process the complete list.
 """
 
 import argparse
 import csv
 import sys
 import time
-from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 import requests
 
@@ -101,8 +101,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", default="manifest.csv", help="Output manifest CSV path")
     ap.add_argument("--limit", type=int, default=50,
-                     help="Max number of level-1 index files to crawl. The full "
-                          "list is large (tens of thousands) — start small.")
+                     help="Max level-1 index files to crawl; use 0 to process all.")
     ap.add_argument("--workers", type=int, default=8, help="Concurrent HTTP workers")
     args = ap.parse_args()
 
@@ -110,8 +109,11 @@ def main():
     session.headers.update({"User-Agent": "price-transparency-pipeline/0.1"})
 
     blobs = get_blob_list(session)
-    print(f"Top-level blob count: {len(blobs)} (processing first {args.limit})")
-    blobs = blobs[: args.limit]
+    if args.limit:
+        print(f"Top-level blob count: {len(blobs)} (processing first {args.limit})")
+        blobs = blobs[: args.limit]
+    else:
+        print(f"Top-level blob count: {len(blobs)} (processing all)")
 
     rows = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:

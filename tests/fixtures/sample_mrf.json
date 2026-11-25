@@ -1,0 +1,57 @@
+{
+  "reporting_entity_name": "Example Payer",
+  "reporting_entity_type": "third_party",
+  "plan_name": "Example Plan",
+  "plan_id": "plan-1",
+  "plan_id_type": "ein",
+  "provider_references": [
+    {
+      "provider_reference_id": 7,
+      "network_name": "Example Network",
+      "provider_groups": [
+        {
+          "npi": ["9876543210"],
+          "tin": {"type": "ein", "value": "222222222"}
+        }
+      ]
+    }
+  ],
+  "in_network": [
+    {
+      "negotiation_arrangement": "ffs",
+      "billing_code_type": "CPT",
+      "billing_code_type_version": "2025",
+      "billing_code": "99213",
+      "description": "Office visit",
+      "negotiated_rates": [
+        {
+          "provider_groups": [
+            {
+              "npi": ["1234567890"],
+              "tin": {"type": "ein", "value": "111111111"}
+            }
+          ],
+          "negotiated_prices": [
+            {
+              "negotiated_type": "negotiated",
+              "negotiated_rate": 100.0,
+              "billing_class": "institutional",
+              "setting": "inpatient"
+            },
+            {
+              "negotiated_type": "negotiated",
+              "negotiated_rate": 80.0,
+              "billing_class": "professional",
+              "setting": "outpatient"
+            },
+            {
+              "negotiated_type": "negotiated",
+              "negotiated_rate": 90.0,
+              "billing_class": "institutional"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
